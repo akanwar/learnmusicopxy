@@ -342,6 +342,7 @@ function renderWeek(wk, startIdx, weekIndex){
         <div class="sbody">
           ${se.warm?`<div class="warm"><b>Warm-up · 2 min</b><span>${chips(se.warm)}</span></div>`:""}
           <div class="goal"><b>Goal</b><span>${chips(se.goal)}</span></div>
+          ${se.clips?`<div class="hearrow">${se.clips.map(id=>`<button type="button" class="hearit" data-clip="${id}">&#9654; ${CLIPS[id].label}</button>`).join("")}<span class="hearnote">synthesized sketches of the idea — the real OP–XY sounds richer</span></div>`:""}
           ${se.story?`<aside class="story"><b>Liner notes — ${se.story.t}</b><p>${chips(se.story.x)}</p></aside>`:""}
           <ol class="steps">${se.steps.map(st=>`
             <li>
@@ -394,7 +395,7 @@ function refreshProgress(){
   if(pb) pb.style.width=(100*done/TOTAL)+"%";
   return done;
 }
-document.addEventListener("click",e=>{
+if (typeof document!=="undefined") document.addEventListener("click",e=>{
   const t=e.target.closest(".done-toggle");
   if(!t)return;
   e.preventDefault(); e.stopPropagation();
@@ -458,3 +459,338 @@ function sentenceCase(){
     }
   });
 }
+
+/* =================================================================
+   hear it — a tiny synth for "it should sound like" demos.
+   Every clip is pure sample-math rendered into a Web Audio buffer the
+   moment you press play: no audio files, no external assets, and
+   deterministic output (seeded noise). These are schematic sketches of
+   each idea — the OP–XY's own engines will sound richer.
+   The same functions run under node for test/clips.test.js.
+================================================================= */
+const HZ=(m)=>440*Math.pow(2,(m-69)/12);           // MIDI note → Hz
+const NOTE={C2:36,G2:43,A2:45,F2:41,C3:48,A3:57,C4:60,D4:62,Eb4:63,E4:64,F4:65,G4:67,A4:69,C5:72,D5:74,E5:76,G5:79};
+
+function lp1(sr,cut){ const a=1-Math.exp(-2*Math.PI*cut/sr); let y=0; return (x)=>(y+=a*(x-y)); }
+function hp1(sr,cut){ const lp=lp1(sr,cut); return (x)=>x-lp(x); }
+// Chamberlin state-variable lowpass — cutoff modulatable per sample, with resonance
+function svf(sr,res){ let low=0,band=0; const q=1/Math.max(0.5,res);
+  return (x,fc)=>{ const f=2*Math.sin(Math.PI*Math.min(fc,sr*0.22)/sr);
+    low+=f*band; const hi=x-low-q*band; band+=f*hi; return low; }; }
+function rng(seed){ let s=seed>>>0; return ()=>{ s^=s<<13;s>>>=0;s^=s>>17;s^=s<<5;s>>>=0; return (s/4294967296)*2-1; }; }
+// raised-cosine fades so no buffer ever starts or ends with a step
+function fadeEnds(buf,sr,inMs=2,outMs=15){
+  const ni=Math.floor(inMs/1000*sr), no=Math.floor(outMs/1000*sr);
+  for(let i=0;i<ni&&i<buf.length;i++) buf[i]*=0.5-0.5*Math.cos(Math.PI*i/ni);
+  for(let i=0;i<no&&i<buf.length;i++) buf[buf.length-1-i]*=0.5-0.5*Math.cos(Math.PI*i/no);
+  return buf;
+}
+
+/* ---- voices (each returns its own Float64Array) ---- */
+function vKick(sr,vel=1){
+  const n=Math.floor(0.5*sr), out=new Float64Array(n); let ph=0;
+  for(let i=0;i<n;i++){ const t=i/sr, f=45+110*Math.exp(-t*28); ph+=2*Math.PI*f/sr;
+    out[i]=Math.tanh(Math.sin(ph)*1.8)*Math.exp(-t*7)*(1-Math.exp(-t*900))*vel; }
+  return fadeEnds(out,sr,1,40);
+}
+function vSnare(sr,vel=1){
+  const n=Math.floor(0.24*sr), out=new Float64Array(n);
+  const nz=rng(777), hp=hp1(sr,1800), lp=lp1(sr,7500); let ph=0;
+  for(let i=0;i<n;i++){ const t=i/sr; ph+=2*Math.PI*185/sr;
+    out[i]=(Math.sin(ph)*Math.exp(-t*30)*0.5+lp(hp(nz()))*Math.exp(-t*22)*1.1)*vel; }
+  return fadeEnds(out,sr);
+}
+function vHat(sr,vel=1,open=false){
+  const n=Math.floor((open?0.25:0.06)*sr), out=new Float64Array(n);
+  const nz=rng(31337), hp=hp1(sr,7000);
+  for(let i=0;i<n;i++){ const t=i/sr; out[i]=hp(nz())*Math.exp(-t*(open?14:70))*0.55*vel; }
+  return fadeEnds(out,sr);
+}
+function vBass(sr,freq,vel=0.55){                          // rings out — never chopped
+  const n=Math.floor(1.2*sr), out=new Float64Array(n);
+  const lp=lp1(sr,900); let p=0;
+  for(let i=0;i<n;i++){ const t=i/sr; p+=2*Math.PI*freq/sr;
+    const x=Math.sin(p)+0.4*Math.sin(2*p)+0.15*Math.sin(3*p);
+    out[i]=lp(x)*Math.min(1,t/0.008)*Math.exp(-t*5)*vel; }
+  return fadeEnds(out,sr,2,30);
+}
+// partials: mellow pad vs bright saw-ish "engine"
+const PARTIALS={mellow:[1,0.5,0.25,0.12],bright:[1,0.72,0.5,0.36,0.26,0.19,0.14]};
+function vTone(sr,freqs,len,{attack=0.03,release=0.5,cutoff=2200,vel=0.5,bright=false,detune=0.0015}={}){
+  const n=Math.floor(len*sr), out=new Float64Array(n);
+  const lp=lp1(sr,cutoff), P=bright?PARTIALS.bright:PARTIALS.mellow, vs=[];
+  freqs.forEach((f)=>{ vs.push({f:f*(1-detune),p:0},{f:f*(1+detune),p:0.3}); });
+  for(let i=0;i<n;i++){ const t=i/sr; let x=0;
+    for(const v of vs){ v.p+=2*Math.PI*v.f/sr; for(let k=0;k<P.length;k++) x+=P[k]*Math.sin((k+1)*v.p); }
+    x/=vs.length*2;
+    const env=Math.min(1,t/attack)*(t>len-release?Math.max(0,(len-t)/release):1);
+    out[i]=lp(x)*env*vel; }
+  return fadeEnds(out,sr);
+}
+function vPluck(sr,freq,vel=0.6){                          // fast-envelope melody voice
+  const n=Math.floor(0.55*sr), out=new Float64Array(n);
+  const lp=lp1(sr,3200); let p=0;
+  for(let i=0;i<n;i++){ const t=i/sr; p+=2*Math.PI*freq/sr;
+    const x=Math.sin(p)+0.55*Math.sin(2*p)+0.3*Math.sin(3*p)+0.15*Math.sin(4*p);
+    out[i]=lp(x)*Math.min(1,t/0.004)*Math.exp(-t*8)*vel; }
+  return fadeEnds(out,sr,1,30);
+}
+function vStab(sr,freqs,vel=0.5){ return vTone(sr,freqs,0.28,{attack:0.004,release:0.16,cutoff:2600,vel,bright:true}); }
+function vRiser(sr,len=1.7,vel=0.5){                       // noise sweeping up = the promise of a drop
+  const n=Math.floor(len*sr), out=new Float64Array(n);
+  const nz=rng(4242), f=svf(sr,1.8);
+  for(let i=0;i<n;i++){ const t=i/sr, k=t/len;
+    out[i]=f(nz(),300*Math.pow(20,k))*(0.15+0.85*k*k)*vel; }
+  return fadeEnds(out,sr,5,120);   // the classic gasp just before the drop
+}
+
+/* ---- pattern helpers ---- */
+function stepTime(bpm,s,swing=0){ const d=60/bpm/4; let t=s*d; if(swing&&s%4===2)t+=swing*d; return t; }
+function mixAt(out,buf,whenSec,sr,gain=1){
+  const at=Math.floor(whenSec*sr);
+  for(let i=0;i<buf.length&&at+i<out.length;i++) out[at+i]+=buf[i]*gain;
+}
+function silence(sr,len){ return new Float64Array(Math.floor(len*sr)); }
+function joinAB(sr,a,b,gap=0.45){
+  const g=silence(sr,gap), out=new Float64Array(a.length+g.length+b.length);
+  out.set(a,0); out.set(b,a.length+g.length); return out;
+}
+// sidechain duck: gain dips right after each kick, then breathes back
+function duck(buf,sr,kickTimes,depth=0.75,rel=7){
+  const out=Float64Array.from(buf);
+  for(let i=0;i<out.length;i++){
+    const t=i/sr; let dt=1e9;
+    for(const k of kickTimes) if(t>=k) dt=Math.min(dt,t-k);
+    if(dt<1e9) out[i]*=1-depth*Math.exp(-dt*rel)*(1-Math.exp(-dt*220));
+  }
+  return out;
+}
+function echo(buf,sr,time=0.29,fb=0.45,mix=0.4){
+  const d=Math.floor(time*sr), ring=new Float64Array(d);
+  const out=new Float64Array(buf.length+Math.floor(sr*1.3)); let w=0;
+  for(let i=0;i<out.length;i++){ const dry=i<buf.length?buf[i]:0;
+    const wet=ring[w]; ring[w]=dry+wet*fb; w=(w+1)%d; out[i]=dry+wet*mix; }
+  return fadeEnds(out,sr,1,60);
+}
+function normalizeBuf(buf,peak=0.88){
+  let m=0; for(const x of buf) m=Math.max(m,Math.abs(x));
+  const g=m>0?peak/m:1; return Float64Array.from(buf,(x)=>x*g);
+}
+
+/* ---- shared pattern blocks ---- */
+function drumBar(sr,out,at,bpm,{kicks=[0,4,8,12],snares=[4,12],hats=[2,6,10,14],swing=0,humanize=false,openHat=null}={}){
+  for(const s of kicks) mixAt(out,vKick(sr),at+stepTime(bpm,s),sr);
+  for(const s of snares) mixAt(out,vSnare(sr,0.85),at+stepTime(bpm,s),sr);
+  hats.forEach((s,i)=>mixAt(out,vHat(sr,humanize?(i%2?0.5:0.9):0.9),at+stepTime(bpm,s,swing),sr));
+  if(openHat!=null) mixAt(out,vHat(sr,0.5,true),at+stepTime(bpm,openHat,swing),sr);
+}
+function sketch(sr,{polished=false}={}){                    // weeks 6 & 12 bookends
+  const bpm=100, bar=60/bpm*4, out=silence(sr,2*bar+1.4);
+  const chords=[[NOTE.C4,NOTE.E4,NOTE.G4],[NOTE.A3,NOTE.C4,NOTE.E4]], roots=[NOTE.C2,NOTE.A2];
+  const kickTimes=[];
+  for(let b=0;b<2;b++){
+    const at=b*bar;
+    drumBar(sr,out,at,bpm,{swing:polished?0.24:0,humanize:polished});
+    [0,4,8,12].forEach((s)=>kickTimes.push(at+stepTime(bpm,s)));
+    mixAt(out,vBass(sr,HZ(roots[b])),at,sr);
+    mixAt(out,vBass(sr,HZ(roots[b]),0.45),at+stepTime(bpm,8),sr);
+    let pad=vTone(sr,chords[b].map(HZ),bar*0.95,{vel:0.4});
+    if(polished) pad=duck(pad,sr,[0,4,8,12].map((s)=>stepTime(bpm,s)),0.7);
+    mixAt(out,pad,at,sr);
+  }
+  [[8,NOTE.A4],[10,NOTE.G4],[12,NOTE.E4],[14,NOTE.G4],[16,NOTE.A4],[20,NOTE.C5],[24,NOTE.A4]].forEach(([s,m])=>
+    mixAt(out,vPluck(sr,HZ(m),0.5),stepTime(bpm,s),sr));
+  return out;
+}
+
+/* ---- the clips ---- */
+const CLIPS={
+"first-notes":{label:"the keys become notes",render(sr){
+  const out=silence(sr,3.2);
+  [NOTE.C4,NOTE.E4,NOTE.G4,NOTE.C5].forEach((m,i)=>mixAt(out,vPluck(sr,HZ(m)),i*0.55,sr));
+  mixAt(out,vTone(sr,[NOTE.C4,NOTE.E4,NOTE.G4].map(HZ),0.9,{vel:0.45}),2.25,sr);
+  return out; }},
+"four-on-the-floor":{label:"four on the floor",render(sr){
+  const bpm=122, bar=60/bpm*4, out=silence(sr,2*bar+0.6);
+  for(let b=0;b<2;b++) drumBar(sr,out,b*bar,bpm,{});
+  return out; }},
+"hiphop-headnod":{label:"the hip-hop head-nod",render(sr){
+  const bpm=90, bar=60/bpm*4, out=silence(sr,2*bar+0.6);
+  for(let b=0;b<2;b++) drumBar(sr,out,b*bar,bpm,
+    {kicks:[0,6,10],hats:[0,2,4,6,8,10,12],swing:0.28,humanize:true,openHat:14});
+  return out; }},
+"robot-vs-human":{label:"robot, then human",render(sr){
+  const bpm=94, bar=60/bpm*4;
+  const mk=(human)=>{ const o=silence(sr,2*bar+0.5);
+    for(let b=0;b<2;b++) drumBar(sr,o,b*bar,bpm,
+      {kicks:[0,6,10],hats:[0,2,4,6,8,10,12,14],swing:human?0.26:0,humanize:human});
+    return o; };
+  return joinAB(sr,mk(false),mk(true)); }},
+"fill-turnaround":{label:"a fill wakes the loop up",render(sr){
+  const bpm=100, bar=60/bpm*4, out=silence(sr,2*bar+0.8);
+  drumBar(sr,out,0,bpm,{});
+  drumBar(sr,out,bar,bpm,{hats:[2,6],snares:[4]});
+  [12,12.5,13,13.5,14,14.5,15,15.5].forEach((s,i)=>          // multiply-style snare roll
+    mixAt(out,vSnare(sr,0.4+0.07*i),bar+stepTime(bpm,s),sr));
+  mixAt(out,vKick(sr),2*bar,sr); mixAt(out,vHat(sr,0.6,true),2*bar,sr);
+  return out; }},
+"major-vs-minor":{label:"major, then minor",render(sr){
+  const bpm=100, bar=60/bpm*4;
+  const mk=(third)=>{ const o=silence(sr,bar+1.3);
+    mixAt(o,vTone(sr,[NOTE.C4,third,NOTE.G4].map(HZ),2.1,{vel:0.5}),0,sr);
+    mixAt(o,vTone(sr,[NOTE.C4,third,NOTE.G4].map(HZ),1.6,{vel:0.5}),bar/2,sr);
+    [0,4,8,12].forEach((s)=>mixAt(o,vBass(sr,HZ(NOTE.C2)),stepTime(bpm,s),sr));
+    return o; };
+  return joinAB(sr,mk(NOTE.E4),mk(NOTE.Eb4),0.5); }},
+"axis-progression":{label:"C — G — Am — F",render(sr){
+  const dur=0.95, out=silence(sr,4*dur+1.2);
+  [[60,64,67],[55,59,62],[57,60,64],[53,57,60]]              // C — G — Am — F
+    .forEach((ch,i)=>{ mixAt(out,vTone(sr,ch.map(HZ),dur*1.05,{vel:0.48}),i*dur,sr);
+      mixAt(out,vBass(sr,HZ([NOTE.C2,NOTE.G2,NOTE.A2,NOTE.F2][i]),0.5),i*dur,sr); });
+  return out; }},
+"bass-under-chords":{label:"roots anchor the chords",render(sr){
+  const bpm=100, bar=60/bpm*4, out=silence(sr,2*bar+1.2);
+  const prog=[[NOTE.C4,NOTE.E4,NOTE.G4],[NOTE.A3,NOTE.C4,NOTE.E4]], roots=[NOTE.C2,NOTE.A2];
+  prog.forEach((ch,i)=>{ mixAt(out,vTone(sr,ch.map(HZ),bar*0.95,{vel:0.42}),i*bar,sr);
+    [0,4,8,12].forEach((s)=>mixAt(out,vBass(sr,HZ(roots[i]),0.5),i*bar+stepTime(bpm,s),sr)); });
+  return out; }},
+"offbeat-stabs":{label:"stabs on the off-beat",render(sr){
+  const bpm=118, bar=60/bpm*4, out=silence(sr,2*bar+0.7);
+  for(let b=0;b<2;b++){ drumBar(sr,out,b*bar,bpm,{snares:[],hats:[]});
+    [2,6,10,14].forEach((s)=>mixAt(out,vStab(sr,[NOTE.C4,NOTE.E4,NOTE.G4].map(HZ),0.5),b*bar+stepTime(bpm,s),sr));
+    mixAt(out,vBass(sr,HZ(NOTE.C2),0.5),b*bar,sr); }
+  return out; }},
+"pentatonic-walk":{label:"five safe notes",render(sr){
+  const bpm=96, out=silence(sr,4.4);
+  const pent=[NOTE.A3,NOTE.C4,NOTE.D4,NOTE.E4,NOTE.G4,NOTE.A4];
+  [0,2,4,6,8,10,12,14,16,20].forEach((s,i)=>
+    mixAt(out,vPluck(sr,HZ(pent[[0,1,2,3,4,5,4,3,2,0][i]])),stepTime(bpm,s),sr));
+  [0,8,16].forEach((s)=>mixAt(out,vKick(sr,0.7),stepTime(bpm,s),sr));
+  return out; }},
+"call-response":{label:"question, then answer",render(sr){
+  const bpm=96, out=silence(sr,4.6);
+  [[0,NOTE.A4],[2,NOTE.C5],[4,NOTE.A4],[6,NOTE.G4]].forEach(([s,m])=>mixAt(out,vPluck(sr,HZ(m)),stepTime(bpm,s),sr));
+  [[10,NOTE.E4],[12,NOTE.G4],[14,NOTE.D4],[16,NOTE.A3]].forEach(([s,m])=>mixAt(out,vPluck(sr,HZ(m)),stepTime(bpm,s),sr));
+  [0,4,8,12,16].forEach((s)=>mixAt(out,vHat(sr,0.5),stepTime(bpm,s),sr));
+  return out; }},
+"first-sketch":{label:"drums + bass + chords + melody",render(sr){ return sketch(sr); }},
+"two-engines":{label:"same notes, two engines",render(sr){
+  const mk=(bright)=>{ const o=silence(sr,2.2);
+    [[0,NOTE.C4],[0.45,NOTE.E4],[0.9,NOTE.G4]].forEach(([t,m])=>
+      mixAt(o,vTone(sr,[HZ(m)],0.8,{attack:0.01,release:0.3,vel:0.5,bright,cutoff:bright?3800:1600}),t,sr));
+    return o; };
+  return joinAB(sr,mk(false),mk(true)); }},
+"pluck-vs-pad":{label:"pluck ADSR, then pad ADSR",render(sr){
+  const notes=[NOTE.C4,NOTE.E4,NOTE.G4].map(HZ);
+  const a=silence(sr,2.4);
+  mixAt(a,vTone(sr,notes,0.9,{attack:0.004,release:0.6,vel:0.55,bright:true,cutoff:3200}),0,sr);
+  mixAt(a,vTone(sr,notes,0.9,{attack:0.004,release:0.6,vel:0.55,bright:true,cutoff:3200}),1.1,sr);
+  const b=silence(sr,3.4);
+  mixAt(b,vTone(sr,notes,3.0,{attack:0.9,release:1.4,vel:0.5}),0,sr);
+  return joinAB(sr,a,b); }},
+"filter-sweep":{label:"cutoff opens the sound",render(sr){
+  const bpm=110, out=silence(sr,4.6), f=svf(sr,2.2), nz=rng(11);
+  const raw=silence(sr,4.6); let p=0;
+  for(let i=0;i<raw.length;i++){ p+=2*Math.PI*HZ(NOTE.C2)/sr; let x=0;
+    for(let k=1;k<=48;k++) x+=Math.sin(k*p)/k; raw[i]=x*0.35; }
+  const gate=silence(sr,4.6);
+  for(let b=0;b<8;b++){ const at=stepTime(bpm,b*2), n0=Math.floor(at*sr), n1=Math.floor((at+0.21)*sr);
+    for(let i=n0;i<n1&&i<gate.length;i++) gate[i]=1; }
+  for(let i=0;i<out.length;i++){ const t=i/sr, k=t/4.6;
+    const fc=180*Math.pow(2,4.6*(k<0.5?k*2:2-k*2));       // up then back down
+    out[i]=f(raw[i]*gate[i],fc)*0.7; }
+  return fadeEnds(out,sr,5,60); }},
+"lfo-wobble":{label:"an LFO turns the knob for you",render(sr){
+  const out=silence(sr,4.2), f=svf(sr,2.0);
+  const raw=silence(sr,4.2); let p1=0,p2=0;
+  for(let i=0;i<raw.length;i++){ p1+=2*Math.PI*HZ(NOTE.C2)/sr; p2+=2*Math.PI*HZ(NOTE.C2)*1.005/sr;
+    let x=0; for(let k=1;k<=14;k++) x+=(Math.sin(k*p1)+Math.sin(k*p2))/(2*k); raw[i]=x*0.5; }
+  for(let i=0;i<out.length;i++){ const t=i/sr, rate=t<2.1?1:3;   // LFO speeds up halfway
+    out[i]=f(raw[i],280+1700*(0.5+0.5*Math.sin(2*Math.PI*rate*t)))*0.7; }
+  return fadeEnds(out,sr,5,60); }},
+"sidechain-pump":{label:"flat, then pumping",render(sr){
+  const bpm=122, bar=60/bpm*4;
+  const mk=(pump)=>{ const o=silence(sr,2*bar+0.8);
+    let pad=vTone(sr,[NOTE.C4,NOTE.E4,NOTE.G4,NOTE.C5].map(HZ),2*bar,{attack:0.05,release:0.4,vel:0.42});
+    const kicks=[]; for(let b=0;b<2;b++) [0,4,8,12].forEach((s)=>kicks.push(b*bar+stepTime(bpm,s)));
+    if(pump) pad=duck(pad,sr,kicks,0.85,3.5);
+    mixAt(o,pad,0,sr);
+    for(const k of kicks) mixAt(o,vKick(sr),k,sr);
+    return o; };
+  return joinAB(sr,mk(false),mk(true)); }},
+"verse-vs-drop":{label:"small scene, then big scene",render(sr){
+  const bpm=118, bar=60/bpm*4, out=silence(sr,2*bar+0.9);
+  drumBar(sr,out,0,bpm,{snares:[],hats:[]});
+  mixAt(out,vBass(sr,HZ(NOTE.C2),0.5),0,sr);
+  drumBar(sr,out,bar,bpm,{});
+  [2,6,10,14].forEach((s)=>mixAt(out,vStab(sr,[NOTE.C4,NOTE.E4,NOTE.G4].map(HZ),0.45),bar+stepTime(bpm,s),sr));
+  mixAt(out,vBass(sr,HZ(NOTE.C2),0.55),bar,sr);
+  mixAt(out,vBass(sr,HZ(NOTE.C2),0.5),bar+stepTime(bpm,8),sr);
+  return out; }},
+"riser-transition":{label:"promise, then payoff",render(sr){
+  const bpm=118, bar=60/bpm*4, out=silence(sr,3*bar+0.9);
+  drumBar(sr,out,0,bpm,{});
+  drumBar(sr,out,bar,bpm,{kicks:[0,4,8,12],hats:[]});
+  mixAt(out,vRiser(sr,bar,0.55),bar,sr);
+  [8,10,12,13,14,15].forEach((s)=>mixAt(out,vSnare(sr,0.35+0.09*(s-8)/2),bar+stepTime(bpm,s),sr));
+  drumBar(sr,out,2*bar,bpm,{});
+  [2,6,10,14].forEach((s)=>mixAt(out,vStab(sr,[NOTE.C4,NOTE.E4,NOTE.G4].map(HZ),0.45),2*bar+stepTime(bpm,s),sr));
+  mixAt(out,vBass(sr,HZ(NOTE.C2),0.55),2*bar,sr);
+  return out; }},
+"mute-performance":{label:"the mute button is an instrument",render(sr){
+  const bpm=118, bar=60/bpm*4, out=silence(sr,4*bar+0.9);
+  const full=(at,parts)=>{ drumBar(sr,out,at,bpm,{hats:parts.hats?[2,6,10,14]:[],snares:parts.sn?[4,12]:[]});
+    if(parts.bass){ mixAt(out,vBass(sr,HZ(NOTE.C2),0.55),at,sr); mixAt(out,vBass(sr,HZ(NOTE.C2),0.45),at+stepTime(bpm,8),sr); }
+    if(parts.stab) [2,10].forEach((s)=>mixAt(out,vStab(sr,[NOTE.C4,NOTE.E4,NOTE.G4].map(HZ),0.42),at+stepTime(bpm,s),sr)); };
+  full(0,{hats:true,sn:true,bass:true,stab:true});
+  full(bar,{hats:true,sn:true,bass:false,stab:false});      // everything but bass+stabs muted
+  full(2*bar,{hats:false,sn:false,bass:true,stab:false});   // just kick+bass
+  full(3*bar,{hats:true,sn:true,bass:true,stab:true});      // all back in
+  return out; }},
+"levels-ab":{label:"bass too loud, then balanced",render(sr){
+  const bpm=110, bar=60/bpm*4;
+  const mk=(bassGain)=>{ const o=silence(sr,bar+1.0);
+    drumBar(sr,o,0,bpm,{});
+    [0,8].forEach((s)=>mixAt(o,vBass(sr,HZ(NOTE.C2),0.5),stepTime(bpm,s),sr,bassGain));
+    [2,10].forEach((s)=>mixAt(o,vStab(sr,[NOTE.C4,NOTE.E4,NOTE.G4].map(HZ),0.45),stepTime(bpm,s),sr));
+    return o; };
+  return joinAB(sr,mk(3.2),mk(1)); }},
+"dry-vs-space":{label:"dry, then with a send",render(sr){
+  const mk=()=>{ const o=silence(sr,1.6);
+    [[0,[NOTE.C4,NOTE.E4,NOTE.G4]],[0.7,[NOTE.A3,NOTE.C4,NOTE.E4]]].forEach(([t,ch])=>
+      mixAt(o,vStab(sr,ch.map(HZ),0.5),t,sr));
+    return o; };
+  return joinAB(sr,mk(),echo(mk(),sr),0.6); }},
+"raw-vs-polished":{label:"week-6 you, then week-12 you",render(sr){
+  return joinAB(sr,sketch(sr),sketch(sr,{polished:true}),0.6); }},
+};
+function renderClip(id,sr){ return normalizeBuf(CLIPS[id].render(sr)); }
+
+/* ---- player: lazy AudioContext, one clip at a time ---- */
+const CLIP_CACHE={};
+let _actx=null,_playing=null;
+function hearIt(btn){
+  const id=btn.dataset.clip;
+  try{
+    if(!_actx) _actx=new (window.AudioContext||window.webkitAudioContext)();
+    if(_actx.state==="suspended") _actx.resume();
+    if(_playing){ try{_playing.src.stop();}catch(e){}
+      _playing.btn.classList.remove("playing");
+      const same=_playing.btn===btn; _playing=null; if(same) return; }
+    const sr=_actx.sampleRate, key=id+"@"+sr;
+    if(!CLIP_CACHE[key]) CLIP_CACHE[key]=renderClip(id,sr);
+    const data=CLIP_CACHE[key];
+    const buf=_actx.createBuffer(1,data.length,sr);
+    buf.getChannelData(0).set(data);
+    const src=_actx.createBufferSource();
+    src.buffer=buf; src.connect(_actx.destination);
+    src.onended=()=>{ if(_playing&&_playing.src===src){ _playing.btn.classList.remove("playing"); _playing=null; } };
+    src.start(); btn.classList.add("playing"); _playing={src,btn};
+  }catch(e){ btn.disabled=true; btn.textContent="audio unavailable"; }
+}
+
+if (typeof document!=="undefined") document.addEventListener("click",(e)=>{
+  const b=e.target.closest(".hearit"); if(b) hearIt(b);
+});
+if (typeof module!=="undefined" && module.exports!==undefined) module.exports={CLIPS,renderClip,TOTAL,
+  VOICES:{vKick,vSnare,vHat,vBass,vTone,vPluck,vStab,vRiser}};
