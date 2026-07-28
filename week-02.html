@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 2 — Rhythm II — make it human · Learn Music with OP–XY</title>
+<meta name="description" content="Week 2 of a free, hands-on 12-week OP–XY beginner course: Rhythm II — make it human.">
+<link rel="stylesheet" href="opxy.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">OP–XY <span>Beginner Course</span></div>
+    <div class="links">
+      <a href="index.html">Course HQ</a><a href="week-01.html">← Week 1</a><a href="week-03.html">Week 3 →</a><a href="cheatsheet.html">Cheat sheets</a>
+    </div>
+    <div id="progressWrap"><span id="progressTxt">0 / 26</span><div id="progressBar"><i></i></div></div>
+  </div>
+</nav>
+
+<div id="course"></div>
+
+<div class="wrap"><div class="accnote slim"><b>Accuracy note</b>— this guide was drafted with AI assistance and reviewed by a human, but it will contain mistakes. When this page and the device disagree, trust the device's screen and the official guide. Spotted an error? <a href="https://github.com/akanwar/learnmusicopxy/issues" target="_blank">Open an issue</a> — corrections are the point of hosting this publicly.</div></div>
+
+<div class="pager"><div class="wrap">
+  <a href="week-01.html">← Week 1 · Rhythm I</a>
+  <a href="index.html">Course HQ</a>
+  <a href="week-03.html">Week 3 · Harmony I →</a>
+</div></div>
+
+<footer>
+  <div class="wrap"><div class="wrap">
+    <b>learnmusicopxy</b> — an independent, hands-on beginner course for the OP–XY. Drafted with AI assistance and reviewed by a human; verify against the official <a href="https://teenage.engineering/guides/op-xy" target="_blank">Teenage Engineering OP–XY guide</a> before relying on any button path. OP–XY is a product and trademark of Teenage Engineering; this project is not affiliated with or endorsed by them, and contains no Teenage Engineering imagery — every diagram is an original schematic. Content licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>, code MIT · <a href="https://github.com/akanwar/learnmusicopxy" target="_blank">source &amp; corrections on GitHub</a>.
+  </div>
+  </div>
+</footer>
+<script src="opxy.js"></script>
+<script>
+/* week data — edit here; shared behavior lives in opxy.js */
+const WEEK=
+{n:"Week 2", title:"Rhythm II — make it human", quiz:[["how do you force one step's velocity?","hold [shift] + press the step, press [key B] (velocity), then an accidental for the value."],["what must be true before you can nudge a step off the grid?","quantize below 100 — hold [bar] and turn [enc dark]."],["which step component makes a drum roll, and on which key?","multiply, on the 3rd natural [key A] — it divides one step into several trigs."]], goal:"machines are perfectly on-grid and perfectly equal in volume. humans are neither. velocity, micro-timing, groove and fills put blood in the beat.",
+ sessions:[
+ {t:"Session 3 — Velocity, nudge, groove", warm:"build the house grid from memory, then say out loud how the hip-hop kick differs. only then read on.", story:{t:"The man who invented swing… as a number, 1979", x:"Roger Linn's drum machines introduced the swing knob — delaying every second subdivision by a percentage — and his MPC became hip-hop's workbench. producers pushed it further: J Dilla famously turned quantize off and placed hits by feel, kicks rushing, snares dragging, until the machine sounded drunk and human at once. entire genres now chase that feel. today you get the same three dials Dilla had: how loud, how early or late, how much swing."}, challenge:"constraint drill: humanize one copy of your beat using only velocity, another using only groove. play both for ten seconds each — which tool did more? that judgement is the actual skill.", remember:"humanity is a few deliberate imperfections — not many accidental ones.", sub:"loud/soft · early/late · swing",
+  goal:"make a robot beat breathe using three independent tools — and learn to hear which is which.",
+  steps:[
+   {do:"accent with the <b>velocity step component</b>: hold [shift], press a hat step (it blinks), then press the 4th natural [key B] — the screen says velocity. still holding [shift], press [acc 7] to force it loud (112). on two other hat steps force [acc 3] (soft, 16).",
+    why:"alternating strong and weak hats is what a real drummer's wrist does automatically.",
+    listen:"the hats stop being a flat 'tick tick tick' and start rolling.",
+    viz:seqGrid([{label:"hi-hat",key:"C#",steps:[1,3,5,7,9,11,13,15],txt:{1:"112",3:"16",5:"112",7:"16",9:"112",11:"16",13:"112",15:"16"}}],16,"orange numbers = forced velocity per step (hold [shift] + step → [key B] → accidental).")},
+   {do:"<b>nudge</b>: first hold [bar] and turn [enc dark] to set quantize below 100. now hold a snare step and tap [-] or [+] a click or two.",
+    why:"notes can only leave the grid when quantize is under 100. a snare a hair late feels fat and lazy; a hair early feels urgent.",
+    listen:"tiny moves only — if you can clearly hear it shift, it is too much."},
+   {do:"<b>groove</b>: hold [bar] and turn [enc light]. compare zero, moderate, and way too much.",
+    why:"groove (swing) delays certain subdivisions across the whole track. the style of groove is chosen in the [tempo] screen.",
+    listen:"moderate should feel better than zero. too much wobbles like a boat."},
+   {do:"clean-up trick, again: hold a drum key + tap [record] to see and edit only that sound.",
+    why:"editing hats while staring at kicks is how dense kits become soup."},
+   {do:"a/b test: keep one pattern as the untouched 'robot', one as the 'human'. flip between them in [arrange] with [enc white].",
+    why:"the human version should use <b>fewer, more intentional</b> changes — not more of everything."}
+  ],
+  assign:"two versions of one beat: robot and human.",
+  ready:"you can hear the difference between a velocity change, a timing nudge, and groove.",
+  fix:"got sloppy → [shift]+[record] undoes the last action, or rebuild from the clean grid. one clean beat beats one over-edited beat."},
+
+ {t:"Session 4 — Fills & turnarounds", warm:"play your human beat, then answer from memory: what must quantize be for nudging to work? (check with [bar] + [enc dark].)", story:{t:"Six seconds that built two genres, 1969", x:"in 1969 a Washington funk band called The Winstons recorded a b-side, Amen, Brother. drummer Gregory Coleman played a four-bar solo break — about six seconds of drums. sampled decades later, those six seconds became the most-sampled recording in history and the rhythmic dna of jungle and drum & bass. a fill is never filler: it is the moment drummers get remembered."}, challenge:"subtraction fill: make a fill by only removing things — no added hits allowed. drop the kick, drop half the hats, let one snare ring. notice it still reads as a fill.", remember:"a fill is a promise that step 1 is coming.", sub:"telling the listener the loop is about to restart",
+  goal:"a fill is a signpost in the last bar. learn the ratchet trick and the kick-drop trick.",
+  steps:[
+   {do:"copy your main beat to a new pattern ([arrange] → [M2], [M1], [M3]). edit the copy.",
+    why:"a fill is a <b>variation</b> of the groove, not a new groove."},
+   {do:"add one extra snare on step 14 or 16.",
+    why:"a single extra hit near the end already announces 'something is coming'.",
+    viz:seqGrid([{...KICK,ghost:[1,5,9,13]},{...SNARE,ghost:[5,13],steps:[14]}],16,"one extra snare late in the bar — that is already a fill.")},
+   {do:"<b>ratchet</b> with the multiply step component: hold [shift], press the snare's [step 16] (it blinks), press the 3rd natural [key A] — screen says multiply — then [acc 3]: divide into 3 trigs.",
+    why:"multiply chops one step into several fast hits: an instant drum roll with zero extra programming.",
+    listen:"brrap — a roll, not random noise.",
+    viz:seqGrid([{...SNARE,ghost:[5,13,14],steps:[16],txt:{16:"×3"}}],16,"step 16 plays three rapid snares. try ×2 and ×4 too — the screen names every value.")},
+   {do:"<b>kick drop</b>: remove the kick from step 13 in the fill pattern only.",
+    why:"silence right before the downbeat makes step 1 of the next loop land twice as hard.",
+    listen:"the restart should feel satisfying, like an exhale.",
+    viz:seqGrid([{...KICK,steps:[1,5,9],txt:{13:"✕"}}],16,"kick plays 1, 5, 9 — beat 13 is deliberately empty.")},
+   {do:"<b>parameter lock</b> one fill hit: hold the extra snare's step and turn an encoder ([M3] [enc dark] opens the filter, for instance).",
+    why:"one special-sounding hit marks the transition. resist changing every step.",
+    listen:"only that hit is brighter — the rest of the kit is untouched."}
+  ],
+  assign:"main beat + fill beat as two patterns. perform 8 bars: main ×3, fill ×1, repeat.",
+  ready:"your fill leads naturally back into the main groove.",
+  fix:"fill sounds amateurish → simplify. one extra snare + one missing kick usually beats a huge roll."},
+
+ {t:"Session 5 — Rhythm checkpoint", warm:"two-minute drill: build a brand-new fill on a copy of your beat without re-reading session 4. multiply component, one extra snare, kick drop — go.", story:{t:"One man and a drum machine on stage", x:"Detroit techno pioneer Jeff Mills performs live on a Roland TR-909 — building, muting and rebuilding patterns in front of thousands, no laptop, no safety net. what looks like knob-fiddling is actually arrangement at performance speed: intro, tension, release, ending. your 45-second checkpoint is the same discipline at bedroom scale."}, challenge:"plan-then-play: write your four moves on paper (which scene, when, which mute, how it ends). perform it twice — once reading the plan, once from memory.", remember:"contrast is the arrangement — what leaves matters as much as what enters.", sub:"a 45-second drums-only performance",
+  goal:"prove rhythm alone can be music: sections, contrast, a deliberate ending.",
+  steps:[
+   {do:"on track 1, prepare four patterns in [arrange]: <b>intro</b> (hats + snare only), <b>main</b>, <b>variation</b> (your human version), <b>fill</b>.",
+    why:"loops become sections the moment they have a reason to exist."},
+   {do:"make your first <b>scenes</b>: in [arrange], hold [shift] and press [acc 1] — scene 1. then [shift]+[acc 2] for scene 2: switching to an empty scene copies the current one, so just change which pattern plays. scenes remember pattern choice, mutes and levels.",
+    why:"scenes are how OP–XY thinks about song sections. you will live here from week 9 on — early contact pays off."},
+   {do:"perform: start on the intro scene → switch to main ([shift]+accidental) → 4 bars of variation → fill → back to main.",
+    why:"an arrangement is just decisions made in time.",
+    viz:energyViz([0.25,0.7,0.5,0.9,0.0],["intro","main","variation","fill+main","stop"],"a 45-second energy curve. low → high → dip → highest → silence.")},
+   {do:"end on purpose: fill, then [stop] exactly on the downbeat.",
+    why:"a clear ending is part of musicianship. do not just run out of ideas."}
+  ],
+  assign:"perform a 45-second drums-only piece twice. the second take counts.",
+  ready:"drums alone feel like a miniature arrangement.",
+  fix:"boring → do not add synths. sharpen the contrast: fewer hats in the intro, everything in the main, silence before the end."}
+]};
+renderWeek(WEEK, 3, 2);
+initPage();
+</script>
+</body>
+</html>

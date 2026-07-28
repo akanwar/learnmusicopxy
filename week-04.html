@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 4 — Harmony II — bass & chord rhythm · Learn Music with OP–XY</title>
+<meta name="description" content="Week 4 of a free, hands-on 12-week OP–XY beginner course: Harmony II — bass & chord rhythm.">
+<link rel="stylesheet" href="opxy.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">OP–XY <span>Beginner Course</span></div>
+    <div class="links">
+      <a href="index.html">Course HQ</a><a href="week-03.html">← Week 3</a><a href="week-05.html">Week 5 →</a><a href="cheatsheet.html">Cheat sheets</a>
+    </div>
+    <div id="progressWrap"><span id="progressTxt">0 / 26</span><div id="progressBar"><i></i></div></div>
+  </div>
+</nav>
+
+<div id="course"></div>
+
+<div class="wrap"><div class="accnote slim"><b>Accuracy note</b>— this guide was drafted with AI assistance and reviewed by a human, but it will contain mistakes. When this page and the device disagree, trust the device's screen and the official guide. Spotted an error? <a href="https://github.com/akanwar/learnmusicopxy/issues" target="_blank">Open an issue</a> — corrections are the point of hosting this publicly.</div></div>
+
+<div class="pager"><div class="wrap">
+  <a href="week-03.html">← Week 3 · Harmony I</a>
+  <a href="index.html">Course HQ</a>
+  <a href="week-05.html">Week 5 · Melody →</a>
+</div></div>
+
+<footer>
+  <div class="wrap"><div class="wrap">
+    <b>learnmusicopxy</b> — an independent, hands-on beginner course for the OP–XY. Drafted with AI assistance and reviewed by a human; verify against the official <a href="https://teenage.engineering/guides/op-xy" target="_blank">Teenage Engineering OP–XY guide</a> before relying on any button path. OP–XY is a product and trademark of Teenage Engineering; this project is not affiliated with or endorsed by them, and contains no Teenage Engineering imagery — every diagram is an original schematic. Content licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>, code MIT · <a href="https://github.com/akanwar/learnmusicopxy" target="_blank">source &amp; corrections on GitHub</a>.
+  </div>
+  </div>
+</footer>
+<script src="opxy.js"></script>
+<script>
+/* week data — edit here; shared behavior lives in opxy.js */
+const WEEK=
+{n:"Week 4", title:"Harmony II — bass & chord rhythm", quiz:[["which note does the bass play under each chord?","the root — the note the chord is named after."],["where do offbeat chord stabs go?","steps 3, 7, 11, 15 — exactly between the kicks."],["how do you mute a track while mixing?","in [mix], hold [shift] + the track button."]], goal:"the bass carries the harmony's weight; the kick and bass must share the floor. then chords learn to dance.",
+ sessions:[
+ {t:"Session 8 — Bass roots under the chords", warm:"enter C – G – Am – F from memory in under four minutes: scale set, four chords placed, extended. time yourself — speed is memory made physical.", story:{t:"The bassline recorded lying down, 1971", x:"Motown bassist James Jamerson played on more hits than the Beatles and the Stones combined, mostly uncredited. the night What's Going On was cut, Marvin Gaye pulled him from a club; too far gone to sit on a stool, Jamerson played the take lying flat on the studio floor — and still anchored every chord change perfectly. the lesson under the legend: the band can float anywhere as long as the bass states the root at the right moment."}, challenge:"root-and-fifth: after the root of each chord, add its fifth (count four naturals up: A→E, F→C, C→G, G→D) on an offbeat. instant bassline, zero wrong notes.", remember:"the bass plays the name of the chord.", sub:"track 3 · the foundation test",
+  goal:"make the bass follow the chord roots, then give it rhythm without fighting the kick.",
+  steps:[
+   {do:"press [instrument] → [track 3] (bass). press [-] once or twice so the keys sit low. set its scale to 4 as well: hold [bar] + [acc 4].",
+    why:"for version 1 the bass moves exactly with the chords — easiest possible alignment."},
+   {do:"for Am – F – C – G: place single notes A, F, C, G on steps 1, 5, 9, 13.",
+    why:"the bass plays each chord's <b>root</b> — the note the chord is named after. harmony instantly feels grounded.",
+    listen:"the chords suddenly sound twice as big.",
+    viz:seqGrid([{label:"bass roots",key:"one low note",steps:[1,5,9,13],txt:{1:"A",5:"F",9:"C",13:"G"}}],16,"roots line up with the chord changes — same steps, same bars.")},
+   {do:"shorten the notes: hold [bar] and turn [enc mid] (note length) down.",
+    why:"short bass notes leave a hole for the kick to punch through. long bass + kick = mud.",
+    listen:"kick stays audible on every hit."},
+   {do:"<b>pulse it</b>: hold [shift], press a bass step, press [key A] (multiply), then [acc 2] or [acc 4].",
+    why:"the ratchet trick from drums works on bass too — instant eighth-note pulse without re-sequencing.",
+    listen:"the bass starts driving instead of sitting."},
+   {do:"<b>foundation test</b>: in [mix], hold [shift] + [track 7] to mute the chords. listen to drums + bass alone, then unmute.",
+    why:"if drums + bass do not groove by themselves, no amount of decoration will save the track."}
+  ],
+  assign:"three bass versions: one-note-per-bar · pulsing · one with a multiply ratchet on the last bar.",
+  ready:"bass follows the harmony without clashing with the drums.",
+  fix:"low end is messy → shorter notes and lower bass level before you blame the sound."},
+
+ {t:"Session 9 — Chord stabs", warm:"place the four roots from memory, then answer: why do bass notes need to be short? say it, then test it by lengthening one.", story:{t:"The preset that owned the 90s", x:"when the Korg M1 workstation appeared in 1988, two of its presets — a bright piano and a breathy organ bass — got sequenced into offbeat stabs by house producers and never left: Robin S's Show Me Love runs almost entirely on that organ. a preset is not cheating; a preset played with better rhythm than everyone else is a career. your pluck on track 4 is today's M1."}, challenge:"ghost stabs: between two loud stabs, add one extra stab forced very quiet with the velocity component ([acc 2] or [acc 3]). barely-there notes are what make grooves feel expensive.", remember:"chords have rhythm — offbeats make the floor bounce.", sub:"harmony as rhythm on the pluck track",
+  goal:"turn the same progression into rhythmic offbeat stabs — the bounce of dance music.",
+  steps:[
+   {do:"press [instrument] → [track 4] (pluck). leave it at normal scale (1).",
+    why:"stabs are fast events; they live on the fast grid."},
+   {do:"hold the A-minor chord (A + C + E) and press steps 3, 7, 11, 15.",
+    why:"offbeat chords — exactly between the kicks — create bounce. ska, house and garage all live here.",
+    listen:"the track starts skipping.",
+    viz:seqGrid([{...KICK,ghost:[1,5,9,13]},{label:"stabs",key:"hold A·C·E",steps:[3,7,11,15]}],16,"stabs land exactly between the kicks. change the held chord each bar to follow the progression.")},
+   {do:"make it stab: [M2], fast attack, low sustain, short release.",
+    why:"the envelope is what makes it a stab rather than a wash.",
+    viz:adsr(0.04,0.3,0.15,0.18,"stab","fast in · fast out")},
+   {do:"<b>parameter lock</b> one stab: press [M3], hold one stab step and turn [enc dark] (cutoff) brighter.",
+    why:"one accented stab per bar prevents machine-repetition.",
+    listen:"only that hit pops."},
+   {do:"compare three textures: pad chords only (track 7) · stabs only (track 4) · both.",
+    why:"same harmony, different energy — that is an arrangement decision, and you just learned to make it."}
+  ],
+  assign:"pad version and stab version of the same progression, on separate tracks.",
+  ready:"you can explain how a chord can have rhythm, not just pitch.",
+  fix:"stabs feel harsh → close the cutoff a little ([M3] [enc dark]) or lower the track level."},
+
+ {t:"Session 10 — Harmony checkpoint", warm:"quick-fire, out loud: which encoder is level in mix M1? which is pan, and what does clicking it do? then verify on the device.", story:{t:"A bedroom in Paris, 1993–1996", x:"Daft Punk's Homework — including Around the World — was recorded in Thomas Bangalter's bedroom on a small pile of gear. they later said the limitation was the aesthetic: few machines, fully learned. you currently have more instruments under your fingers than that bedroom held. three tracks, well balanced, is not a compromise; it is the classic recipe."}, challenge:"reference listen: play your sketch, then thirty seconds of a favorite track at matched, low volume. write one difference in your notes — just one. that habit is called referencing and professionals never stop doing it.", remember:"balance in order: drums, then bass, then everything else.", sub:"a one-minute sketch with no melody",
+  goal:"drums + bass + chords, arranged into intro / groove / full, balanced by ear.",
+  steps:[
+   {do:"build three scenes in [arrange]: scene 1 drums + bass · scene 2 + stabs · scene 3 + pad chords. ([shift]+accidental to create; remember empty scenes copy the current one.)",
+    viz:scenesViz(
+      [{name:"1 intro",on:[0,1]},{name:"2 groove",on:[0,1,2]},{name:"3 full",on:[0,1,2,3]}],
+      ["1 drums","3 bass","4 stabs","7 chords"],"each scene adds one layer. subtraction will come later — addition first."),
+    why:"three scenes are enough for a real piece of music."},
+   {do:"balance in [mix] [M1]: select each track, set level with [enc white] — drums first, then bass, then chords last.",
+    why:"balance in order of importance. chords must never bury the kick or bass."},
+   {do:"keep kick and bass centered; pan the stabs slightly with [enc light] (click it to re-center).",
+    why:"the middle of the stereo field is where the power lives."},
+   {do:"perform one minute through the three scenes, then end deliberately.",
+    why:"a sketch with a beginning, middle and end — you are now arranging."}
+  ],
+  assign:"the one-minute harmony sketch, performed twice.",
+  ready:"a coherent groove exists with no melody at all.",
+  fix:"boring → vary mutes and chord rhythm before reaching for new instruments."}
+]};
+renderWeek(WEEK, 8, 4);
+initPage();
+</script>
+</body>
+</html>

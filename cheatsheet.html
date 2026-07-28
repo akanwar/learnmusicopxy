@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cheat sheets · Learn Music with OP–XY</title>
+<meta name="description" content="Button paths, encoder legend, step components and the seven rules — the printable quick reference for the OP–XY beginner course.">
+<link rel="stylesheet" href="opxy.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">OP–XY <span>Beginner Course</span></div>
+    <div class="links">
+      <a href="index.html">Course HQ</a><a href="week-12.html">Week 12</a>
+    </div>
+    <div id="progressWrap"><span id="progressTxt">0 / 26</span><div id="progressBar"><i></i></div></div>
+  </div>
+</nav>
+
+<section class="block" id="cheats">
+  <div class="wrap">
+    <div class="kicker">99 — Keep nearby</div>
+    <h2>cheat sheets</h2>
+
+    <h3 style="margin:26px 0 12px">button paths you will use constantly</h3>
+    <div class="cheat" id="cheatpaths"></div>
+
+    <h3 style="margin:34px 0 12px">the four encoders</h3>
+    <p class="lede" style="margin-bottom:14px">OP–XY never labels knobs on the hardware — the screen shows what each one does, always in this color order, left to right:</p>
+    <div id="encleg"></div>
+
+    <h3 style="margin:34px 0 12px">step components — the 14 natural keys</h3>
+    <p class="lede" style="margin-bottom:14px">hold <span class="k">shift</span> + press a lit step, then press a <b>natural key</b> to add that component. while still holding <span class="k">shift</span>, the <b>accidental keys 1–0</b> set its value (the screen names everything as you press).</p>
+    <div class="viz" id="sckb"></div>
+    <table class="t" style="margin-top:16px" id="sctable"></table>
+
+    <h3 style="margin:34px 0 12px">seven rules that prevent 80% of bad results</h3>
+    <ol class="rules" id="rules"></ol>
+
+    <h3 style="margin:34px 0 12px">official guide chapters</h3>
+    <p style="font-size:13.5px" id="chapters"></p>
+  </div>
+</section>
+
+<div class="wrap"><div class="accnote slim"><b>Accuracy note</b>— this guide was drafted with AI assistance and reviewed by a human, but it will contain mistakes. When this page and the device disagree, trust the device's screen and the official guide. Spotted an error? <a href="https://github.com/akanwar/learnmusicopxy/issues" target="_blank">Open an issue</a> — corrections are the point of hosting this publicly.</div></div>
+
+<footer>
+  <div class="wrap"><div class="wrap">
+    <b>learnmusicopxy</b> — an independent, hands-on beginner course for the OP–XY. Drafted with AI assistance and reviewed by a human; verify against the official <a href="https://teenage.engineering/guides/op-xy" target="_blank">Teenage Engineering OP–XY guide</a> before relying on any button path. OP–XY is a product and trademark of Teenage Engineering; this project is not affiliated with or endorsed by them, and contains no Teenage Engineering imagery — every diagram is an original schematic. Content licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>, code MIT · <a href="https://github.com/akanwar/learnmusicopxy" target="_blank">source &amp; corrections on GitHub</a>.
+  </div>
+  </div>
+</footer>
+<script src="opxy.js"></script>
+<script>
+const PATHS=[
+ ["[projects] then hold [M1]","create a new project"],
+ ["[instrument] → [track 1]…[track 8]","select a track (lit red = selected)"],
+ ["[shift] + [M1]","change the engine on this track"],
+ ["[shift] + track button","browse / change this track's preset"],
+ ["play a note, then press a step","place that note on the step"],
+ ["hold several notes + press a step","place a chord"],
+ ["hold a step + press a later step","extend the note / chord"],
+ ["hold a step + turn any encoder","parameter lock just that step"],
+ ["hold a sound key + tap [record]","view & edit only that sound's steps"],
+ ["hold [record] + press [play]","live record (press [play] again first for a count-in)"],
+ ["hold [record] while stopped","step record, note by note"],
+ ["hold [record] + [stop] until red fills","clear the whole track"],
+ ["[shift] + [record]","undo (one step)"],
+ ["hold [bar] + [+] / [-]","add / remove bars (max 4)"],
+ ["hold [bar] + [shift] + [+]","duplicate the current bar"],
+ ["hold [bar] + an accidental","track scale (how long one step lasts)"],
+ ["hold [bar] + encoders","quantize · note length · groove · automation smoothing"],
+ ["hold [bar] + [M1] / [M2] / [M4]","clear notes / clear p-locks / clear everything"],
+ ["hold a step + [-] / [+]","nudge off the grid (quantize must be under 100)"],
+ ["[shift] + [-] / [+]","transpose the whole sequence by an octave"],
+ ["[arrange]: [M1] / [M2] / [M3] / [M4]","new / copy / paste / clear pattern"],
+ ["[arrange]: turn [enc white] · click it","switch patterns · mute track"],
+ ["[arrange]: [shift] + accidental","select scene (empty scene = clone of current)"],
+ ["[arrange]: [shift], tap [play], then accidental","queue the scene change in time"],
+ ["[arrange]: hold [shift] + press [arrange]","song mode — enter scenes like a phone number"],
+ ["[mix] [M1]: encoders","FX I send · FX II send · pan (click = center) · level"],
+ ["[mix]: [shift] + track button","mute / unmute (hold track buttons = solo)"],
+ ["[auxiliary] → [track 2]","punch-in FX™ — hold keys while playing"],
+ ["[auxiliary] → [track 7] / [track 8]","choose what FX I / FX II are ([shift]+[M1])"],
+ ["[sample], then hold [record]","record a sample, max 20 s"]
+];
+$("#cheatpaths").innerHTML=PATHS.map(([c,w])=>`<div class="row"><span class="combo">${chips(c)}</span><span class="what">${w}</span></div>`).join("");
+
+$("#encleg").innerHTML=`<div style="display:flex;gap:26px;flex-wrap:wrap;font-size:13px">
+  <span><span class="enc dark"></span> dark gray — first parameter</span>
+  <span><span class="enc mid"></span> mid gray — second</span>
+  <span><span class="enc light"></span> light gray — third</span>
+  <span><span class="enc white"></span> white — fourth (often level / the big one)</span>
+</div>
+<p style="font-size:13px;color:var(--mid);margin-top:10px">examples — [M2] envelopes: attack · decay · sustain · release&nbsp;&nbsp;·&nbsp;&nbsp;[M3] filter: cutoff · resonance · env amount · key tracking&nbsp;&nbsp;·&nbsp;&nbsp;[mix] [M1]: FX I · FX II · pan · level</p>`;
+
+const SC=[
+ ["F","pulse","repeat the step several times in place","[acc 3] = 3 repeats"],
+ ["G","hold","hold the step for several steps","[acc 2] = hold 2"],
+ ["A","multiply","chop one step into fast trigs — the ratchet","[acc 3] = roll of 3"],
+ ["B","velocity","force this step's loudness","[acc 7] = loud · [acc 3] = ghost"],
+ ["C","ramp up","note climbs the scale each repeat","[acc 3] = 4-step climb"],
+ ["D","ramp down","note descends each repeat","—"],
+ ["E","random","randomize the note within the scale","[acc 1] = small range"],
+ ["F (2nd)","portamento","glide into and out of this step","[acc 5] = 50%"],
+ ["G (2nd)","bend","pitch-bend shapes on the step","try each accidental"],
+ ["A (2nd)","tonality","transpose this step by an interval","[acc 3] = octave up"],
+ ["B (2nd)","jump","sequencer jumps to a chosen step","[acc 0] = random step"],
+ ["C (2nd)","skip p-lock","p-lock plays only every nth pass","[acc 2] = every 2nd"],
+ ["D (2nd)","skip component","component plays only every nth pass","—"],
+ ["E (2nd)","skip trig","note plays only every nth pass","[acc 4] = every 4th"]
+];
+$("#sckb").innerHTML=kbSVG({plain:true,hl:{"F1":"pulse","G1":"hold","A1":"mult","B1":"vel","C1":"ramp↑","D1":"ramp↓","E1":"rnd","F2":"port","G2":"bend","A2":"tone","B2":"jump","C2":"skipP","D2":"skipC","E2":"skipT"},caption:"hold [shift] + a lit step, then one of these natural keys. the screen names everything — trust the screen over memory."});
+$("#sctable").innerHTML=`<tr><th>natural key</th><th>component</th><th>what it does</th><th>good first value</th></tr>`+
+ SC.map(([k,n,d,v])=>`<tr><td><span class="k kw">${k}</span></td><td><b>${n}</b></td><td>${d}</td><td>${chips(v)}</td></tr>`).join("");
+
+$("#rules").innerHTML=[
+ "do not add a new track to fix a boring loop. improve rhythm, mutes or section contrast first.",
+ "keep kick and bass centered and nearly dry.",
+ "one memorable melody idea, repeated and varied, beats five forgettable ones.",
+ "copy the pattern before any risky edit. [shift]+[record] only undoes one step.",
+ "effects are dessert, not dinner.",
+ "when a sound is bad, ask in order: wrong note? wrong rhythm? wrong envelope? filter too bright? level too loud?",
+ "finish sketches. a finished mediocre track teaches more than twenty promising loops."
+].map(r=>`<li>${chips(r)}</li>`).join("");
+
+const CH=[["layout","layout"],["get started","get-started"],["sequencer","sequencer"],["step components","step-components"],["instrument","instrument"],["arrange","arrange"],["mix","mix"],["sample","sample"],["workflow","workflow"],["synth engines","synth-engines"],["fx","fx"],["how to","how-to"]];
+$("#chapters").innerHTML=CH.map(([t,u])=>`<a href="https://teenage.engineering/guides/op-xy/${u}" target="_blank">${t}</a>`).join(" · ");
+initPage();
+</script>
+</body>
+</html>

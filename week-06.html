@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 6 — First sketch — 90 seconds of music · Learn Music with OP–XY</title>
+<meta name="description" content="Week 6 of a free, hands-on 12-week OP–XY beginner course: First sketch — 90 seconds of music.">
+<link rel="stylesheet" href="opxy.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">OP–XY <span>Beginner Course</span></div>
+    <div class="links">
+      <a href="index.html">Course HQ</a><a href="week-05.html">← Week 5</a><a href="week-07.html">Week 7 →</a><a href="cheatsheet.html">Cheat sheets</a>
+    </div>
+    <div id="progressWrap"><span id="progressTxt">0 / 26</span><div id="progressBar"><i></i></div></div>
+  </div>
+</nav>
+
+<div id="course"></div>
+
+<div class="wrap"><div class="accnote slim"><b>Accuracy note</b>— this guide was drafted with AI assistance and reviewed by a human, but it will contain mistakes. When this page and the device disagree, trust the device's screen and the official guide. Spotted an error? <a href="https://github.com/akanwar/learnmusicopxy/issues" target="_blank">Open an issue</a> — corrections are the point of hosting this publicly.</div></div>
+
+<div class="pager"><div class="wrap">
+  <a href="week-05.html">← Week 5 · Melody</a>
+  <a href="index.html">Course HQ</a>
+  <a href="week-07.html">Week 7 · Synthesis I →</a>
+</div></div>
+
+<footer>
+  <div class="wrap"><div class="wrap">
+    <b>learnmusicopxy</b> — an independent, hands-on beginner course for the OP–XY. Drafted with AI assistance and reviewed by a human; verify against the official <a href="https://teenage.engineering/guides/op-xy" target="_blank">Teenage Engineering OP–XY guide</a> before relying on any button path. OP–XY is a product and trademark of Teenage Engineering; this project is not affiliated with or endorsed by them, and contains no Teenage Engineering imagery — every diagram is an original schematic. Content licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>, code MIT · <a href="https://github.com/akanwar/learnmusicopxy" target="_blank">source &amp; corrections on GitHub</a>.
+  </div>
+  </div>
+</footer>
+<script src="opxy.js"></script>
+<script>
+/* week data — edit here; shared behavior lives in opxy.js */
+const WEEK=
+{n:"Week 6", title:"First sketch — 90 seconds of music", quiz:[["what is the first move when a track feels flat?","subtract — make sections more different. do not add notes."],["why set rough levels before judging the composition?","bad balance makes good ideas sound bad — mix a little before you criticize yourself."]], goal:"everything so far becomes one piece. the skill being trained this week is not creativity — it is finishing.",
+ sessions:[
+ {t:"Session 13 — The 90-second sketch", warm:"name, out loud, your best pattern on each of tracks 1, 3, 4, 5 and 7 — before opening the device. commit to the list.", story:{t:"The demo that shipped, 1982", x:"Bruce Springsteen recorded the Nebraska songs alone on a 4-track cassette machine as demos for the band. the full-band versions never beat the kitchen-table tape, so the demo itself was released — and became a classic. finished and honest beats polished and postponed. your 90 seconds does not need to be good; it needs to be done."}, challenge:"radical subtraction: clone your scene set and delete half of everything — half the tracks in the intro, half the hats, half the melody notes. play both versions. the thin one usually wins somewhere; steal that somewhere.", remember:"arrangement is subtraction.", sub:"select, arrange, perform, done",
+  goal:"combine your best drums, bass, chords and melody into a sketch with sections and an ending.",
+  steps:[
+   {do:"choose your best pattern on each of tracks 1, 3, 4/7, 5. resist using everything you own.",
+    why:"<b>select, don't accumulate.</b> four good tracks beat eight weak ones."},
+   {do:"build four scenes: <b>intro</b> (no melody) → <b>main</b> (everything) → <b>breakdown</b> (no drums) → <b>return</b> (everything).",
+    why:"arrangement begins with subtraction. the melody matters more when it left and came back.",
+    viz:scenesViz(
+     [{name:"intro",on:[0,1,3]},{name:"main",on:[0,1,2,3,4]},{name:"breakdown",on:[2,3,4]},{name:"return",on:[0,1,2,3,4]}],
+     ["1 drums","3 bass","4 stabs","7 chords","5 melody"])},
+   {do:"add <b>one</b> transition: the week-2 fill, a bar of silence, or a filter sweep (hold [record] while playing and turn [M3] [enc dark]; smooth it after with [bar] + [enc white]).",
+    why:"one good transition connects sections. three mediocre ones distract.",
+    listen:"the listener should sense the next section coming."},
+   {do:"rough levels in [mix] [M1] before judging your composition.",
+    why:"bad balance makes good ideas sound bad. always mix a little before you criticize yourself."},
+   {do:"perform the full 90 seconds, top to bottom, twice. no stopping to fix things mid-take.",
+    why:"finishing is a muscle. this is its first real rep.",
+    viz:energyViz([0.3,0.8,0.35,0.9,0.0],["intro","main","breakdown","return","end"])}
+  ],
+  assign:"the first musical sketch — 90 seconds, with a name.",
+  ready:"a recognizable musical idea exists, with sections and an ending.",
+  fix:"doesn't feel like a song → make the sections more different from each other. do not add notes."}
+]};
+renderWeek(WEEK, 13, 6);
+initPage();
+</script>
+</body>
+</html>

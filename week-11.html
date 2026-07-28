@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 11 — Mixing — clarity before character · Learn Music with OP–XY</title>
+<meta name="description" content="Week 11 of a free, hands-on 12-week OP–XY beginner course: Mixing — clarity before character.">
+<link rel="stylesheet" href="opxy.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">OP–XY <span>Beginner Course</span></div>
+    <div class="links">
+      <a href="index.html">Course HQ</a><a href="week-10.html">← Week 10</a><a href="week-12.html">Week 12 →</a><a href="cheatsheet.html">Cheat sheets</a>
+    </div>
+    <div id="progressWrap"><span id="progressTxt">0 / 26</span><div id="progressBar"><i></i></div></div>
+  </div>
+</nav>
+
+<div id="course"></div>
+
+<div class="wrap"><div class="accnote slim"><b>Accuracy note</b>— this guide was drafted with AI assistance and reviewed by a human, but it will contain mistakes. When this page and the device disagree, trust the device's screen and the official guide. Spotted an error? <a href="https://github.com/akanwar/learnmusicopxy/issues" target="_blank">Open an issue</a> — corrections are the point of hosting this publicly.</div></div>
+
+<div class="pager"><div class="wrap">
+  <a href="week-10.html">← Week 10 · Arrangement II</a>
+  <a href="index.html">Course HQ</a>
+  <a href="week-12.html">Week 12 · Final project →</a>
+</div></div>
+
+<footer>
+  <div class="wrap"><div class="wrap">
+    <b>learnmusicopxy</b> — an independent, hands-on beginner course for the OP–XY. Drafted with AI assistance and reviewed by a human; verify against the official <a href="https://teenage.engineering/guides/op-xy" target="_blank">Teenage Engineering OP–XY guide</a> before relying on any button path. OP–XY is a product and trademark of Teenage Engineering; this project is not affiliated with or endorsed by them, and contains no Teenage Engineering imagery — every diagram is an original schematic. Content licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>, code MIT · <a href="https://github.com/akanwar/learnmusicopxy" target="_blank">source &amp; corrections on GitHub</a>.
+  </div>
+  </div>
+</footer>
+<script src="opxy.js"></script>
+<script>
+/* week data — edit here; shared behavior lives in opxy.js */
+const WEEK=
+{n:"Week 11", title:"Mixing — clarity before character", quiz:[["map the four encoders in mix M1.","dark = FX I send, mid = FX II send, light = pan (click to center), white = level."],["which tracks stay nearly dry and centered?","kick and bass — reverb on low end is instant mud."],["a part is inaudible. first move?","lower its competitors. raising everything is how mixes die."]], goal:"mixing makes every important element audible. the order of operations is the whole secret: levels, then pan, then sends, then master.",
+ sessions:[
+ {t:"Session 23 — Levels first", warm:"quick recall: the punch-in FX live on which mode and track? go there and hold two keys to confirm.", story:{t:"Why studios keep terrible speakers", x:"professional control rooms famously mix on small, unflattering speakers — Auratones, Yamaha NS-10s — and then run the car test: if the mix survives a car stereo, it survives anywhere. the principle is that a mix must be balanced, not flattered. your OP–XY speaker and a cheap earbud are honest judges; if the kick and melody read there, you mixed it right."}, challenge:"the next-room test: play your track and walk into the next room. can you still hear the kick, the bass movement, the melody? whatever vanished first is your quietest priority — fix it with levels only.", remember:"if muting a track improves the song, the mix just told you something.", sub:"mix mode M1 · the volume-only mix",
+  goal:"balance the whole song using nothing but the white encoder.",
+  steps:[
+   {do:"press [mix] → [M1]. choose tracks with the track buttons; [enc white] is that track's level.",
+    why:"in mix mode you stop being a composer. you are now the engineer."},
+   {do:"set levels in this order: drums → bass → chords → melody → textures.",
+    why:"foundation first. everything else is balanced <b>against</b> the drums and bass.",
+    viz:mixerViz([{l:"drums",v:.9,c:ORANGE},{l:"bass",v:.8,c:ORANGE},{l:"chords",v:.55},{l:"Melody",v:.65},{l:"texture",v:.35}],"a healthy starting shape: rhythm section tallest, decoration shortest.")},
+   {do:"the earn-your-place test: mute each track ([shift]+track). if the song improves, that part gets quieter — or deleted.",
+    why:"arrangement and mixing overlap. the mute button is the most honest critic you own."},
+   {do:"check on headphones at moderate volume.",
+    why:"loud always sounds 'better' — it is a lie your ears tell you. judge quietly."}
+  ],
+  assign:"mix v1 — volume only. no effects were touched.",
+  ready:"every important element is audible with levels alone.",
+  fix:"can't hear something → lower its competitors. raising everything is how mixes die."},
+
+ {t:"Session 24 — Pan & sends", warm:"from memory: mix M1's four encoders, in color order. say all four, then check. (you will use them for the rest of your life.)", story:{t:"Singing into the stairwell, 1931 onward", x:"before digital reverb, studios built echo chambers — Abbey Road piped vocals into tiled rooms and recorded the reflections; Capitol buried concrete chambers under its Hollywood parking lot. early stereo was equally physical: sixties Beatles mixes shoved all drums into one ear because the console had few options. sends are the modern chamber: everyone shares one room, and that shared room is what glues a mix. pan is you deciding where each musician stands."}, challenge:"one-instrument reverb: send only the snare generously to FX I and keep everything else nearly dry — the classic trick for depth without wash. how far can you push the snare before the mix blurs?", remember:"dry center, wet edges.", sub:"width and depth, in moderation",
+  goal:"add stereo width and shared reverb/delay without washing the track out.",
+  steps:[
+   {do:"pan with [enc light] (click to re-center): kick and bass stay dead center, hats and stabs nudge slightly off, pads can spread wider.",
+    why:"the center carries the power; the sides carry the decoration.",
+    viz:mixerViz([{l:"kick/bass",v:.85,c:ORANGE,pan:0},{l:"hats",v:.5,pan:.5},{l:"stabs",v:.55,pan:-.5},{l:"pad",v:.45,pan:.8},{l:"lead",v:.65,pan:-.2}],"dots above each fader = pan position. heavy stuff stays in the middle.")},
+   {do:"choose your two shared effects: press [auxiliary] → [track 7] is FX I, [track 8] is FX II. [shift]+[M1] picks the effect: reverb, delay, chorus, phaser, lofi, distortion. classic setup: FX I reverb · FX II delay.",
+    why:"sends are <b>shared</b> effects — every track can feed a little signal into the same reverb. that shared space glues a mix."},
+   {do:"back in [mix] [M1]: [enc dark] sends to FX I, [enc mid] to FX II. start subtle. keep both near zero on kick and bass.",
+    why:"reverb on low end is instant mud. dry low end keeps punch.",
+    listen:"the song should sound like it happens in one room — not in a cave."},
+   {do:"gentle mastering, optional: [M2] master EQ (low / mid / high, white = blend) · [M3] saturator · [M4] master — group levels and a touch of compressor.",
+    why:"tiny moves. the master bus multiplies everything, including mistakes."},
+   {do:"a/b a dry version against your wet version. choose the clearer one.",
+    why:"effect addiction is real and this is the vaccine."}
+  ],
+  assign:"mix v2 — pan plus tasteful sends.",
+  ready:"the mix is wider and deeper but every element is still clear.",
+  fix:"sounds distant or washy → halve both send levels. yes, halve."}
+]};
+renderWeek(WEEK, 23, 11);
+initPage();
+</script>
+</body>
+</html>

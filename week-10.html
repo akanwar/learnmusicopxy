@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 10 — Arrangement II — song mode & performing · Learn Music with OP–XY</title>
+<meta name="description" content="Week 10 of a free, hands-on 12-week OP–XY beginner course: Arrangement II — song mode & performing.">
+<link rel="stylesheet" href="opxy.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">OP–XY <span>Beginner Course</span></div>
+    <div class="links">
+      <a href="index.html">Course HQ</a><a href="week-09.html">← Week 9</a><a href="week-11.html">Week 11 →</a><a href="cheatsheet.html">Cheat sheets</a>
+    </div>
+    <div id="progressWrap"><span id="progressTxt">0 / 26</span><div id="progressBar"><i></i></div></div>
+  </div>
+</nav>
+
+<div id="course"></div>
+
+<div class="wrap"><div class="accnote slim"><b>Accuracy note</b>— this guide was drafted with AI assistance and reviewed by a human, but it will contain mistakes. When this page and the device disagree, trust the device's screen and the official guide. Spotted an error? <a href="https://github.com/akanwar/learnmusicopxy/issues" target="_blank">Open an issue</a> — corrections are the point of hosting this publicly.</div></div>
+
+<div class="pager"><div class="wrap">
+  <a href="week-09.html">← Week 9 · Arrangement I</a>
+  <a href="index.html">Course HQ</a>
+  <a href="week-11.html">Week 11 · Mixing →</a>
+</div></div>
+
+<footer>
+  <div class="wrap"><div class="wrap">
+    <b>learnmusicopxy</b> — an independent, hands-on beginner course for the OP–XY. Drafted with AI assistance and reviewed by a human; verify against the official <a href="https://teenage.engineering/guides/op-xy" target="_blank">Teenage Engineering OP–XY guide</a> before relying on any button path. OP–XY is a product and trademark of Teenage Engineering; this project is not affiliated with or endorsed by them, and contains no Teenage Engineering imagery — every diagram is an original schematic. Content licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>, code MIT · <a href="https://github.com/akanwar/learnmusicopxy" target="_blank">source &amp; corrections on GitHub</a>.
+  </div>
+  </div>
+</footer>
+<script src="opxy.js"></script>
+<script>
+/* week data — edit here; shared behavior lives in opxy.js */
+const WEEK=
+{n:"Week 10", title:"Arrangement II — song mode & performing", quiz:[["how do you enter song mode?","in [arrange], hold [shift] and press [arrange] again."],["where do punch-in FX live?","[auxiliary] → [track 2] — hold keyboard keys while the music plays."],["why does dance music phrase in 8s, 16s and 32s?","DJs need predictable joints to mix across — structure is a courtesy to the mixer."]], goal:"chain the scenes into an actual song that plays start to finish, then learn to perform on top of it without losing the plot.",
+ sessions:[
+ {t:"Session 21 — Song mode", warm:"perform your four transition tools once each, from memory: fill, drop-out, filter rise, queued switch. under five minutes.", story:{t:"The best-selling 12-inch of all time, 1983", x:"New Order's Blue Monday was arranged almost entirely on sequencers and a drum machine — famously even its mistakes were kept, like the kick pattern entering off. it became the best-selling 12-inch single in history, and its sleeve was so expensive to print the band initially lost money per copy. structure note for tonight: dance music phrases in 8s, 16s and 32s because DJs need predictable joints to mix across. count your scenes in those blocks."}, challenge:"structure theft: map a favorite song's sections with timestamps (intro 0:00, groove 0:15, …) and rebuild that exact map from your own scenes in song mode. composers have stolen forms forever; only the notes are yours to invent.", remember:"repeat a section only when something new pays for it.", sub:"scenes in order, like dialing a phone number",
+  goal:"build a 2-minute rough song that plays itself.",
+  steps:[
+   {do:"in [arrange], hold [shift] and press [arrange] — song mode.",
+    why:"song mode is where scenes get sequenced into a timeline."},
+   {do:"hold [shift] and press accidentals to enter your scene order — the official guide says it best: 'like entering a phone number'. e.g. 1 · 2 · 3 · 3 · 4 · 3 · 1.",
+    why:"a whole song structure in seven key presses.",
+    viz:energyViz([0.25,0.55,0.95,0.9,0.35,0.95,0.2],["intro","groove","main","main 2","break","return","outro"])},
+   {do:"housekeeping: [enc dark] toggles song looping · [shift]+[M2]/[M3] step through the song to insert scenes · [shift]+[M4] deletes a scene from the song (the scene itself survives).",
+    why:"editing the order is cheap — try three different structures in ten minutes."},
+   {do:"repeat the main scene only if something changes the second time — an added layer, an opened filter.",
+    why:"the listener forgives repetition only when it pays new information."},
+   {do:"write the final order on paper, then play the whole song once without touching anything.",
+    why:"paper stops endless fiddling. the full pass exposes which section is weakest — fix that one."}
+  ],
+  assign:"a 2-minute rough song in song mode. structure on paper.",
+  ready:"there is a beginning, development, contrast, return and ending.",
+  fix:"feels long → shorten sections. feels abrupt → add one transition, not three."},
+
+ {t:"Session 22 — Performing on top", warm:"play your song top to bottom hands-off. while it runs, name each scene aloud before it arrives. wrong guesses = re-listen.", story:{t:"The mixing desk becomes an instrument, 1970s Kingston", x:"King Tubby, a Jamaican electronics engineer, started performing the mixing console itself: yanking the vocals out, drenching a snare in spring reverb, dropping everything but bass — live, as dub versions. every mute-button performance and punch-in effect since is Tubby's move. tonight the desk is yours: mutes, one filter, and punch-in FX, played like an instrument."}, challenge:"one-take video: film one full performance on your phone and watch it once. cringe is information — you will instantly see which moves read and which fidget. keep three, cut the rest.", remember:"one mute and one sweep, done cleanly, beat ten frantic moves.", sub:"mutes, sweeps and punch-in FX™",
+  goal:"interact with the running song like an instrument — structure underneath, hands on top.",
+  steps:[
+   {do:"start the song. in [mix], mute and unmute single tracks with [shift] + track button. solo by holding one or more track buttons.",
+    why:"muting is the performance move: cheap, reversible, dramatic. (shortcut from anywhere: hold [instrument] + a track button.)"},
+   {do:"ride one filter during a build: [M3] [enc dark] on the pad or stabs.",
+    why:"one hand, one knob, smooth — not frantic."},
+   {do:"<b>punch-in FX™</b>: press [auxiliary] → [track 2]. while the song plays, hold keyboard keys — each is a momentary effect, and they combine.",
+    why:"these are performance effects: they only happen while held, so you cannot wreck the project.",
+    listen:"stutters, sweeps, chaos — released the instant you let go."},
+   {do:"record a full performance pass (even just on your phone) and note your three best moves.",
+    why:"performance ideas are discovered live and kept deliberately. repeat what worked."}
+  ],
+  assign:"perform the 2-minute arrangement twice; mark the better take and why.",
+  ready:"you can touch the music while it plays without losing the form.",
+  fix:"got lost → reduce the act to one mute and one filter sweep. mastery is doing less, cleanly."}
+]};
+renderWeek(WEEK, 21, 10);
+initPage();
+</script>
+</body>
+</html>
