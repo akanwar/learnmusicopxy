@@ -234,3 +234,13 @@ footer a{color:var(--mid)}
 .pager a:hover{border-color:var(--orange)}
 .accnote.slim{max-width:none; margin:0 0 8px}
 @media print{.pager{display:none}}
+
+/* ---------- hear-it demo buttons ---------- */
+.hearrow{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:12px 0 2px}
+.hearit{font:inherit; font-size:12.5px; font-weight:700; color:var(--ink); background:#fff;
+  border:1px solid var(--line); border-radius:999px; padding:7px 14px; cursor:pointer}
+.hearit:hover{border-color:var(--orange)}
+.hearit.playing{background:var(--orange); border-color:var(--orange); color:#fff}
+.hearit:disabled{opacity:.5; cursor:default}
+.hearnote{font-size:11.5px; color:var(--mid)}
+@media print{.hearrow{display:none}}

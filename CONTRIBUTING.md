@@ -9,7 +9,10 @@ an OP–XY.
    (`week-00.html` … `week-12.html`, plus `index.html` and `cheatsheet.html`); shared styling is
    `opxy.css` and shared behavior `opxy.js`. Still no build step.
 2. **Test locally** by opening the page in your browser: no console errors, progress checkboxes
-   still work, and print-preview still looks right if you touched layout.
+   still work, and print-preview still looks right if you touched layout. If you touched the
+   audio demos in `opxy.js`, also run `node test/clips.test.js` — it screens every clip for
+   clicks, thumps and broken renders, and it exists because those bugs are easy to ship and
+   hard to spot in code review.
 3. **Open a pull request** that says *what* you changed and *why* — a link to the relevant chapter
    of the official OP–XY guide, or a photo/video of the device doing the thing, is gold.
 

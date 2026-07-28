@@ -10,7 +10,9 @@ press shown exactly as it appears on the device.
 This is a self-contained static site: plain HTML files, no build step, no frameworks, no external
 assets. The course flows across pages like a book — a course HQ (`index.html`), one page per week
 (`week-00.html` … `week-12.html`) and a printable quick reference (`cheatsheet.html`), sharing one
-stylesheet (`opxy.css`) and one script (`opxy.js`). Open `index.html` on your own computer right
+stylesheet (`opxy.css`) and one script (`opxy.js`). `node test/clips.test.js` screens every audio
+demo for clicks, thumps and silent renders, plus checks that each clip demonstrates what its
+lesson claims. Open `index.html` on your own computer right
 now (double-click it) and everything works — including offline at the practice desk.
 
 ## What's inside
@@ -22,6 +24,11 @@ now (double-click it) and everything works — including offline at the practice
   button-path steps, what to listen for, an assignment, a mastery check, and a fix-it box.
 - **Visual, not verbal** — step-sequencer grids showing exactly which pads to press, keyboard
   diagrams with chord notes lit, ADSR envelope shapes, scene maps and energy curves.
+- **Audible, too** — 22 sessions carry "▶ hear it" buttons that synthesize a short demo of the
+  idea (the four-on-the-floor, the major/minor flip, the sidechain pump…) right in your browser
+  with the Web Audio API. No audio files: every clip is a few lines of deterministic sample math
+  in `opxy.js`, rendered when you press play. They are schematic sketches of each concept — the
+  OP–XY's own engines sound far richer.
 - **Built on learning science** — each session opens with a 2-minute retrieval warm-up, closes
   with a one-line mantra, and each week ends with click-to-reveal recall quizzes. "Liner notes"
   vignettes (the 808's flop-to-legend arc, the Amen break, the invention of ADSR, the 303 and
