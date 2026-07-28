@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 3 — Harmony I — chords on the grid · Learn Music with OP–XY</title>
+<meta name="description" content="Week 3 of a free, hands-on 12-week OP–XY beginner course: Harmony I — chords on the grid.">
+<link rel="stylesheet" href="opxy.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">OP–XY <span>Beginner Course</span></div>
+    <div class="links">
+      <a href="index.html">Course HQ</a><a href="week-02.html">← Week 2</a><a href="week-04.html">Week 4 →</a><a href="cheatsheet.html">Cheat sheets</a>
+    </div>
+    <div id="progressWrap"><span id="progressTxt">0 / 26</span><div id="progressBar"><i></i></div></div>
+  </div>
+</nav>
+
+<div id="course"></div>
+
+<div class="wrap"><div class="accnote slim"><b>Accuracy note</b>— this guide was drafted with AI assistance and reviewed by a human, but it will contain mistakes. When this page and the device disagree, trust the device's screen and the official guide. Spotted an error? <a href="https://github.com/akanwar/learnmusicopxy/issues" target="_blank">Open an issue</a> — corrections are the point of hosting this publicly.</div></div>
+
+<div class="pager"><div class="wrap">
+  <a href="week-02.html">← Week 2 · Rhythm II</a>
+  <a href="index.html">Course HQ</a>
+  <a href="week-04.html">Week 4 · Harmony II →</a>
+</div></div>
+
+<footer>
+  <div class="wrap"><div class="wrap">
+    <b>learnmusicopxy</b> — an independent, hands-on beginner course for the OP–XY. Drafted with AI assistance and reviewed by a human; verify against the official <a href="https://teenage.engineering/guides/op-xy" target="_blank">Teenage Engineering OP–XY guide</a> before relying on any button path. OP–XY is a product and trademark of Teenage Engineering; this project is not affiliated with or endorsed by them, and contains no Teenage Engineering imagery — every diagram is an original schematic. Content licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>, code MIT · <a href="https://github.com/akanwar/learnmusicopxy" target="_blank">source &amp; corrections on GitHub</a>.
+  </div>
+  </div>
+</footer>
+<script src="opxy.js"></script>
+<script>
+/* week data — edit here; shared behavior lives in opxy.js */
+const WEEK=
+{n:"Week 3", title:"Harmony I — chords on the grid", quiz:[["what does track scale 4 do?","one step = one beat, so 16 steps = 4 bars — set per track with [bar] + [acc 4]."],["what is the difference between C major and C minor?","one note: E drops a semitone to E♭. major bright, minor dark."],["how do you make a chord ring longer?","hold its step and press a later step — the chord extends to it."]], goal:"chords carry the emotion. this week: enter them, stretch them, and hear major versus minor — using the track-scale trick that makes one step equal one beat.",
+ sessions:[
+ {t:"Session 6 — First chords", warm:"drum warm-up for the hands, then a question for the head: what does track scale 4 change, and for which tracks? say it before checking the vocabulary card.", story:{t:"Why does minor sound sad?", x:"here is an open scientific question you can hear tonight: nobody fully knows why minor chords feel dark. part is physics — the minor third creates slightly rougher overtone relationships — but a larger part is learned: thousands of hours of film scores and lullabies have trained your ear to read one semitone as an emotional switch. some cultures hear these colors differently. when you flip E to E♭ today, notice that three notes carry a century of cinema with them."}, challenge:"one-finger explorer: hold C and G, and walk the middle finger to every key between them. two of the results are the famous major and minor — but at least one more will be beautiful. keep it.", remember:"at scale 4, one step = one beat — and one semitone flips the mood.", sub:"major vs minor on the strings track",
+  goal:"place two chords on the grid, hear bright vs dark, and shape them with the envelope.",
+  steps:[
+   {do:"press [instrument] → [track 7] (strings — sustained and chord-friendly). play a few keys.",
+    why:"soft sustained sounds expose harmony clearly. save aggressive leads for later."},
+   {do:"slow the grid down: hold [bar] and press [acc 4] — track scale 4. now one step = one beat, so 16 steps = 4 bars.",
+    why:"chords change by the bar, not by the 16th note. track scale is <b>per track</b> — your drums stay fast while chords move slow. this is the single most useful sequencing trick in the course.",
+    listen:"press [play]: the playhead crawls 4× slower on this track."},
+   {do:"<b>C major</b>: hold [key C] + [key E] + [key G] together, then press [step 1]. <b>C minor</b>: hold [key C] + [acc 5] (that is E♭) + [key G], press [step 9].",
+    why:"same root, one note moved a half-step — and the entire mood flips. that one interval is most of western music's emotional vocabulary.",
+    listen:"major = bright, open. minor = dark, serious.",
+    viz: kbSVG({hl:{"C1":"C","E1":"E","G2":"G"},caption:"C major — hold all three, then press the step."}) + kbSVG({hl:{"C1":"C","D#1":"E♭","G2":"G"},caption:"C minor — E drops to the black key E♭ ([acc 5])."})},
+   {do:"<b>stretch a chord</b>: hold [step 1] and press [step 8]. the chord now sustains for 8 steps. press the end step again to toggle full/overlap.",
+    why:"harmony has to ring long enough to be heard as harmony.",
+    viz:seqGrid([{label:"chords",key:"hold notes",steps:[1,9],txt:{1:"C",9:"Cm"},ghost:[2,3,4,5,6,7,8,10,11,12,13,14,15,16]}],16,"at scale 4 this grid is 4 bars: C major rings bars 1–2, C minor bars 3–4.")},
+   {do:"shape it: press [M2] (envelopes). raise attack ([enc dark]) and release ([enc white]) for a swelling pad; pull both down for a short stab.",
+    why:"the envelope decides how a chord enters and leaves the room.",
+    listen:"pad = breathes in. stab = hits and vanishes."}
+  ],
+  assign:"two 4-bar loops: one that feels major/bright, one minor/dark.",
+  ready:"you can enter a chord on a step and extend it, without guessing.",
+  fix:"muddy → use fewer notes per chord, or play the chord an octave higher ([+])."},
+
+ {t:"Session 7 — Four progressions that always work", warm:"play C major and C minor from memory — keys first, then on steps 1 and 9. no diagrams until after.", story:{t:"The four chords that ate pop music", x:"in 2009 the comedy act Axis of Awesome played dozens of hit songs back to back over one repeating loop — C, G, Am, F — and the joke landed because it is true: hundreds of hits share this exact progression. that is not laziness, it is physics plus familiarity: the loop resolves so smoothly that listeners trust it instantly. tonight you learn the loop itself; the personality will come from your rhythm, sounds and melody on top."}, challenge:"the push: copy your favorite progression and move every chord one step earlier, so each lands on the last step of the previous bar. that anticipation is half of funk and most of UK garage.", remember:"same four chords, different order — order is the story.", sub:"reusable harmony templates",
+  goal:"program song-like chord loops you will reuse for the rest of the course.",
+  steps:[
+   {do:"new pattern on track 7 ([arrange] → [M1]). the track keeps its scale-4 setting.",
+    why:"never overwrite a sketch that worked."},
+   {do:"<b>C – G – Am – F</b>: one chord on each of steps 1, 5, 9, 13, each extended 4 steps.",
+    why:"the brightest, most familiar loop in pop. it feels resolved and safe.",
+    listen:"like a song you already know.",
+    viz:seqGrid([{label:"progression",key:"1 chord / bar",steps:[1,5,9,13],txt:{1:"C",5:"G",9:"Am",13:"F"}}],16,"scale 4: steps 1 / 5 / 9 / 13 are bars 1 / 2 / 3 / 4.")
+      + kbSVG({hl:{"G1":"G","B1":"B","D1":"D"},caption:"G major — G · B · D"})
+      + kbSVG({hl:{"A1":"A","C1":"C","E1":"E"},caption:"A minor — A · C · E"})
+      + kbSVG({hl:{"F1":"F","A1":"A","C1":"C"},caption:"F major — F · A · C"})},
+   {do:"<b>Am – F – C – G</b> as another pattern: same four chords, minor first.",
+    why:"identical ingredients, reordered — suddenly cinematic and wistful. order is meaning.",
+    listen:"darker opening, hopeful middle."},
+   {do:"<b>Dm – Am – C – G</b> as a third pattern (D minor = D · F · A).",
+    why:"the moody electronic staple — less obvious than the first two.",
+    viz:kbSVG({hl:{"D1":"D","F2":"F","A2":"A"},caption:"D minor — D · F · A (use the second octave's F and A)."})},
+   {do:"add your week-1 drums underneath each progression (track 1 still plays at scale 1 — fast drums under slow chords, simultaneously).",
+    why:"this is the payoff of per-track scale.",
+    listen:"pick the progression that makes the drums sound best. that one is yours."}
+  ],
+  assign:"three saved chord patterns. note your favorite and what it feels like.",
+  ready:"you can hear a progression's emotional character and name which chord is 'home'.",
+  fix:"chords feel disconnected → extend each one longer, and stick to these simple three-note voicings."}
+]};
+renderWeek(WEEK, 6, 3);
+initPage();
+</script>
+</body>
+</html>

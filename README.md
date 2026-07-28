@@ -7,15 +7,17 @@ press shown exactly as it appears on the device.
 
 **Live site:** <https://akanwar.github.io/learnmusicopxy/>
 
-This is a self-contained static site: one HTML file, no build step, no frameworks, no external
-assets. Open `index.html` on your own computer right now (double-click it) and everything works —
-including offline at the practice desk.
+This is a self-contained static site: plain HTML files, no build step, no frameworks, no external
+assets. The course flows across pages like a book — a course HQ (`index.html`), one page per week
+(`week-00.html` … `week-12.html`) and a printable quick reference (`cheatsheet.html`), sharing one
+stylesheet (`opxy.css`) and one script (`opxy.js`). Open `index.html` on your own computer right
+now (double-click it) and everything works — including offline at the practice desk.
 
 ## What's inside
 
 - **An annotated device map** — all 14 zones of the OP–XY panel, drawn as an original schematic,
   so every instruction ("hold `bar` + `shift`") points at something you can find.
-- **26 sessions across 12 weeks** — Rhythm I/II → Harmony I/II → Melody → First sketch →
+- **26 sessions across 12 weeks, one page per week** — Rhythm I/II → Harmony I/II → Melody → First sketch →
   Synthesis I/II → Arrangement I/II → Mixing → Final project. Each session: a goal, exact
   button-path steps, what to listen for, an assignment, a mastery check, and a fix-it box.
 - **Visual, not verbal** — step-sequencer grids showing exactly which pads to press, keyboard
@@ -25,7 +27,9 @@ including offline at the practice desk.
   vignettes (the 808's flop-to-legend arc, the Amen break, the invention of ADSR, the 303 and
   acid house…) give the concepts stories to stick to.
 - **Progress that persists** — session checkboxes, a progress bar, and per-week practice notes
-  all save in your browser (localStorage, per device). Print works too: navigation hides itself.
+  all save in your browser (localStorage, per device) and follow you across pages; the HQ roadmap
+  shows per-week completion. Print works too: navigation hides itself, and each week prints as its
+  own booklet.
 
 ## Publishing to GitHub Pages (one-time, ~5 minutes)
 
@@ -33,7 +37,7 @@ including offline at the practice desk.
 2. Repo **Settings → Pages** → under *Branch*, choose `main` and `/ (root)`, then **Save**.
 3. Wait a minute, refresh: your site is live at `https://YOUR-USERNAME.github.io/REPO-NAME/`.
 
-To change anything later, edit the file and push — the site updates within a minute.
+To change anything later, edit the page and push — the site updates within a minute.
 
 ## Contributing
 
@@ -62,4 +66,4 @@ no Teenage Engineering imagery; every diagram is an original schematic drawn for
 
   > Based on *learnmusicopxy* by Ansh Kanwar — github.com/akanwar/learnmusicopxy
 
-- **Code** (inline scripts in `index.html`): [MIT](LICENSE-CODE).
+- **Code** (`opxy.js` and inline scripts): [MIT](LICENSE-CODE).

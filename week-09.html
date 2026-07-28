@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 9 — Arrangement I — scenes & transitions · Learn Music with OP–XY</title>
+<meta name="description" content="Week 9 of a free, hands-on 12-week OP–XY beginner course: Arrangement I — scenes & transitions.">
+<link rel="stylesheet" href="opxy.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">OP–XY <span>Beginner Course</span></div>
+    <div class="links">
+      <a href="index.html">Course HQ</a><a href="week-08.html">← Week 8</a><a href="week-10.html">Week 10 →</a><a href="cheatsheet.html">Cheat sheets</a>
+    </div>
+    <div id="progressWrap"><span id="progressTxt">0 / 26</span><div id="progressBar"><i></i></div></div>
+  </div>
+</nav>
+
+<div id="course"></div>
+
+<div class="wrap"><div class="accnote slim"><b>Accuracy note</b>— this guide was drafted with AI assistance and reviewed by a human, but it will contain mistakes. When this page and the device disagree, trust the device's screen and the official guide. Spotted an error? <a href="https://github.com/akanwar/learnmusicopxy/issues" target="_blank">Open an issue</a> — corrections are the point of hosting this publicly.</div></div>
+
+<div class="pager"><div class="wrap">
+  <a href="week-08.html">← Week 8 · Synthesis II</a>
+  <a href="index.html">Course HQ</a>
+  <a href="week-10.html">Week 10 · Arrangement II →</a>
+</div></div>
+
+<footer>
+  <div class="wrap"><div class="wrap">
+    <b>learnmusicopxy</b> — an independent, hands-on beginner course for the OP–XY. Drafted with AI assistance and reviewed by a human; verify against the official <a href="https://teenage.engineering/guides/op-xy" target="_blank">Teenage Engineering OP–XY guide</a> before relying on any button path. OP–XY is a product and trademark of Teenage Engineering; this project is not affiliated with or endorsed by them, and contains no Teenage Engineering imagery — every diagram is an original schematic. Content licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>, code MIT · <a href="https://github.com/akanwar/learnmusicopxy" target="_blank">source &amp; corrections on GitHub</a>.
+  </div>
+  </div>
+</footer>
+<script src="opxy.js"></script>
+<script>
+/* week data — edit here; shared behavior lives in opxy.js */
+const WEEK=
+{n:"Week 9", title:"Arrangement I — scenes & transitions", quiz:[["what happens when you switch to an empty scene?","it clones the current one — so you build sections by removing things."],["how do you make a scene change land on the downbeat?","queue it: hold [shift], tap [play], then choose the scene with an accidental."]], goal:"loops become music when they move through time. scenes are OP–XY's sections; transitions are the joints between them.",
+ sessions:[
+ {t:"Session 19 — Scenes & the energy curve", warm:"play your sketch and name each scene's one-word job out loud as it plays. any scene without a job gets deleted today.", story:{t:"Two turntables in the Bronx, 1973", x:"DJ Kool Herc noticed dancers waited for the drum break — so he bought two copies of the same record and switched between them, looping the break forever. that merry-go-round invented the extended breakdown and, arguably, hip-hop. your breakdown scene is Herc's trick formalized: take the part people crave, isolate it, make them wait for the return."}, challenge:"backwards build: construct the breakdown scene first — the sparsest thing that still grooves — then build outward to the main. designing from the quietest moment produces better contrast than trimming from the loudest.", remember:"clone the scene, then remove things.", sub:"sections by subtraction",
+  goal:"turn your best loop into four scenes that trace a deliberate energy curve.",
+  steps:[
+   {do:"press [arrange]. per track: [enc white] switches patterns, clicking it mutes the track. [M1] new pattern · [M2] copy · [M3] paste · [M4] clear.",
+    why:"arrange mode is mission control for patterns. instrument tracks light white, auxiliary red."},
+   {do:"scenes recap: hold [shift] + an accidental (1–9). an empty scene clones the current one — so the workflow is: clone, then <b>remove</b> things.",
+    why:"sections are made by subtraction far more often than by addition."},
+   {do:"build: scene 1 <b>intro</b> (few tracks) → scene 2 <b>groove</b> (drums + bass enter) → scene 3 <b>main</b> (everything) → scene 4 <b>breakdown</b> (kick or melody removed).",
+    viz:scenesViz(
+     [{name:"1 intro",on:[3,4]},{name:"2 groove",on:[0,1,3,4]},{name:"3 main",on:[0,1,2,3,4]},{name:"4 breakdown",on:[1,2,3]}],
+     ["1 drums","3 bass","4 stabs","7 pad","5 melody"],"each column is a scene = one combination of patterns and mutes."),
+    why:"scenes also remember levels and mutes — they are full snapshots of a moment."},
+   {do:"sanity-check the curve: intro low, main high, breakdown is the deep breath before the return.",
+    viz:energyViz([0.25,0.55,0.95,0.35,0.95],["intro","groove","main","break","return"])}
+  ],
+  assign:"four named scenes from one loop, each with a one-word purpose.",
+  ready:"you make scenes by changing patterns and mutes — not by writing new songs.",
+  fix:"scenes feel unrelated → keep drums and bass identical across scenes; change only one or two layers."},
+
+ {t:"Session 20 — Transitions", warm:"switch between two scenes un-queued, then queued ([shift], tap [play], pick scene). feel the difference; describe it in one word.", story:{t:"Why buildups feel good — the science", x:"music psychologist David Huron showed that much of musical pleasure is prediction: the brain rewards itself for correctly guessing what comes next. a riser or filter sweep is you loudly promising the listener a downbeat; the drop pays the promise and the brain hands out the chemistry. this is why a transition must telegraph, not surprise — you are not hiding the change, you are advertising it."}, challenge:"transition audit: play one favorite track and log every transition with its timestamp in your notes — fill? silence? riser? noise? most tracks use three tools, constantly. steal the ratio.", remember:"transitions are servants, not stars.", sub:"the joints between sections",
+  goal:"collect four transition tools and learn the queued scene change.",
+  steps:[
+   {do:"tool 1 — the <b>fill</b>: switch to your fill pattern for the last bar before a scene change.",
+    why:"rhythmic signpost. you built this in week 2."},
+   {do:"tool 2 — the <b>drop-out</b>: one bar of silence, or kick removed, right before the return.",
+    why:"negative space makes the arrival hit harder. silence is a transition."},
+   {do:"tool 3 — the <b>filter rise</b>: automate or p-lock the cutoff opening into the next scene.",
+    why:"energy rises without a single new note."},
+   {do:"tool 4 — the <b>queued switch</b>: hold [shift], tap [play], then choose the scene with an accidental. the change waits and lands cleanly in time.",
+    why:"un-queued scene changes happen instantly — fine for jamming, messy for songs.",
+    listen:"the switch lands exactly on the downbeat."},
+   {do:"perform all transitions live first; sequence only the ones that worked.",
+    why:"performance is the laboratory, the sequencer is the publication."}
+  ],
+  assign:"a 64-bar run through your scenes with at least three different transitions.",
+  ready:"sections no longer feel copy-pasted next to each other.",
+  fix:"a transition steals the show → make it shorter and quieter. transitions are servants."}
+]};
+renderWeek(WEEK, 19, 9);
+initPage();
+</script>
+</body>
+</html>

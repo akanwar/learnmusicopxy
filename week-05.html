@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 5 — Melody — five notes are plenty · Learn Music with OP–XY</title>
+<meta name="description" content="Week 5 of a free, hands-on 12-week OP–XY beginner course: Melody — five notes are plenty.">
+<link rel="stylesheet" href="opxy.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">OP–XY <span>Beginner Course</span></div>
+    <div class="links">
+      <a href="index.html">Course HQ</a><a href="week-04.html">← Week 4</a><a href="week-06.html">Week 6 →</a><a href="cheatsheet.html">Cheat sheets</a>
+    </div>
+    <div id="progressWrap"><span id="progressTxt">0 / 26</span><div id="progressBar"><i></i></div></div>
+  </div>
+</nav>
+
+<div id="course"></div>
+
+<div class="wrap"><div class="accnote slim"><b>Accuracy note</b>— this guide was drafted with AI assistance and reviewed by a human, but it will contain mistakes. When this page and the device disagree, trust the device's screen and the official guide. Spotted an error? <a href="https://github.com/akanwar/learnmusicopxy/issues" target="_blank">Open an issue</a> — corrections are the point of hosting this publicly.</div></div>
+
+<div class="pager"><div class="wrap">
+  <a href="week-04.html">← Week 4 · Harmony II</a>
+  <a href="index.html">Course HQ</a>
+  <a href="week-06.html">Week 6 · First sketch →</a>
+</div></div>
+
+<footer>
+  <div class="wrap"><div class="wrap">
+    <b>learnmusicopxy</b> — an independent, hands-on beginner course for the OP–XY. Drafted with AI assistance and reviewed by a human; verify against the official <a href="https://teenage.engineering/guides/op-xy" target="_blank">Teenage Engineering OP–XY guide</a> before relying on any button path. OP–XY is a product and trademark of Teenage Engineering; this project is not affiliated with or endorsed by them, and contains no Teenage Engineering imagery — every diagram is an original schematic. Content licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>, code MIT · <a href="https://github.com/akanwar/learnmusicopxy" target="_blank">source &amp; corrections on GitHub</a>.
+  </div>
+  </div>
+</footer>
+<script src="opxy.js"></script>
+<script>
+/* week data — edit here; shared behavior lives in opxy.js */
+const WEEK=
+{n:"Week 5", title:"Melody — five notes are plenty", quiz:[["name the five notes of A minor pentatonic.","A · C · D · E · G."],["how do you duplicate the current bar?","hold [bar] + [shift] and press [+]."],["in a 4-bar phrase, which bar changes and why?","bar 4 — repetition builds recognition, the late variation rewards attention."]], goal:"melody is the part people hum. the pentatonic scale makes wrong notes nearly impossible, and call-and-response makes phrases feel like sentences.",
+ sessions:[
+ {t:"Session 11 — Pentatonic melody", warm:"before touching the device, name the five allowed notes. then find them on the keys with the diagram covered.", story:{t:"The scale wired into everyone, 2009", x:"at the 2009 World Science Festival, Bobby McFerrin hopped along an invisible pentatonic scale on stage — and the audience sang each next note correctly before he landed on it, unprompted. the five-note scale appears on every inhabited continent, and flutes older than 35,000 years already play something close to it. when the pentatonic feels safe tonight, that is not a trick — you are borrowing the most field-tested melody technology humans own."}, challenge:"same rhythm, new notes: write a second motif that keeps your first motif's exact step positions but changes every pitch. hearing rhythm and pitch as separate layers is a composer's superpower.", remember:"five notes, mostly silence.", sub:"track 5 · five safe notes over Am–F–C–G",
+  goal:"write a 4-bar motif from a restricted palette, with deliberate space.",
+  steps:[
+   {do:"press [instrument] → [track 5] (lead). your palette is <b>only A · C · D · E · G</b> — the A-minor pentatonic.",
+    why:"these five notes contain no half-step collisions with your progression. every combination sounds at least okay — which frees you to think about <b>shape</b> instead of fear.",
+    viz:kbSVG({hl:{"A1":"A","C1":"C","D1":"D","E1":"E","G2":"G"},caption:"the whole allowed palette. anything you play from these five works over Am–F–C–G."})},
+   {do:"step-sequence a 4-note motif into one bar, leaving most steps empty — for example A on 1, C on 4, E on 7, D on 11.",
+    why:"melody needs air. the silence is part of the phrase.",
+    listen:"hum it back. if you can't, simplify.",
+    viz:seqGrid([{label:"motif",key:"lead",steps:[1,4,7,11],txt:{1:"A",4:"C",7:"E",11:"D"}}],16,"four notes, twelve empty steps. the gaps are intentional.")},
+   {do:"extend to 4 bars: hold [bar] + [shift] + press [+] — this duplicates the current bar. do it until you have 4 bars, then change <b>only the last note of bar 4</b>.",
+    why:"repetition builds memory; one small variation rewards attention. that ratio — mostly same, slightly different — is the core of catchy.",
+    listen:"the loop now has a hook and a wink."},
+   {do:"mute test: in [mix], [shift] + [track 5]. does the track still work without melody? good — unmute.",
+    why:"melody should decorate a groove that already stands, never rescue one that doesn't."}
+  ],
+  assign:"one 4-bar melody using five notes or fewer.",
+  ready:"your melody is hummable and clearly non-random.",
+  fix:"sounds noodly → cut the number of notes in half. yes, really."},
+
+ {t:"Session 12 — Call & response", warm:"play last session's motif from memory. then: which bar of a 4-bar phrase should vary, and why?", story:{t:"The oldest song structure on earth", x:"call and response predates written music: West African work songs used it, field hollers carried it across the Atlantic, gospel choirs formalized it, blues turned it inward, and every rap ad-lib and EDM crowd-echo still runs on it. it works because conversation is the shape human attention likes best. your two bars tonight — question up, answer down — are the same shape at its smallest possible size."}, challenge:"answer first: write the response phrase before the call, then compose a question that makes the existing answer feel inevitable. composing backwards breaks melodic habits fast.", remember:"question up, answer down, land on home.", sub:"making phrases talk to each other",
+  goal:"structure a melody as a conversation: question, answer, question, varied answer.",
+  steps:[
+   {do:"bar 1 — the <b>call</b>: a short rising phrase, e.g. A → C → E.",
+    why:"ending away from home (on E) leaves the phrase open, like a question.",
+    listen:"it should feel unfinished.",
+    viz:seqGrid([{label:"bar 1 · call",key:"lead",steps:[1,5,9],txt:{1:"A",5:"C",9:"E"}}],16)},
+   {do:"bar 2 — the <b>response</b>: answer it downward, e.g. E → D → C → A.",
+    why:"landing back on A (home) closes the question.",
+    listen:"question… answer. the two bars talk.",
+    viz:seqGrid([{label:"bar 2 · response",key:"lead",steps:[1,4,7,11],txt:{1:"E",4:"D",7:"C",11:"A"}}],16)},
+   {do:"bar 3: repeat the call <b>exactly</b> (duplicate-bar trick: hold [bar]+[shift]+[+]).",
+    why:"exact repetition is what makes the listener recognize it as a theme."},
+   {do:"bar 4: vary the response — change its rhythm or its final note.",
+    why:"variation at the end turns the loop back into itself gracefully."},
+   {do:"shape the voice: [M2] — short release for a pluck-y narrator, long release for a singing one.",
+    why:"the same notes phrase completely differently with a different envelope."}
+  ],
+  assign:"a 4-bar call-and-response melody over your favorite progression.",
+  ready:"you can point at the grid and say which bar is the call and which is the response.",
+  fix:"the response doesn't answer → end it on A or C. those notes close the door."}
+]};
+renderWeek(WEEK, 11, 5);
+initPage();
+</script>
+</body>
+</html>

@@ -5,7 +5,9 @@ an OP–XY.
 
 ## The two-minute version
 
-1. **Fork** this repo and edit `index.html` (it's one plain HTML file — no build step).
+1. **Fork** this repo and edit the page you are changing — each week lives in its own file
+   (`week-00.html` … `week-12.html`, plus `index.html` and `cheatsheet.html`); shared styling is
+   `opxy.css` and shared behavior `opxy.js`. Still no build step.
 2. **Test locally** by opening the page in your browser: no console errors, progress checkboxes
    still work, and print-preview still looks right if you touched layout.
 3. **Open a pull request** that says *what* you changed and *why* — a link to the relevant chapter
@@ -22,7 +24,7 @@ Small fixes (typos, a wrong step number, a broken link) can also just be an
 - **Keep the voice:** plain language, one idea per step, tell the learner what to *listen* for.
 - **Keep the pedagogy:** sessions keep their warm-up, goal, steps, assignment, mastery check and
   fix-it box; weeks keep their recall quizzes. If you add content, add it in that shape.
-- **No new dependencies.** One file, vanilla JS, no frameworks, works offline from a double-click.
+- **No new dependencies.** A handful of static files, vanilla JS, no frameworks, works offline from a double-click.
 - **No Teenage Engineering assets.** All imagery must remain original schematics — no product
   photos, no copied icons, no assets from teenage.engineering.
 - By contributing you agree your content contributions are licensed CC BY 4.0 and code

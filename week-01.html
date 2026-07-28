@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 1 — Rhythm I — the grid · Learn Music with OP–XY</title>
+<meta name="description" content="Week 1 of a free, hands-on 12-week OP–XY beginner course: Rhythm I — the grid.">
+<link rel="stylesheet" href="opxy.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">OP–XY <span>Beginner Course</span></div>
+    <div class="links">
+      <a href="index.html">Course HQ</a><a href="week-00.html">← Start here</a><a href="week-02.html">Week 2 →</a><a href="cheatsheet.html">Cheat sheets</a>
+    </div>
+    <div id="progressWrap"><span id="progressTxt">0 / 26</span><div id="progressBar"><i></i></div></div>
+  </div>
+</nav>
+
+<div id="course"></div>
+
+<div class="wrap"><div class="accnote slim"><b>Accuracy note</b>— this guide was drafted with AI assistance and reviewed by a human, but it will contain mistakes. When this page and the device disagree, trust the device's screen and the official guide. Spotted an error? <a href="https://github.com/akanwar/learnmusicopxy/issues" target="_blank">Open an issue</a> — corrections are the point of hosting this publicly.</div></div>
+
+<div class="pager"><div class="wrap">
+  <a href="week-00.html">← Start here · One evening, zero pressure</a>
+  <a href="index.html">Course HQ</a>
+  <a href="week-02.html">Week 2 · Rhythm II →</a>
+</div></div>
+
+<footer>
+  <div class="wrap"><div class="wrap">
+    <b>learnmusicopxy</b> — an independent, hands-on beginner course for the OP–XY. Drafted with AI assistance and reviewed by a human; verify against the official <a href="https://teenage.engineering/guides/op-xy" target="_blank">Teenage Engineering OP–XY guide</a> before relying on any button path. OP–XY is a product and trademark of Teenage Engineering; this project is not affiliated with or endorsed by them, and contains no Teenage Engineering imagery — every diagram is an original schematic. Content licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>, code MIT · <a href="https://github.com/akanwar/learnmusicopxy" target="_blank">source &amp; corrections on GitHub</a>.
+  </div>
+  </div>
+</footer>
+<script src="opxy.js"></script>
+<script>
+/* week data — edit here; shared behavior lives in opxy.js */
+const WEEK=
+{n:"Week 1", title:"Rhythm I — the grid", quiz:[["which steps carry the kick in four-on-the-floor?","1, 5, 9 and 13 — the four beats of the bar."],["how do you view and edit only the snare's steps?","hold the snare key and tap [record] — the grid shows only that sound."],["what is the kick-placement difference between house and hip-hop?","house: kick on every beat (1-5-9-13). hip-hop: asymmetric kicks (e.g. 1, 7, 11) — the asymmetry is the head-nod."]], goal:"the step sequencer is the heart of the OP–XY: 16 steps = 1 bar = 4 beats. this week you learn to place sounds on it and feel why position matters.",
+ sessions:[
+ {t:"Session 1 — Your first beat", warm:"before touching anything: say the four mode names out loud, then name the button combo that creates a new project. check yourself against session 0 only afterwards.", story:{t:"The drummer who invented the heartbeat, 1973", x:"four-on-the-floor was popularized by Earl Young, the Philadelphia session drummer on The Trammps records — he started stomping the kick on every beat so dancers could not lose the pulse. a decade later, Chicago DJ Frankie Knuckles built entire nights on that pulse at a club called The Warehouse; regulars asked record shops for the music they heard there, and the genre became known as house. the pattern you are programming today is that exact heartbeat, fifty years on."}, challenge:"cover-the-screen drill: put a card over the screen and rebuild kick, snare and hats using only key positions and step numbers. spatial memory is what makes the device feel like an instrument.", remember:"1 · 5 · 9 · 13 is the heartbeat — and the grid always remembers the last key you played.", sub:"kick · snare · hat on a 16-step grid",
+  goal:"build the most important drum pattern in popular music, and learn the sequence-one-sound trick you will use forever.",
+  steps:[
+   {do:"press [instrument] → [track 1]. press the lowest [key F] — that is the kick drum. then press [step 1], [step 5], [step 9], [step 13].",
+    why:"OP–XY always remembers the last key you played; tapping a step stamps that sound onto it. kick on every beat is called <b>four on the floor</b> — the heartbeat of house and techno.",
+    listen:"press [play] — steady like a clock, no surprises.",
+    viz:seqGrid([{...KICK,steps:[1,5,9,13]}],16,"press the orange steps. bold numbers 1, 5, 9, 13 are the four beats of the bar.")},
+   {do:"press [key G] (next to the kick) — the snare. now <b>hold [key G] down and tap [record]</b>. the grid empties. still holding [key G], press [step 5] and [step 13].",
+    why:"holding a sound + tapping [record] shows <b>only that sound's steps</b> — the single most useful drum-editing trick on the device. snare on beats 2 and 4 is the <b>backbeat</b>, the head-nod of almost all pop.",
+    listen:"kick and snare together should already feel like a beat.",
+    viz:seqGrid([{...KICK,ghost:[1,5,9,13]},{...SNARE,steps:[5,13]}],16,"gray = already placed. orange = place now.")},
+   {do:"press [key C#] (the first black key) — closed hi-hat. hold it, tap [record], then press every other step: 1, 3, 5, 7, 9, 11, 13, 15.",
+    why:"eighth-note hats are the glue between kick and snare. they create motion.",
+    listen:"the loop starts to <b>groove</b> instead of just thudding.",
+    viz:seqGrid([{...KICK,ghost:[1,5,9,13]},{...SNARE,ghost:[5,13]},{...HAT,steps:[1,3,5,7,9,11,13,15]}])},
+   {do:"transport practice: [play] starts, [play] again restarts from the top, [stop] stops, [stop] twice silences everything.",
+    why:"owning start/stop is owning the room."},
+   {do:"press [tempo] — the screen shows BPM. try your beat at 90, 110 and 125.",
+    why:"same grid, three different genres. tempo is a musical decision, not a setting.",
+    listen:"90 feels heavy and hip-hop; 125 feels like a club."}
+  ],
+  assign:"keep this as pattern 1 on track 1. write down which BPM you liked and why.",
+  ready:"you can rebuild kick / snare / hat from memory and explain why steps 1-5-9-13 matter.",
+  fix:"too cluttered → remove hats first (hold [key C#] + tap [record], tap lit steps to delete). too empty → add hats before adding any new instrument."},
+
+ {t:"Session 2 — Three genre grids", warm:"rebuild the session 1 beat from memory, under three minutes, no peeking. if you stall, glance once, then start over from empty.", story:{t:"The flop that built hip-hop, 1980", x:"the Roland TR-808 drum machine was a commercial failure — critics wanted realistic drums and the 808 sounded like a heartbeat from space. discontinued after about 12,000 units, it turned up cheap in pawn shops, where young producers grabbed it: Marvin Gaye programmed one on Sexual Healing, Afrika Bambaataa built Planet Rock on one, and its boom became the foundation of hip-hop, electro and trap. the lesson for tonight: the sounds matter far less than where you place them."}, challenge:"invent a fourth grid: the dembow that powers reggaeton — kick on 1, 5, 9, 13 and snares on 4, 7, 12, 15. then try a genre you love by ear.", remember:"genre lives in the kick placement, not in the drum sounds.", sub:"house · hip-hop · rock from kick placement alone",
+  goal:"hear how kick placement defines genre — before sound design ever matters.",
+  steps:[
+   {do:"protect your first beat: press [arrange], make sure [track 1] is selected, press [M2] (copy), then [M1] (new pattern), then [M3] (paste). turn [enc white] to flip between pattern 1 and 2.",
+    why:"each track holds up to 9 patterns. copy before you experiment — version safety is a producer habit.",
+    listen:"both patterns sound identical for now. edit pattern 2."},
+   {do:"<b>house</b> — back in [instrument]: kick 1, 5, 9, 13 · snare 5, 13 · hats on the offbeats only: 3, 7, 11, 15.",
+    why:"moving hats off the kicks (compare session 1) creates the pumping forward drive of house.",
+    listen:"relentless, even, danceable.",
+    viz:seqGrid([{...KICK,steps:[1,5,9,13]},{...SNARE,steps:[5,13]},{...HAT,steps:[3,7,11,15]}])},
+   {do:"<b>hip-hop</b> — new pattern (repeat the copy trick): kick 1, 7, 11 · snare 5, 13 · hats every other step, then delete two or three of them.",
+    why:"the kick leaves the grid's symmetry — that asymmetry is the head-nod. missing hats create pocket.",
+    listen:"less machine, more swagger. slow it to ~90 BPM.",
+    viz:seqGrid([{...KICK,steps:[1,7,11]},{...SNARE,steps:[5,13]},{...HAT,steps:[1,3,7,9,13,15]}])},
+   {do:"<b>rock-ish</b> — one more pattern: kick 1, 9 · snare 5, 13 · hats on all odd steps.",
+    why:"a drummer's right hand is steady; the feet are simple. fewer kicks = more weight per kick.",
+    listen:"closer to a band. try ~120 BPM.",
+    viz:seqGrid([{...KICK,steps:[1,9]},{...SNARE,steps:[5,13]},{...HAT,steps:[1,3,5,7,9,11,13,15]}])},
+   {do:"compare all three at the same BPM: in [arrange], turn [enc white] to switch patterns while the sequencer plays.",
+    why:"trains your ear to separate <b>rhythm</b> from tempo and sound choice.",
+    listen:"can you name each one with your eyes closed?"}
+  ],
+  assign:"keep house / hip-hop / rock as patterns on track 1. do not chase better drum sounds yet.",
+  ready:"you can build each grid in under five minutes and describe the kick logic of each.",
+  fix:"all three sound the same → drop to 80 BPM and listen to kick + snare only."}
+]};
+renderWeek(WEEK, 1, 1);
+initPage();
+</script>
+</body>
+</html>

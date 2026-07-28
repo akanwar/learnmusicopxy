@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Start here — One evening, zero pressure · Learn Music with OP–XY</title>
+<meta name="description" content="Start here of a free, hands-on 12-week OP–XY beginner course: One evening, zero pressure.">
+<link rel="stylesheet" href="opxy.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">OP–XY <span>Beginner Course</span></div>
+    <div class="links">
+      <a href="index.html">Course HQ</a><a href="week-01.html">Week 1 →</a><a href="cheatsheet.html">Cheat sheets</a>
+    </div>
+    <div id="progressWrap"><span id="progressTxt">0 / 26</span><div id="progressBar"><i></i></div></div>
+  </div>
+</nav>
+
+<div id="course"></div>
+
+<div class="wrap"><div class="accnote slim"><b>Accuracy note</b>— this guide was drafted with AI assistance and reviewed by a human, but it will contain mistakes. When this page and the device disagree, trust the device's screen and the official guide. Spotted an error? <a href="https://github.com/akanwar/learnmusicopxy/issues" target="_blank">Open an issue</a> — corrections are the point of hosting this publicly.</div></div>
+
+<div class="pager"><div class="wrap">
+  <a href="index.html">← Course HQ</a>
+  <a href="index.html">Course HQ</a>
+  <a href="week-01.html">Week 1 · Rhythm I →</a>
+</div></div>
+
+<footer>
+  <div class="wrap"><div class="wrap">
+    <b>learnmusicopxy</b> — an independent, hands-on beginner course for the OP–XY. Drafted with AI assistance and reviewed by a human; verify against the official <a href="https://teenage.engineering/guides/op-xy" target="_blank">Teenage Engineering OP–XY guide</a> before relying on any button path. OP–XY is a product and trademark of Teenage Engineering; this project is not affiliated with or endorsed by them, and contains no Teenage Engineering imagery — every diagram is an original schematic. Content licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>, code MIT · <a href="https://github.com/akanwar/learnmusicopxy" target="_blank">source &amp; corrections on GitHub</a>.
+  </div>
+  </div>
+</footer>
+<script src="opxy.js"></script>
+<script>
+/* week data — edit here; shared behavior lives in opxy.js */
+const WEEK=
+{n:"Start here", title:"One evening, zero pressure", quiz:[["which mode always takes you home when you are lost?","[instrument] — it always returns you to the tracks."],["how do you create a new project?","press [projects], then press and hold [M1]."],["what do the track buttons do in instrument mode?","select which of the 8 tracks you are editing — the selected one lights red."]], goal:"thirty minutes to switch it on, make a noise, and learn where everything lives. nothing you do tonight can break anything.",
+ sessions:[
+ {t:"Session 0 — Meet the machine", story:{t:"A Swedish workshop, 2010", x:"Teenage Engineering started in a Stockholm workshop in 2010, convinced that serious instruments could be small, playful and beautiful. their first synth, the OP–1, became a cult object used everywhere from bedrooms to stadium tours — Thom Yorke and Bon Iver both put it on records. the OP–XY (2024) is the same philosophy grown up: an entire studio, sequencer and mixer under two octaves of keys. you are not holding a toy; you are holding the argument that limitations breed music."}, challenge:"with the device off, point at where the following live: track buttons, step sequencer, [bar], [shift], the four encoders. then switch on and check.", remember:"[instrument] is home. when lost, press it.", sub:"power on · make any sound · the four modes",
+  goal:"press buttons until the panel map above feels familiar. no music required yet.",
+  steps:[
+   {do:"switch the OP–XY on and rotate the volume knob (top left, beside the speaker) to a comfortable level.",
+    why:"the built-in speaker is fine for learning; headphones in the jack are even better."},
+   {do:"press [projects], then press and hold [M1] to create a new project.",
+    why:"a fresh project loads a full band: <b>track 1–2</b> drums, <b>3</b> bass, <b>4</b> pluck, <b>5</b> lead, <b>6</b> soft pluck, <b>7</b> strings, <b>8</b> pad. the whole course uses these defaults.",
+    listen:"the screen confirms a new project."},
+   {do:"press [instrument], then [track 1]. mash some keyboard keys.",
+    why:"in instrument mode the 8 track buttons choose what the keyboard plays. on a drum track, all 24 keys are different drum sounds.",
+    listen:"drums. now press [track 5] and play again — a lead synth. the keys turned into notes."},
+   {do:"press [-] and [+] a few times while playing notes on track 5.",
+    why:"minus and plus shift the keyboard down or up an octave. on many other pages they also mean less/more.",
+    listen:"same melody, lower or higher."},
+   {do:"press each of the four mode buttons once: [instrument], [auxiliary], [arrange], [mix]. then come back to [instrument].",
+    why:"these are the four rooms of the device. <b>instrument</b>: compose sounds and notes · <b>auxiliary</b>: transpose, effects, punch-in FX · <b>arrange</b>: patterns, scenes, songs · <b>mix</b>: levels, pan, eq. each room has four sub-pages on [M1]–[M4]."},
+   {do:"hold [shift] and press random buttons for ten seconds. nothing breaks.",
+    why:"shift opens sub-functions everywhere. curiosity is the intended workflow — worst case, [shift]+[record] is undo."}
+  ],
+  assign:"find every numbered zone from the panel map on your real device, by touch.",
+  ready:"you can name the four modes and find tracks, steps, keyboard and transport without looking at this page.",
+  fix:"if a sound hangs forever, press [stop] twice. if you get lost in a weird screen, press [instrument] — it always takes you home."}
+]};
+renderWeek(WEEK, 0, 0);
+initPage();
+</script>
+</body>
+</html>
