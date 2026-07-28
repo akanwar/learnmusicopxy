@@ -1,0 +1,1516 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learn Music with OP–XY — a 12-week beginner course</title>
+<meta name="description" content="A free, hands-on 12-week course for learning electronic music on the Teenage Engineering OP-XY: rhythm, harmony, melody, synthesis, arrangement and mixing, with visual step grids, keyboard diagrams and every button press shown.">
+<meta property="og:title" content="Learn Music with OP–XY — a 12-week beginner course">
+<meta property="og:description" content="From first beat to finished track: a free, visual, hands-on OP-XY course for complete beginners.">
+<style>
+:root{
+  --ink:#0d0d0d; --paper:#ffffff; --soft:#f4f4f4; --line:#e5e5e5;
+  --mid:#8a8a8e; --orange:#FF4D00; --panel:#1c1c1f; --key:#2a2a2e;
+}
+*{box-sizing:border-box; margin:0; padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  background:var(--paper); color:var(--ink);
+  font-size:15px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:980px; margin:0 auto; padding:0 28px}
+a{color:var(--ink)}
+h1,h2,h3,h4{font-weight:600; letter-spacing:-.01em}
+p{max-width:72ch}
+
+/* ---------- top nav ---------- */
+nav{
+  position:sticky; top:0; z-index:50; background:rgba(255,255,255,.95);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+}
+nav .wrap{display:flex; align-items:center; gap:18px; height:52px}
+nav .brand{font-weight:700; font-size:14px; white-space:nowrap}
+nav .brand span{color:var(--orange)}
+nav .links{display:flex; gap:14px; overflow-x:auto; font-size:13px; color:var(--mid)}
+nav .links a{color:var(--mid); text-decoration:none; white-space:nowrap}
+nav .links a:hover{color:var(--ink)}
+#progressWrap{margin-left:auto; display:flex; align-items:center; gap:8px; font-size:12px; color:var(--mid); white-space:nowrap}
+#progressBar{width:90px; height:4px; background:var(--line); border-radius:2px; overflow:hidden}
+#progressBar i{display:block; height:100%; width:0%; background:var(--orange); transition:width .3s}
+
+/* ---------- hero ---------- */
+header.hero{padding:64px 0 36px; border-bottom:1px solid var(--line)}
+header.hero .cols{display:flex; gap:40px; align-items:center; flex-wrap:wrap}
+header.hero img{width:300px; max-width:100%; border-radius:8px}
+header.hero h1{font-size:42px; line-height:1.05; margin-bottom:14px}
+header.hero h1 em{font-style:normal; color:var(--orange)}
+header.hero p.sub{color:var(--mid); font-size:16px; max-width:54ch}
+.meta{margin-top:18px; font-size:12px; color:var(--mid)}
+.meta a{color:var(--mid)}
+.accnote{margin-top:16px; border:1.5px dashed #cfcfcf; border-radius:10px; padding:10px 14px; font-size:12.5px; color:#555; max-width:62ch; line-height:1.5}
+.accnote b{color:var(--ink)}
+.accnote a{color:var(--orange)}
+
+/* ---------- section scaffolding ---------- */
+section.block{padding:52px 0; border-bottom:1px solid var(--line)}
+.kicker{font-size:12px; text-transform:lowercase; letter-spacing:.12em; color:var(--orange); font-weight:700; margin-bottom:8px}
+section.block>.wrap>h2{font-size:28px; margin-bottom:10px}
+.lede{color:var(--mid); margin-bottom:26px; max-width:64ch}
+
+/* numbered circle badge, TE style */
+.badge{
+  display:inline-flex; width:26px; height:26px; border-radius:50%;
+  background:var(--line); color:var(--ink); font-size:13px; font-weight:600;
+  align-items:center; justify-content:center; flex:none;
+}
+.badge.orange{background:var(--orange); color:#fff}
+
+/* ---------- key / button chips ---------- */
+.k{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:22px; height:22px; padding:0 8px; border-radius:6px;
+  background:var(--key); color:#f3f3f3; font-size:11.5px; font-weight:600;
+  vertical-align:-5px; letter-spacing:.02em; white-space:nowrap;
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.45), 0 1px 1px rgba(0,0,0,.15);
+  margin:0 1px;
+}
+.k.km{border-radius:50%; min-width:24px; width:24px; padding:0}      /* M1-M4 */
+.k.ktr{border-radius:50%; min-width:24px; width:24px; padding:0; background:#3a3a40}
+.k.kw{background:#e9e9e9; color:#222; box-shadow:inset 0 -2px 0 rgba(0,0,0,.18), 0 1px 1px rgba(0,0,0,.1)}
+.k.kacc{background:#111; border:1px solid #3c3c42}
+.k.krec{background:#2a2a2e; color:#fff}
+.k.krec::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--orange); margin-right:5px}
+.k.kplay::before{content:"▶"; font-size:9px; margin-right:0px}
+.k.kstop::before{content:"■"; font-size:9px; margin-right:0px}
+.k.kplay,.k.kstop{padding:0 9px}
+.k.kplay::after,.k.kstop::after{content:none}
+.enc{
+  display:inline-block; width:15px; height:15px; border-radius:50%;
+  vertical-align:-2px; border:1px solid rgba(0,0,0,.35); margin:0 2px;
+  box-shadow:inset -2px -2px 3px rgba(0,0,0,.25);
+}
+.enc.dark{background:#3b3b41}.enc.mid{background:#77777d}.enc.light{background:#b9b9bd}.enc.white{background:#f4f4f4}
+.encname{font-size:12px; color:var(--mid)}
+
+/* ---------- cards / tables ---------- */
+.cardgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px}
+.card{border:1px solid var(--line); border-radius:10px; padding:16px; background:#fff}
+.card h4{font-size:14px; margin-bottom:6px}
+.card p{font-size:13px; color:#444}
+.card .term{display:flex; gap:10px; align-items:center; margin-bottom:8px}
+
+table.t{width:100%; border-collapse:collapse; font-size:13.5px}
+table.t th{ text-align:left; font-size:11px; letter-spacing:.1em; text-transform:lowercase; color:var(--mid); font-weight:600; padding:8px 10px; border-bottom:2px solid var(--ink)}
+table.t td{padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+table.t tr td:first-child{white-space:nowrap}
+
+/* ---------- roadmap ---------- */
+.roadmap{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px}
+.roadmap .wk{border:1px solid var(--line); border-radius:10px; padding:12px}
+.roadmap .wk b{display:block; font-size:12px; color:var(--orange); margin-bottom:2px}
+.roadmap .wk span{font-size:13px; font-weight:600; display:block}
+.roadmap .wk em{font-style:normal; font-size:12px; color:var(--mid)}
+
+/* ---------- week & session ---------- */
+.weekhead{display:flex; align-items:baseline; gap:14px; margin:0 0 6px}
+.weekhead .wno{font-size:13px; font-weight:700; color:var(--orange); letter-spacing:.08em}
+.weekhead h2{font-size:26px}
+.weekgoal{color:var(--mid); margin-bottom:22px; max-width:64ch}
+
+details.session{border:1px solid var(--line); border-radius:12px; margin-bottom:14px; background:#fff; overflow:hidden}
+details.session[open]{box-shadow:0 1px 6px rgba(0,0,0,.05)}
+details.session>summary{
+  list-style:none; cursor:pointer; display:flex; align-items:center; gap:14px;
+  padding:16px 18px; user-select:none;
+}
+details.session>summary::-webkit-details-marker{display:none}
+details.session>summary .sno{
+  flex:none; width:34px; height:34px; border-radius:50%; background:var(--line);
+  display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px;
+}
+details.session[open]>summary .sno{background:var(--orange); color:#fff}
+details.session>summary .stitle{font-weight:600; font-size:16px}
+details.session>summary .ssub{font-size:12.5px; color:var(--mid); display:block; font-weight:400}
+details.session>summary .chev{margin-left:auto; color:var(--mid); transition:transform .2s; flex:none}
+details.session[open]>summary .chev{transform:rotate(90deg)}
+.done-toggle{
+  flex:none; width:22px; height:22px; border-radius:6px; border:2px solid #cfcfcf;
+  background:#fff; cursor:pointer; position:relative;
+}
+.done-toggle.on{background:var(--orange); border-color:var(--orange)}
+.done-toggle.on::after{content:"✓"; color:#fff; font-size:13px; font-weight:700; position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
+details.session.isdone>summary .stitle{color:var(--mid); text-decoration:line-through; text-decoration-thickness:1px}
+
+.sbody{padding:4px 20px 20px}
+.goal{
+  background:var(--soft); border-radius:10px; padding:12px 16px; margin-bottom:18px;
+  font-size:14px; max-width:none;
+}
+.goal b{color:var(--orange); font-size:11px; letter-spacing:.1em; display:block; margin-bottom:2px}
+
+ol.steps{list-style:none; counter-reset:st}
+ol.steps>li{
+  counter-increment:st; position:relative; padding:14px 0 14px 46px;
+  border-top:1px dashed var(--line);
+}
+ol.steps>li:first-child{border-top:none}
+ol.steps>li::before{
+  content:counter(st); position:absolute; left:0; top:14px;
+  width:28px; height:28px; border-radius:50%; background:var(--line);
+  display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700;
+}
+.do{font-size:14.5px; margin-bottom:3px}
+.why{font-size:13px; color:var(--mid); max-width:70ch}
+.why b{color:#444; font-weight:600}
+.listen{font-size:13px; color:#444; margin-top:4px}
+.listen::before{content:"♪ Listen: "; color:var(--orange); font-weight:700; font-size:12px}
+.viz{margin:12px 0 4px; overflow-x:auto}
+.viz svg{display:block}
+.vizcap{font-size:12px; color:var(--mid); margin-top:6px}
+
+.sfoot{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:18px}
+.sfoot .fcell{border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:13px}
+.sfoot .fcell b{display:block; font-size:11px; letter-spacing:.06em; margin-bottom:4px}
+.fcell.assign b{color:var(--orange)}
+.fcell.ready b{color:#0a9b57}
+.fcell.fix b{color:#b6890a}
+.fcell.challenge b{color:#0d0d0d}
+
+.warm{display:flex; gap:12px; align-items:baseline; border:1px dashed #d9d9d9; border-radius:10px; padding:10px 14px; margin-bottom:14px; font-size:13.5px}
+.warm b{flex:none; font-size:11px; letter-spacing:.1em; color:var(--orange); font-weight:700}
+
+aside.story{border-left:3px solid var(--orange); background:var(--soft); padding:12px 16px 12px 14px; border-radius:0 10px 10px 0; margin:0 0 18px}
+aside.story b{display:block; font-size:11px; letter-spacing:.12em; color:var(--orange); font-weight:700; margin-bottom:4px}
+aside.story p{font-size:13.5px; color:#3c3c3c; max-width:78ch}
+
+.remember{margin-top:14px; font-size:14.5px; font-weight:600; display:flex; gap:10px; align-items:baseline}
+.remember::before{content:"Remember"; flex:none; color:#fff; background:var(--orange); font-size:10px; font-weight:700; letter-spacing:.08em; padding:3px 8px; border-radius:20px}
+
+details.quiz{border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:#fff}
+details.quiz summary{list-style:none; cursor:pointer; padding:10px 14px; font-size:13.5px; display:flex; gap:10px; align-items:baseline}
+details.quiz summary::-webkit-details-marker{display:none}
+details.quiz summary::before{content:"?"; flex:none; width:20px; height:20px; border-radius:50%; background:var(--ink); color:#fff; font-weight:700; font-size:12px; display:flex; align-items:center; justify-content:center}
+details.quiz .qa{padding:0 14px 12px 44px; font-size:13.5px; color:#444}
+details.quiz .qa::before{content:"→ "; color:var(--orange); font-weight:700}
+.nicelist{margin:4px 0 0; padding:0; list-style:none}
+.nicelist li{padding:7px 0 7px 22px; position:relative; font-size:13.5px; color:#444; max-width:78ch}
+.nicelist li::before{content:""; position:absolute; left:4px; top:14px; width:7px; height:7px; border-radius:50%; background:var(--orange)}
+.trackmap{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:9px 16px; font-size:13px}
+.trackmap div{display:flex; gap:9px; align-items:center}
+
+/* ---------- device map ---------- */
+#devmap svg{width:100%; height:auto}
+.maplegend{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:6px 22px; margin-top:22px}
+.maplegend .li{display:flex; gap:10px; font-size:13px; padding:7px 8px; border-radius:8px; align-items:flex-start; cursor:default}
+.maplegend .li:hover{background:var(--soft)}
+.maplegend .li b{font-weight:600}
+.maplegend .li span{color:var(--mid)}
+
+/* ---------- notes ---------- */
+.notesbox{width:100%; min-height:74px; border:1px solid var(--line); border-radius:10px; padding:10px 12px; font:inherit; font-size:13px; resize:vertical; background:var(--soft)}
+.noteslabel{font-size:11px; letter-spacing:.1em; color:var(--mid); font-weight:700; margin:18px 0 6px}
+
+/* ---------- cheat sheet ---------- */
+.cheat{display:grid; grid-template-columns:1fr; gap:8px}
+.cheat .row{display:flex; gap:16px; align-items:baseline; padding:9px 4px; border-bottom:1px solid var(--line); font-size:13.5px}
+.cheat .row .combo{flex:none; width:330px}
+.cheat .row .what{color:#444}
+.rules{counter-reset:r; max-width:74ch}
+.rules li{list-style:none; counter-increment:r; padding:10px 0 10px 44px; position:relative; border-bottom:1px solid var(--line); font-size:14px}
+.rules li::before{content:counter(r); position:absolute; left:0; top:10px; width:26px;height:26px;border-radius:50%; background:var(--ink); color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700}
+
+footer{padding:40px 0 80px; font-size:12.5px; color:var(--mid)}
+footer a{color:var(--mid)}
+
+@media (max-width:700px){
+  .cheat .row{flex-direction:column; gap:4px}
+  .cheat .row .combo{width:auto}
+  header.hero h1{font-size:32px}
+}
+@media print{
+  nav,#progressWrap,.done-toggle{display:none}
+  details.session{page-break-inside:avoid}
+  section.block{padding:24px 0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">OP–XY <span>Beginner Course</span></div>
+    <div class="links">
+      <a href="#map">The machine</a><a href="#vocab">Vocabulary</a><a href="#roadmap">Roadmap</a><a href="#course">Course</a><a href="#cheats">Cheat sheets</a>
+    </div>
+    <div id="progressWrap"><span id="progressTxt">0 / 26</span><div id="progressBar"><i></i></div></div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap cols">
+    <div>
+      <div class="kicker">A 12-week course for complete beginners</div>
+      <h1>learn to make music<br>on <em>OP–XY</em></h1>
+      <p class="sub">rhythm, harmony, melody, synthesis, arrangement and mixing — taught one 30–45 minute session at a time, with every button press shown exactly as it appears on the device — and the stories of the machines and records behind each idea.</p>
+      <p class="meta">every instruction verified against the <a href="https://teenage.engineering/guides/op-xy" target="_blank">official Teenage&nbsp;Engineering OP–XY guide</a> · your progress and notes save automatically in your browser</p>
+      <div class="accnote"><b>Accuracy note</b> — this guide was drafted with AI assistance and reviewed by a human, but it will contain mistakes. When this page and the device disagree, trust the device's screen and the official guide. Spotted an error? <a href="https://github.com/akanwar/learnmusicopxy/issues" target="_blank">Open an issue</a> — corrections are the point of hosting this publicly.</div>
+    </div>
+    <svg viewBox="0 0 340 200" width="320" aria-label="Schematic illustration of the OP-XY front panel" xmlns="http://www.w3.org/2000/svg" style="flex:none">
+      <rect x="4" y="14" width="332" height="172" rx="16" fill="#1b1b1e"/>
+      <g><circle cx="30" cy="40" r="1.8" fill="#0c0c0d"/><circle cx="38" cy="40" r="1.8" fill="#0c0c0d"/><circle cx="46" cy="40" r="1.8" fill="#0c0c0d"/><circle cx="30" cy="48" r="1.8" fill="#0c0c0d"/><circle cx="38" cy="48" r="1.8" fill="#0c0c0d"/><circle cx="46" cy="48" r="1.8" fill="#0c0c0d"/></g>
+      <rect x="60" y="30" width="104" height="28" rx="3" fill="#e9e9e6"/>
+      <rect x="68" y="36" width="60" height="4" rx="2" fill="#bdbdb8"/>
+      <rect x="68" y="44" width="36" height="4" rx="2" fill="#FF4D00"/>
+      <circle cx="192" cy="44" r="13" fill="#3b3b41" stroke="#000"/><circle cx="228" cy="44" r="13" fill="#77777d" stroke="#000"/>
+      <circle cx="264" cy="44" r="13" fill="#b9b9bd" stroke="#000"/><circle cx="300" cy="44" r="13" fill="#f4f4f4" stroke="#000"/>
+      <g><rect x="24" y="72" width="17" height="17" rx="5" fill="#26262a"/><rect x="43.4" y="72" width="17" height="17" rx="5" fill="#26262a"/><rect x="62.8" y="72" width="17" height="17" rx="5" fill="#26262a"/><rect x="82.2" y="72" width="17" height="17" rx="5" fill="#26262a"/><circle cx="110" cy="80.5" r="8.5" fill="#2e2e33"/><circle cx="129.4" cy="80.5" r="8.5" fill="#2e2e33"/><circle cx="148.8" cy="80.5" r="8.5" fill="#2e2e33"/><circle cx="168.2" cy="80.5" r="8.5" fill="#2e2e33"/><circle cx="187.6" cy="80.5" r="8.5" fill="#2e2e33"/><circle cx="207" cy="80.5" r="8.5" fill="#2e2e33"/><circle cx="226.4" cy="80.5" r="8.5" fill="#2e2e33"/><circle cx="245.8" cy="80.5" r="8.5" fill="#2e2e33"/><circle cx="265.2" cy="80.5" r="8.5" fill="#2e2e33"/><circle cx="284.6" cy="80.5" r="8.5" fill="#2e2e33"/><circle cx="304" cy="80.5" r="8.5" fill="#2e2e33"/></g>
+      <g><circle cx="33" cy="108" r="8.5" fill="#2a2a2e"/><circle cx="52" cy="108" r="8.5" fill="#333338"/><circle cx="71" cy="108" r="8.5" fill="#3c3c41"/><circle cx="90" cy="108" r="8.5" fill="#46464b"/><circle cx="109" cy="108" r="8.5" fill="#FF4D00"/><circle cx="128" cy="108" r="8.5" fill="#59595e"/><circle cx="147" cy="108" r="8.5" fill="#636368"/><circle cx="166" cy="108" r="8.5" fill="#6d6d72"/><circle cx="185" cy="108" r="8.5" fill="#77777c"/><circle cx="204" cy="108" r="8.5" fill="#828287"/><circle cx="223" cy="108" r="8.5" fill="#8c8c91"/><circle cx="242" cy="108" r="8.5" fill="#96969b"/><circle cx="261" cy="108" r="8.5" fill="#a1a1a6"/><circle cx="280" cy="108" r="8.5" fill="#ababb0"/><circle cx="299" cy="108" r="8.5" fill="#b5b5ba"/><circle cx="318" cy="108" r="8.5" fill="#bfbfc4"/></g>
+      <g><rect x="24" y="126" width="17" height="22" rx="5" fill="#26262a"/><circle cx="32.5" cy="137" r="4" fill="#FF4D00"/><rect x="43.4" y="126" width="17" height="22" rx="5" fill="#26262a"/><polygon points="49,132 49,142 57,137" fill="#d7d7d9"/><rect x="62.8" y="126" width="17" height="22" rx="5" fill="#26262a"/><rect x="68" y="133" width="7" height="7" fill="#d7d7d9"/><rect x="94" y="126" width="12" height="22" rx="4" fill="#141416"/><rect x="112" y="126" width="12" height="22" rx="4" fill="#141416"/><rect x="130" y="126" width="12" height="22" rx="4" fill="#141416"/><rect x="160" y="126" width="12" height="22" rx="4" fill="#141416"/><rect x="178" y="126" width="12" height="22" rx="4" fill="#141416"/><rect x="208" y="126" width="12" height="22" rx="4" fill="#141416"/><rect x="226" y="126" width="12" height="22" rx="4" fill="#141416"/><rect x="244" y="126" width="12" height="22" rx="4" fill="#141416"/><rect x="274" y="126" width="12" height="22" rx="4" fill="#141416"/><rect x="292" y="126" width="12" height="22" rx="4" fill="#141416"/></g>
+      <g><rect x="24" y="154" width="17" height="20" rx="5" fill="#222226"/><rect x="43.4" y="154" width="17" height="20" rx="5" fill="#222226"/><rect x="62.8" y="154" width="17" height="20" rx="5" fill="#222226"/><rect x="86" y="154" width="16.4" height="20" rx="5" fill="#2c2c30"/><rect x="104.4" y="154" width="16.4" height="20" rx="5" fill="#2c2c30"/><rect x="122.8" y="154" width="16.4" height="20" rx="5" fill="#2c2c30"/><rect x="141.2" y="154" width="16.4" height="20" rx="5" fill="#2c2c30"/><rect x="159.6" y="154" width="16.4" height="20" rx="5" fill="#2c2c30"/><rect x="178" y="154" width="16.4" height="20" rx="5" fill="#2c2c30"/><rect x="196.4" y="154" width="16.4" height="20" rx="5" fill="#2c2c30"/><rect x="214.8" y="154" width="16.4" height="20" rx="5" fill="#2c2c30"/><rect x="233.2" y="154" width="16.4" height="20" rx="5" fill="#2c2c30"/><rect x="251.6" y="154" width="16.4" height="20" rx="5" fill="#2c2c30"/><rect x="270" y="154" width="16.4" height="20" rx="5" fill="#2c2c30"/><rect x="288.4" y="154" width="16.4" height="20" rx="5" fill="#2c2c30"/><rect x="306.8" y="154" width="16.4" height="20" rx="5" fill="#2c2c30"/></g>
+    </svg>
+  </div>
+</header>
+
+<!-- ============ DEVICE MAP ============ -->
+<section class="block" id="map">
+  <div class="wrap">
+    <div class="kicker">01 — Before anything else</div>
+    <h2>meet the machine</h2>
+    <p class="lede">this is the OP–XY top panel. fourteen zones, four rows of keys. every lesson below refers to these by name — come back here whenever a button name doesn't ring a bell.</p>
+    <div id="devmap"></div>
+    <div class="maplegend" id="maplegend"></div>
+  </div>
+</section>
+
+<!-- ============ VOCABULARY ============ -->
+<section class="block" id="vocab">
+  <div class="wrap">
+    <div class="kicker">02 — Eight words</div>
+    <h2>vocabulary</h2>
+    <p class="lede">electronic music on OP–XY is built like nesting dolls: notes live on steps, steps form patterns, patterns stack into scenes, scenes chain into songs. learn these eight words and the whole device makes sense.</p>
+    <div class="viz" id="nestviz"></div>
+    <div class="cardgrid" id="vocabgrid" style="margin-top:22px"></div>
+  </div>
+</section>
+
+<!-- ============ ROADMAP ============ -->
+<section class="block" id="roadmap">
+  <div class="wrap">
+    <div class="kicker">03 — The plan</div>
+    <h2>The 12-week roadmap</h2>
+    <p class="lede">two to three short sessions per week. the goal is never theory — it is a finished musical artifact at the end of every session, and one finished track at the end of week 12.</p>
+    <div class="roadmap" id="roadmapgrid"></div>
+    <div class="card" style="margin-top:18px">
+      <h4>The course track map</h4>
+      <p style="margin-bottom:10px">A new OP–XY project loads instruments in this order — the course uses the device's own defaults, so nothing needs reassigning:</p>
+      <div class="trackmap">
+        <div><span class="k ktr">1</span> Drums</div>
+        <div><span class="k ktr">2</span> Second drum kit / percussion</div>
+        <div><span class="k ktr">3</span> Bass</div>
+        <div><span class="k ktr">4</span> Pluck — stabs &amp; arps</div>
+        <div><span class="k ktr">5</span> Lead — melody</div>
+        <div><span class="k ktr">6</span> Soft pluck</div>
+        <div><span class="k ktr">7</span> Strings — chords</div>
+        <div><span class="k ktr">8</span> Pad — alt. chords</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <h4>How this course teaches (the science, briefly)</h4>
+      <p style="margin-bottom:6px">Four habits are built into every session, because the research on learning is unambiguous about them:</p>
+      <ul class="nicelist">
+        <li><b>Warm-ups make you remember before you re-read.</b> Recalling something strengthens memory far more than reviewing it (the testing effect) — always try the warm-up before scrolling back.</li>
+        <li><b>Quizzes close each week.</b> Answer out loud first, then click to check. Being almost right and then corrected is exactly where memory forms.</li>
+        <li><b>Short sessions, spread out.</b> Two or three 30-minute sessions beat one 3-hour marathon (the spacing effect). Stop while it is still fun.</li>
+        <li><b>Every session ends with something you can play.</b> Hearable progress is the motivation that survives to week 12.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COURSE ============ -->
+<div id="course"></div>
+
+<!-- ============ CHEAT SHEETS ============ -->
+<section class="block" id="cheats">
+  <div class="wrap">
+    <div class="kicker">99 — Keep nearby</div>
+    <h2>cheat sheets</h2>
+
+    <h3 style="margin:26px 0 12px">button paths you will use constantly</h3>
+    <div class="cheat" id="cheatpaths"></div>
+
+    <h3 style="margin:34px 0 12px">the four encoders</h3>
+    <p class="lede" style="margin-bottom:14px">OP–XY never labels knobs on the hardware — the screen shows what each one does, always in this color order, left to right:</p>
+    <div id="encleg"></div>
+
+    <h3 style="margin:34px 0 12px">step components — the 14 natural keys</h3>
+    <p class="lede" style="margin-bottom:14px">hold <span class="k">shift</span> + press a lit step, then press a <b>natural key</b> to add that component. while still holding <span class="k">shift</span>, the <b>accidental keys 1–0</b> set its value (the screen names everything as you press).</p>
+    <div class="viz" id="sckb"></div>
+    <table class="t" style="margin-top:16px" id="sctable"></table>
+
+    <h3 style="margin:34px 0 12px">seven rules that prevent 80% of bad results</h3>
+    <ol class="rules" id="rules"></ol>
+
+    <h3 style="margin:34px 0 12px">official guide chapters</h3>
+    <p style="font-size:13.5px" id="chapters"></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <b>learnmusicopxy</b> — an independent, hands-on beginner course for the OP–XY. Drafted with AI assistance and reviewed by a human; verify against the official <a href="https://teenage.engineering/guides/op-xy" target="_blank">Teenage Engineering OP–XY guide</a> before relying on any button path. OP–XY is a product and trademark of Teenage Engineering; this project is not affiliated with or endorsed by them, and contains no Teenage Engineering imagery — every diagram is an original schematic. Content licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>, inline code MIT · <a href="https://github.com/akanwar/learnmusicopxy" target="_blank">source &amp; corrections on GitHub</a>.
+  </div>
+</footer>
+
+<script>
+/* =================================================================
+   helpers — chips, svg components
+================================================================= */
+const $ = (s,el=document)=>el.querySelector(s);
+const ORANGE="#FF4D00", INK="#0d0d0d", LINE="#e5e5e5", MID="#8a8a8e", KEY="#2a2a2e";
+
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+
+/* ---- chip parser: tokens in [brackets] ---- */
+function chips(text){
+  return text.replace(/\[([^\]]+)\]/g,(m,t)=>{
+    const lower=t.toLowerCase();
+    if(/^m[1-4]$/.test(lower)) return `<span class="k km">${t.slice(1)}</span><span class="encname"> (${t.toUpperCase()})</span>`;
+    if(/^track [1-8]$/.test(lower)) return `<span class="k ktr">${t.split(" ")[1]}</span><span class="encname"> (track ${t.split(" ")[1]})</span>`;
+    if(/^step /.test(lower)) return `<span class="k kw">step ${t.split(" ")[1]}</span>`;
+    if(/^acc /.test(lower)) return `<span class="k kacc">${t.split(" ")[1]}</span>`;
+    if(/^key /.test(lower)) return `<span class="k kw">${t.split(" ").slice(1).join(" ")}</span>`;
+    if(lower==="record") return `<span class="k krec">record</span>`;
+    if(lower==="play") return `<span class="k kplay">play</span>`;
+    if(lower==="stop") return `<span class="k kstop">stop</span>`;
+    if(lower==="enc dark") return `<span class="enc dark"></span><span class="encname">dark&nbsp;gray</span>`;
+    if(lower==="enc mid") return `<span class="enc mid"></span><span class="encname">mid&nbsp;gray</span>`;
+    if(lower==="enc light") return `<span class="enc light"></span><span class="encname">light&nbsp;gray</span>`;
+    if(lower==="enc white") return `<span class="enc white"></span><span class="encname">white</span>`;
+    return `<span class="k">${esc(t)}</span>`;
+  });
+}
+
+/* ---- 16-step sequencer grid ----
+   rows: [{label,key,steps:[..], ghost:[..]}]  steps=press now(orange), ghost=already placed(dark) */
+function seqGrid(rows, nsteps=16, caption=""){
+  const cell=30, gap=5, grp=10, lw=120;
+  const W = lw + nsteps*(cell+gap) + Math.floor((nsteps-1)/4)*grp + 10;
+  const rowH = cell+16;
+  const H = 26 + rows.length*rowH;
+  let s = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="max-width:${W}px">`;
+  // step numbers
+  for(let i=0;i<nsteps;i++){
+    const x = lw + i*(cell+gap) + Math.floor(i/4)*grp;
+    const beat = i%4===0;
+    s+=`<text x="${x+cell/2}" y="14" font-size="10" font-weight="${beat?700:400}" fill="${beat?INK:MID}" text-anchor="middle" font-family="Helvetica,Arial">${i+1}</text>`;
+  }
+  rows.forEach((r,ri)=>{
+    const y = 24 + ri*rowH;
+    s+=`<text x="0" y="${y+cell/2+4}" font-size="12" font-weight="600" fill="${INK}" font-family="Helvetica,Arial">${esc(r.label)}</text>`;
+    if(r.key) s+=`<text x="0" y="${y+cell/2+16}" font-size="9.5" fill="${MID}" font-family="Helvetica,Arial">key: ${esc(r.key)}</text>`;
+    for(let i=0;i<nsteps;i++){
+      const x = lw + i*(cell+gap) + Math.floor(i/4)*grp;
+      const on = (r.steps||[]).includes(i+1);
+      const gh = (r.ghost||[]).includes(i+1);
+      const fill = on?ORANGE:(gh?KEY:"#ffffff");
+      const stroke = on?ORANGE:(gh?KEY:"#cfcfcf");
+      s+=`<rect x="${x}" y="${y}" width="${cell}" height="${cell}" rx="7" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
+      if(on) s+=`<circle cx="${x+cell/2}" cy="${y+cell/2}" r="4" fill="#fff"/>`;
+      if(gh) s+=`<circle cx="${x+cell/2}" cy="${y+cell/2}" r="4" fill="#9a9aa0"/>`;
+      if(r.txt && r.txt[i+1]) s+=`<text x="${x+cell/2}" y="${y+cell/2+3.5}" font-size="9" fill="${on?'#fff':INK}" font-weight="700" text-anchor="middle" font-family="Helvetica,Arial">${r.txt[i+1]}</text>`;
+    }
+  });
+  s+="</svg>";
+  if(caption) s+=`<div class="vizcap">${chips(caption)}</div>`;
+  return `<div class="viz">${s}</div>`;
+}
+
+/* ---- 24-key keyboard, runs F..E F..E like the real device ----
+   hl: {"C1":"C","E1":"E","G2":"G"} note→label (orange). drum:{"F1":"kick",...}
+   accNums: show 1-0 labels on accidentals */
+function kbSVG(opts={}){
+  const naturals=["F","G","A","B","C","D","E"];
+  const accAfter={F:true,G:true,A:true,B:false,C:true,D:true,E:false};
+  const nw=44, nh=84, ah=50, aw=30;
+  const keys=[]; // naturals across 2 octaves
+  let accCount=0;
+  const W=14*nw+2, H=nh+30;
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="max-width:${W}px">`;
+  // naturals
+  for(let o=1;o<=2;o++){
+    naturals.forEach((n,i)=>{
+      const idx=(o-1)*7+i, x=idx*nw;
+      const id=n+o;
+      const hl = opts.hl && opts.hl[id];
+      const fillN = hl ? (opts.plain ? "#fafafa" : ORANGE) : "#fafafa";
+      const strokeN = hl && !opts.plain ? ORANGE : "#c9c9c9";
+      s+=`<rect x="${x}" y="0" width="${nw-3}" height="${nh}" rx="6" fill="${fillN}" stroke="${strokeN}" stroke-width="1.5"/>`;
+      s+=`<text x="${x+(nw-3)/2}" y="${nh-10}" font-size="11" text-anchor="middle" font-weight="${hl?700:400}" fill="${hl?(opts.plain?INK:"#fff"):MID}" font-family="Helvetica,Arial">${n}</text>`;
+      if(hl && hl!==true && hl!==n) s+=`<text x="${x+(nw-3)/2}" y="${nh+16}" font-size="10.5" font-weight="700" text-anchor="middle" fill="${opts.plain?INK:ORANGE}" font-family="Helvetica,Arial">${esc(String(hl))}</text>`;
+    });
+  }
+  // accidentals
+  for(let o=1;o<=2;o++){
+    naturals.forEach((n,i)=>{
+      if(!accAfter[n]) return;
+      accCount++;
+      const idx=(o-1)*7+i, x=idx*nw + nw - 3 - aw/2 + 1.5;
+      const id=n+"#"+o;
+      const hl = opts.hl && opts.hl[id];
+      s+=`<rect x="${x}" y="-1" width="${aw}" height="${ah}" rx="5" fill="${hl?ORANGE:"#1d1d20"}" stroke="${hl?ORANGE:"#1d1d20"}"/>`;
+      const lab = opts.accNums ? (accCount%10) : (hl&&hl!==true?hl:"");
+      const num = accCount%10===0?"0":String(accCount%10);
+      if(opts.accNums) s+=`<text x="${x+aw/2}" y="${ah-8}" font-size="9.5" text-anchor="middle" fill="#bbb" font-family="Helvetica,Arial">${num}</text>`;
+      if(hl && hl!==true) s+=`<text x="${x+aw/2}" y="${ah-8}" font-size="9.5" font-weight="700" text-anchor="middle" fill="#fff" font-family="Helvetica,Arial">${esc(String(hl))}</text>`;
+    });
+  }
+  s+="</svg>";
+  let cap = opts.caption?`<div class="vizcap">${chips(opts.caption)}</div>`:"";
+  return `<div class="viz">${s}${cap}</div>`;
+}
+
+/* ---- ADSR envelope ---- */
+function adsr(a,d,su,r,label,note){
+  const W=220,H=128,p=16, base=H-44, top=16;
+  const span=W-2*p;
+  const ax=p+span*a*0.25, dx=ax+span*d*0.25, sx=p+span*0.62, rx=Math.min(W-p, sx+span*r*0.3);
+  const sy= top+(base-top)*(1-su);
+  const path=`M ${p} ${base} L ${ax} ${top} L ${dx} ${sy} L ${sx} ${sy} L ${rx} ${base}`;
+  return `<div style="display:inline-block;margin:0 14px 10px 0;vertical-align:top">
+  <svg viewBox="0 0 ${W} ${H}" width="${W}" xmlns="http://www.w3.org/2000/svg">
+    <rect x="1" y="1" width="${W-2}" height="${H-2}" rx="10" fill="#fff" stroke="${LINE}"/>
+    <path d="${path}" fill="none" stroke="${ORANGE}" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M ${p} ${base} L ${W-p} ${base}" stroke="${LINE}" stroke-width="1"/>
+    <text x="${p}" y="${H-24}" font-size="11.5" font-weight="700" fill="${INK}" font-family="Helvetica,Arial">${esc(label)}</text>
+    <text x="${p}" y="${H-10}" font-size="9.5" fill="${MID}" font-family="Helvetica,Arial">${esc(note||"")}</text>
+  </svg></div>`;
+}
+
+/* ---- scene blocks diagram ---- */
+function scenesViz(scenes, tracks, caption){
+  const cw=104, ch=20, lw=86, gap=8;
+  const W=lw+scenes.length*(cw+gap), H=34+tracks.length*(ch+5);
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="max-width:${W}px">`;
+  scenes.forEach((sc,si)=>{
+    const x=lw+si*(cw+gap);
+    s+=`<text x="${x+cw/2}" y="13" font-size="11" font-weight="700" text-anchor="middle" fill="${INK}" font-family="Helvetica,Arial">${esc(sc.name)}</text>`;
+  });
+  tracks.forEach((tr,ti)=>{
+    const y=24+ti*(ch+5);
+    s+=`<text x="0" y="${y+ch-6}" font-size="10.5" fill="${MID}" font-family="Helvetica,Arial">${esc(tr)}</text>`;
+    scenes.forEach((sc,si)=>{
+      const x=lw+si*(cw+gap);
+      const on=sc.on.includes(ti);
+      s+=`<rect x="${x}" y="${y}" width="${cw}" height="${ch}" rx="5" fill="${on?ORANGE:"#f0f0f0"}" opacity="${on?(sc.dim&&sc.dim.includes(ti)?0.45:1):1}"/>`;
+    });
+  });
+  s+="</svg>";
+  return `<div class="viz">${s}${caption?`<div class="vizcap">${chips(caption)}</div>`:""}</div>`;
+}
+
+/* ---- energy curve ---- */
+function energyViz(pts,labels,caption){
+  const W=560,H=120,p=30;
+  const xs=i=>p+(W-2*p)*i/(pts.length-1), ys=v=>H-26-(H-58)*v;
+  let path="M "+pts.map((v,i)=>`${xs(i)} ${ys(v)}`).join(" L ");
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="max-width:${W}px">
+    <path d="${path}" fill="none" stroke="${ORANGE}" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M ${p} ${H-26} L ${W-p} ${H-26}" stroke="${LINE}"/>`;
+  pts.forEach((v,i)=>{ s+=`<circle cx="${xs(i)}" cy="${ys(v)}" r="4" fill="${ORANGE}"/>`;
+    if(labels[i]) s+=`<text x="${xs(i)}" y="${H-10}" font-size="10" text-anchor="middle" fill="${MID}" font-family="Helvetica,Arial">${labels[i]}</text>`;});
+  s+="</svg>";
+  return `<div class="viz">${s}${caption?`<div class="vizcap">${chips(caption)}</div>`:""}</div>`;
+}
+
+/* ---- mixer levels ---- */
+function mixerViz(items,caption){
+  const bw=52,gap=18,H=150,W=items.length*(bw+gap);
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="max-width:${W}px">`;
+  items.forEach((it,i)=>{
+    const x=i*(bw+gap), bh=(H-44)*it.v, y=H-30-bh;
+    s+=`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="6" fill="${it.c||KEY}"/>
+        <text x="${x+bw/2}" y="${H-14}" font-size="10.5" text-anchor="middle" fill="${MID}" font-family="Helvetica,Arial">${esc(it.l)}</text>`;
+    if(it.pan!==undefined){
+      s+=`<line x1="${x+8}" y1="${y-9}" x2="${x+bw-8}" y2="${y-9}" stroke="${LINE}" stroke-width="2"/>
+          <circle cx="${x+bw/2+it.pan*(bw/2-10)}" cy="${y-9}" r="4" fill="${ORANGE}"/>`;
+    }
+  });
+  s+="</svg>";
+  return `<div class="viz">${s}${caption?`<div class="vizcap">${chips(caption)}</div>`:""}</div>`;
+}
+</script>
+<script>
+/* =================================================================
+   device map — schematic of the OP-XY top panel, 14 official zones
+================================================================= */
+function badge(s,x,y,n){return s+`<circle cx="${x}" cy="${y}" r="13" fill="${ORANGE}"/><text x="${x}" y="${y+4.5}" font-size="13" font-weight="700" fill="#fff" text-anchor="middle" font-family="Helvetica,Arial">${n}</text>`}
+
+function deviceMap(){
+  const u=74, k=62, W=17*u+60, H=420, ox=30, oy=14;
+  const cx=i=>ox+i*u, kk=(s,c,r,o={})=>{ // key at col c row-y r
+    return s+`<rect x="${cx(c)+(o.dx||0)}" y="${r}" width="${o.w||k}" height="${o.h||k}" rx="${o.rx||12}" fill="${o.fill||"#26262a"}" stroke="#000" stroke-width="0.5"/>`;
+  };
+  const lab=(s,c,r,t,o={})=>s+`<text x="${cx(c)+(o.dx||k/2)}" y="${r}" font-size="${o.fs||11}" font-weight="${o.fw||600}" fill="${o.fill||"#d7d7d9"}" text-anchor="middle" font-family="Helvetica,Arial">${t}</text>`;
+  const R1=oy+18, R2=oy+118, R3=oy+196, R4=oy+274, R5=oy+340;
+  let s=`<svg viewBox="0 0 ${W} ${H+40}" xmlns="http://www.w3.org/2000/svg">`;
+  s+=`<rect x="6" y="${oy-8}" width="${W-12}" height="${H}" rx="22" fill="#1b1b1e"/>`;
+
+  /* row 1: speaker, volume, projects, tempo, screen, encoders, sample */
+  for(let r=0;r<6;r++)for(let c=0;c<7;c++) s+=`<circle cx="${cx(0)+10+c*9}" cy="${R1+8+r*9}" r="2.6" fill="#0c0c0d"/>`; // speaker
+  s+=`<circle cx="${cx(1)+k-8}" cy="${R1+30}" r="22" fill="#222226" stroke="#000"/><circle cx="${cx(1)+k-8}" cy="${R1+30}" r="3" fill="#9a9aa0"/>`; // volume
+  s=kk(s,2,R1,{}); s=lab(s,2,R1+36,"projects",{fs:9.5});
+  s=kk(s,3,R1,{}); s=lab(s,3,R1+36,"tempo",{fs:9.5});
+  s+=`<rect x="${cx(4)}" y="${R1-4}" width="${4*u-12}" height="${k+10}" rx="6" fill="#e9e9e6" stroke="#000"/>`; // screen
+  s+=`<rect x="${cx(4)+14}" y="${R1+10}" width="${4*u-40}" height="${k-22}" fill="none" stroke="#bdbdb8"/>`;
+  s=lab(s,5,R1+34,"screen",{fill:"#8a8a85",dx:u-6,fs:11});
+  const encCols=[8.5,10.5,12.5,14.5], encFill=["#3b3b41","#77777d","#b9b9bd","#f4f4f4"];
+  encCols.forEach((c,i)=>{ s+=`<circle cx="${cx(c)}" cy="${R1+30}" r="26" fill="${encFill[i]}" stroke="#000"/><circle cx="${cx(c)}" cy="${R1+14}" r="3" fill="${i>1?"#555":"#ddd"}"/>`;});
+  s=kk(s,16,R1,{rx:31}); s=lab(s,16,R1+36,"sample",{fs:9});
+
+  /* row 2: modes, M1-4, tracks 1-8, com+players right col */
+  const modes=["instr","aux","arrange","mix"];
+  modes.forEach((m,i)=>{ s=kk(s,i,R2); s=lab(s,i,R2+36,m,{fs:9.5}); });
+  for(let i=0;i<4;i++){ s=kk(s,4+i,R2,{rx:31,fill:"#2e2e33"}); s=lab(s,4+i,R2+38,String(i+1),{fs:14,fill:"#eee"}); }
+  const auxlab=["brain","fx","midi","cv","ext","tape","fx i","fx ii"];
+  for(let i=0;i<8;i++){ s=kk(s,8+i,R2,{rx:31,fill:"#2e2e33"}); s=lab(s,8+i,R2+32,String(i+1),{fs:13,fill:"#eee"}); s=lab(s,8+i,R2+46,auxlab[i],{fs:7.5,fill:"#86868c"}); }
+  s=kk(s,16,R2,{h:28,rx:8}); s=lab(s,16,R2+18,"com",{fs:9});
+  s=kk(s,16,R2+34,{h:28,rx:8}); s=lab(s,16,R2+52,"players",{fs:8});
+
+  /* row 3: sequencer + bar */
+  for(let i=0;i<16;i++){
+    const shade = 38+Math.round(i*9.5);
+    s=kk(s,i,R3,{rx:31,fill:`rgb(${shade},${shade},${shade+4})`});
+    s+=`<circle cx="${cx(i)+k/2}" cy="${R3+14}" r="2.5" fill="${i<2?ORANGE:"#0e0e10"}"/>`;
+    s=lab(s,i,R3+40,String(i+1),{fs:10,fill:i>9?"#333":"#bbb"});
+  }
+  s=kk(s,16,R3,{rx:31}); s=lab(s,16,R3+30,"1–4",{fs:8.5}); s=lab(s,16,R3+42,"bar",{fs:9.5});
+
+  /* row 4: record/play/stop + accidentals  ----  row 5: -/+/shift + naturals */
+  s=kk(s,0,R4,{h:54}); s+=`<circle cx="${cx(0)+k/2}" cy="${R4+27}" r="8" fill="${ORANGE}"/>`;
+  s=kk(s,1,R4,{h:54}); s+=`<polygon points="${cx(1)+25},${R4+19} ${cx(1)+25},${R4+35} ${cx(1)+39},${R4+27}" fill="#d7d7d9"/>`;
+  s=kk(s,2,R4,{h:54}); s=lab(s,2,R4+32,"■",{fs:12});
+  // accidentals: offsets after naturals F G A _ C D _ — natural cols 3..16
+  const accPat=[0,1,2,4,5]; let accN=0;
+  for(let o=0;o<2;o++) accPat.forEach(p=>{ accN++;
+    const c=3+o*7+p; const x=cx(c)+k-18;
+    s+=`<rect x="${x}" y="${R4}" width="40" height="54" rx="9" fill="#161618" stroke="#000"/>`;
+    s+=`<text x="${x+20}" y="${R4+32}" font-size="11" fill="#cfcfcf" text-anchor="middle" font-family="Helvetica,Arial">${accN%10}</text>`;
+  });
+  s=kk(s,0,R5,{h:54,fill:"#222226"}); s=lab(s,0,R5+32,"−",{fs:15});
+  s=kk(s,1,R5,{h:54,fill:"#222226"}); s=lab(s,1,R5+32,"+",{fs:15});
+  s=kk(s,2,R5,{h:54,fill:"#222226"}); s=lab(s,2,R5+32,"shift",{fs:10});
+  const nat=["F","G","A","B","C","D","E"];
+  for(let o=0;o<2;o++) nat.forEach((n,i)=>{ const c=3+o*7+i;
+    s=kk(s,c,R5,{h:54,fill:"#2c2c30"});
+    s=lab(s,c,R5+34,n,{fs:11,fill:"#9d9da3"});
+  });
+
+  /* badges */
+  s=badge(s,cx(1)+k/2,R2-16,1);            // main modes
+  s=badge(s,cx(5)+u-8,R2-16,2);            // modules
+  s=badge(s,cx(11)+u-8,R2-16,3);           // tracks
+  s=badge(s,cx(7)+k/2,R3-14,4);            // sequencer
+  s=badge(s,cx(1)+k/2,R4+70,5);            // transport (under, spans both rows)
+  s=badge(s,cx(9)+k/2,R5+70,6);            // keyboard
+  s=badge(s,cx(16)+k/2,R1-14,7);           // sample
+  s=badge(s,cx(2)+k/2,R1-14,8);            // projects
+  s=badge(s,cx(3)+k/2,R1-14,9);            // tempo
+  s=badge(s,cx(16)+k+18,R2+14,10);         // com
+  s=badge(s,cx(16)+k+18,R2+48,11);         // players
+  s=badge(s,cx(16)+k/2,R3-14,12);          // bar
+  s=badge(s,cx(1)+k-8,R1-14,13);           // volume
+  s=badge(s,cx(10.5),R1-14,14);            // encoders
+  s+="</svg>";
+  return s;
+}
+
+const LEGEND=[
+ [1,"main modes","instrument · auxiliary · arrange · mix — the four 'rooms' of the device. you'll live in these."],
+ [2,"modules M1–M4","four buttons under the screen. in instrument mode: M1 engine, M2 envelopes, M3 filter, M4 LFO."],
+ [3,"track buttons 1–8","select which track you're editing. lit red = selected. small icons = their auxiliary-mode jobs."],
+ [4,"step sequencer","16 steps = one bar. the musical grid you place sounds onto. the heart of OP–XY."],
+ [5,"transport","record, play, stop — plus − / + (octave down/up) and shift (sub-functions everywhere)."],
+ [6,"keyboard","two octaves, F to E. naturals carry the step-component icons; accidentals are numbered 1–0."],
+ [7,"sample","press from anywhere to record a sample (max 20 s) into the device."],
+ [8,"projects","view, create and save projects. hold M1 in here to make a new project."],
+ [9,"tempo","bpm, swing and metronome."],
+ [10,"com","system settings, wireless, outputs, connecting to a computer."],
+ [11,"players","note effects — arpeggios, chord helpers, hold."],
+ [12,"bar","extend sequences, track scale, quantize, groove, smoothing. hold it + something."],
+ [13,"volume","rotate for level. beside the speaker."],
+ [14,"encoders","dark gray → mid gray → light gray → white. the screen always shows what they do right now."]
+];
+
+$("#devmap").innerHTML=deviceMap();
+$("#maplegend").innerHTML=LEGEND.map(([n,t,d])=>`<div class="li"><span class="badge orange">${n}</span><div><b>${t}</b> — <span>${d}</span></div></div>`).join("");
+
+/* ---- nesting viz: note → pattern → scene → song ---- */
+function nestViz(){
+  const W=900,H=120;
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="max-width:${W}px">`;
+  const box=(x,w,t,sub,fill)=>{
+    s+=`<rect x="${x}" y="18" width="${w}" height="70" rx="10" fill="${fill}" stroke="${LINE}"/>
+        <text x="${x+w/2}" y="44" font-size="13" font-weight="700" text-anchor="middle" fill="${INK}" font-family="Helvetica,Arial">${t}</text>
+        <text x="${x+w/2}" y="62" font-size="10.5" text-anchor="middle" fill="${MID}" font-family="Helvetica,Arial">${sub}</text>`;
+  };
+  box(0,150,"note","one key, one step","#fff");
+  box(190,170,"pattern","up to 4 bars on 1 track","#fff");
+  box(400,170,"scene","8 patterns playing together","#fff");
+  box(610,150,"song","scenes in order","#fff");
+  box(800,100,"project","the file","#f4f4f4");
+  [165,375,585,775].forEach(x=>{s+=`<path d="M ${x} 53 l 16 0 m -6 -6 l 6 6 l -6 6" stroke="${ORANGE}" stroke-width="2.5" fill="none"/>`});
+  return s+"</svg>";
+}
+$("#nestviz").innerHTML=nestViz();
+
+const VOCAB=[
+ ["instrument mode","where the 8 instrument tracks live: drum kits, samplers and synth engines. press [instrument] to get here."],
+ ["pattern","a sequence on one track (up to 9 per track). made in the step sequencer, managed in arrange mode."],
+ ["scene","one pattern choice + mutes + levels for all 8 tracks. scenes become your song sections (99 available)."],
+ ["song","scenes chained in order, in arrange mode's song view."],
+ ["module (M1–M4)","sub-pages of a mode. instrument mode: M1 engine · M2 envelopes · M3 filter · M4 LFO."],
+ ["parameter lock","hold a step + turn an encoder → only that step gets the new value. instant variation."],
+ ["step component","per-step trick on the natural keys: repeats, holds, ramps, jumps… hold [shift] + step, then a natural key."],
+ ["track scale","how much time one step covers (set per track: hold [bar] + accidental). scale 4 → one step = one beat."]
+];
+$("#vocabgrid").innerHTML=VOCAB.map(([t,d],i)=>`<div class="card"><div class="term"><span class="badge">${i+1}</span><h4>${t}</h4></div><p>${chips(d)}</p></div>`).join("");
+
+const ROADMAP=[
+ ["Week 1","Rhythm I","the grid, first beats"],["Week 2","Rhythm II","groove, fills, feel"],
+ ["Week 3","Harmony I","chords on the grid"],["Week 4","Harmony II","bass + chord rhythm"],
+ ["Week 5","Melody","pentatonic, call & response"],["Week 6","First sketch","90 seconds of music"],
+ ["Week 7","Synthesis I","engines & envelopes"],["Week 8","Synthesis II","filters, LFO, sampling"],
+ ["Week 9","Arrangement I","scenes & transitions"],["Week 10","Arrangement II","song mode, performing"],
+ ["Week 11","Mixing","levels, pan, sends"],["Week 12","Final project","finish one real track"]
+];
+$("#roadmapgrid").innerHTML=ROADMAP.map(([w,f,o])=>`<div class="wk"><b>${w}</b><span>${f}</span><em>${o}</em></div>`).join("");
+</script>
+<script>
+/* =================================================================
+   the course
+================================================================= */
+const KICK={label:"kick",key:"low F"}, SNARE={label:"snare",key:"G"}, HAT={label:"hi-hat",key:"C#"};
+const COURSE=[
+
+/* ---------------- week 0 ---------------- */
+{n:"Start here", title:"One evening, zero pressure", quiz:[["which mode always takes you home when you are lost?","[instrument] — it always returns you to the tracks."],["how do you create a new project?","press [projects], then press and hold [M1]."],["what do the track buttons do in instrument mode?","select which of the 8 tracks you are editing — the selected one lights red."]], goal:"thirty minutes to switch it on, make a noise, and learn where everything lives. nothing you do tonight can break anything.",
+ sessions:[
+ {t:"Session 0 — Meet the machine", story:{t:"A Swedish workshop, 2010", x:"Teenage Engineering started in a Stockholm workshop in 2010, convinced that serious instruments could be small, playful and beautiful. their first synth, the OP–1, became a cult object used everywhere from bedrooms to stadium tours — Thom Yorke and Bon Iver both put it on records. the OP–XY (2024) is the same philosophy grown up: an entire studio, sequencer and mixer under two octaves of keys. you are not holding a toy; you are holding the argument that limitations breed music."}, challenge:"with the device off, point at where the following live: track buttons, step sequencer, [bar], [shift], the four encoders. then switch on and check.", remember:"[instrument] is home. when lost, press it.", sub:"power on · make any sound · the four modes",
+  goal:"press buttons until the panel map above feels familiar. no music required yet.",
+  steps:[
+   {do:"switch the OP–XY on and rotate the volume knob (top left, beside the speaker) to a comfortable level.",
+    why:"the built-in speaker is fine for learning; headphones in the jack are even better."},
+   {do:"press [projects], then press and hold [M1] to create a new project.",
+    why:"a fresh project loads a full band: <b>track 1–2</b> drums, <b>3</b> bass, <b>4</b> pluck, <b>5</b> lead, <b>6</b> soft pluck, <b>7</b> strings, <b>8</b> pad. the whole course uses these defaults.",
+    listen:"the screen confirms a new project."},
+   {do:"press [instrument], then [track 1]. mash some keyboard keys.",
+    why:"in instrument mode the 8 track buttons choose what the keyboard plays. on a drum track, all 24 keys are different drum sounds.",
+    listen:"drums. now press [track 5] and play again — a lead synth. the keys turned into notes."},
+   {do:"press [-] and [+] a few times while playing notes on track 5.",
+    why:"minus and plus shift the keyboard down or up an octave. on many other pages they also mean less/more.",
+    listen:"same melody, lower or higher."},
+   {do:"press each of the four mode buttons once: [instrument], [auxiliary], [arrange], [mix]. then come back to [instrument].",
+    why:"these are the four rooms of the device. <b>instrument</b>: compose sounds and notes · <b>auxiliary</b>: transpose, effects, punch-in FX · <b>arrange</b>: patterns, scenes, songs · <b>mix</b>: levels, pan, eq. each room has four sub-pages on [M1]–[M4]."},
+   {do:"hold [shift] and press random buttons for ten seconds. nothing breaks.",
+    why:"shift opens sub-functions everywhere. curiosity is the intended workflow — worst case, [shift]+[record] is undo."}
+  ],
+  assign:"find every numbered zone from the panel map on your real device, by touch.",
+  ready:"you can name the four modes and find tracks, steps, keyboard and transport without looking at this page.",
+  fix:"if a sound hangs forever, press [stop] twice. if you get lost in a weird screen, press [instrument] — it always takes you home."}
+]},
+
+/* ---------------- week 1 ---------------- */
+{n:"Week 1", title:"Rhythm I — the grid", quiz:[["which steps carry the kick in four-on-the-floor?","1, 5, 9 and 13 — the four beats of the bar."],["how do you view and edit only the snare's steps?","hold the snare key and tap [record] — the grid shows only that sound."],["what is the kick-placement difference between house and hip-hop?","house: kick on every beat (1-5-9-13). hip-hop: asymmetric kicks (e.g. 1, 7, 11) — the asymmetry is the head-nod."]], goal:"the step sequencer is the heart of the OP–XY: 16 steps = 1 bar = 4 beats. this week you learn to place sounds on it and feel why position matters.",
+ sessions:[
+ {t:"Session 1 — Your first beat", warm:"before touching anything: say the four mode names out loud, then name the button combo that creates a new project. check yourself against session 0 only afterwards.", story:{t:"The drummer who invented the heartbeat, 1973", x:"four-on-the-floor was popularized by Earl Young, the Philadelphia session drummer on The Trammps records — he started stomping the kick on every beat so dancers could not lose the pulse. a decade later, Chicago DJ Frankie Knuckles built entire nights on that pulse at a club called The Warehouse; regulars asked record shops for the music they heard there, and the genre became known as house. the pattern you are programming today is that exact heartbeat, fifty years on."}, challenge:"cover-the-screen drill: put a card over the screen and rebuild kick, snare and hats using only key positions and step numbers. spatial memory is what makes the device feel like an instrument.", remember:"1 · 5 · 9 · 13 is the heartbeat — and the grid always remembers the last key you played.", sub:"kick · snare · hat on a 16-step grid",
+  goal:"build the most important drum pattern in popular music, and learn the sequence-one-sound trick you will use forever.",
+  steps:[
+   {do:"press [instrument] → [track 1]. press the lowest [key F] — that is the kick drum. then press [step 1], [step 5], [step 9], [step 13].",
+    why:"OP–XY always remembers the last key you played; tapping a step stamps that sound onto it. kick on every beat is called <b>four on the floor</b> — the heartbeat of house and techno.",
+    listen:"press [play] — steady like a clock, no surprises.",
+    viz:seqGrid([{...KICK,steps:[1,5,9,13]}],16,"press the orange steps. bold numbers 1, 5, 9, 13 are the four beats of the bar.")},
+   {do:"press [key G] (next to the kick) — the snare. now <b>hold [key G] down and tap [record]</b>. the grid empties. still holding [key G], press [step 5] and [step 13].",
+    why:"holding a sound + tapping [record] shows <b>only that sound's steps</b> — the single most useful drum-editing trick on the device. snare on beats 2 and 4 is the <b>backbeat</b>, the head-nod of almost all pop.",
+    listen:"kick and snare together should already feel like a beat.",
+    viz:seqGrid([{...KICK,ghost:[1,5,9,13]},{...SNARE,steps:[5,13]}],16,"gray = already placed. orange = place now.")},
+   {do:"press [key C#] (the first black key) — closed hi-hat. hold it, tap [record], then press every other step: 1, 3, 5, 7, 9, 11, 13, 15.",
+    why:"eighth-note hats are the glue between kick and snare. they create motion.",
+    listen:"the loop starts to <b>groove</b> instead of just thudding.",
+    viz:seqGrid([{...KICK,ghost:[1,5,9,13]},{...SNARE,ghost:[5,13]},{...HAT,steps:[1,3,5,7,9,11,13,15]}])},
+   {do:"transport practice: [play] starts, [play] again restarts from the top, [stop] stops, [stop] twice silences everything.",
+    why:"owning start/stop is owning the room."},
+   {do:"press [tempo] — the screen shows BPM. try your beat at 90, 110 and 125.",
+    why:"same grid, three different genres. tempo is a musical decision, not a setting.",
+    listen:"90 feels heavy and hip-hop; 125 feels like a club."}
+  ],
+  assign:"keep this as pattern 1 on track 1. write down which BPM you liked and why.",
+  ready:"you can rebuild kick / snare / hat from memory and explain why steps 1-5-9-13 matter.",
+  fix:"too cluttered → remove hats first (hold [key C#] + tap [record], tap lit steps to delete). too empty → add hats before adding any new instrument."},
+
+ {t:"Session 2 — Three genre grids", warm:"rebuild the session 1 beat from memory, under three minutes, no peeking. if you stall, glance once, then start over from empty.", story:{t:"The flop that built hip-hop, 1980", x:"the Roland TR-808 drum machine was a commercial failure — critics wanted realistic drums and the 808 sounded like a heartbeat from space. discontinued after about 12,000 units, it turned up cheap in pawn shops, where young producers grabbed it: Marvin Gaye programmed one on Sexual Healing, Afrika Bambaataa built Planet Rock on one, and its boom became the foundation of hip-hop, electro and trap. the lesson for tonight: the sounds matter far less than where you place them."}, challenge:"invent a fourth grid: the dembow that powers reggaeton — kick on 1, 5, 9, 13 and snares on 4, 7, 12, 15. then try a genre you love by ear.", remember:"genre lives in the kick placement, not in the drum sounds.", sub:"house · hip-hop · rock from kick placement alone",
+  goal:"hear how kick placement defines genre — before sound design ever matters.",
+  steps:[
+   {do:"protect your first beat: press [arrange], make sure [track 1] is selected, press [M2] (copy), then [M1] (new pattern), then [M3] (paste). turn [enc white] to flip between pattern 1 and 2.",
+    why:"each track holds up to 9 patterns. copy before you experiment — version safety is a producer habit.",
+    listen:"both patterns sound identical for now. edit pattern 2."},
+   {do:"<b>house</b> — back in [instrument]: kick 1, 5, 9, 13 · snare 5, 13 · hats on the offbeats only: 3, 7, 11, 15.",
+    why:"moving hats off the kicks (compare session 1) creates the pumping forward drive of house.",
+    listen:"relentless, even, danceable.",
+    viz:seqGrid([{...KICK,steps:[1,5,9,13]},{...SNARE,steps:[5,13]},{...HAT,steps:[3,7,11,15]}])},
+   {do:"<b>hip-hop</b> — new pattern (repeat the copy trick): kick 1, 7, 11 · snare 5, 13 · hats every other step, then delete two or three of them.",
+    why:"the kick leaves the grid's symmetry — that asymmetry is the head-nod. missing hats create pocket.",
+    listen:"less machine, more swagger. slow it to ~90 BPM.",
+    viz:seqGrid([{...KICK,steps:[1,7,11]},{...SNARE,steps:[5,13]},{...HAT,steps:[1,3,7,9,13,15]}])},
+   {do:"<b>rock-ish</b> — one more pattern: kick 1, 9 · snare 5, 13 · hats on all odd steps.",
+    why:"a drummer's right hand is steady; the feet are simple. fewer kicks = more weight per kick.",
+    listen:"closer to a band. try ~120 BPM.",
+    viz:seqGrid([{...KICK,steps:[1,9]},{...SNARE,steps:[5,13]},{...HAT,steps:[1,3,5,7,9,11,13,15]}])},
+   {do:"compare all three at the same BPM: in [arrange], turn [enc white] to switch patterns while the sequencer plays.",
+    why:"trains your ear to separate <b>rhythm</b> from tempo and sound choice.",
+    listen:"can you name each one with your eyes closed?"}
+  ],
+  assign:"keep house / hip-hop / rock as patterns on track 1. do not chase better drum sounds yet.",
+  ready:"you can build each grid in under five minutes and describe the kick logic of each.",
+  fix:"all three sound the same → drop to 80 BPM and listen to kick + snare only."}
+]},
+
+/* ---------------- week 2 ---------------- */
+{n:"Week 2", title:"Rhythm II — make it human", quiz:[["how do you force one step's velocity?","hold [shift] + press the step, press [key B] (velocity), then an accidental for the value."],["what must be true before you can nudge a step off the grid?","quantize below 100 — hold [bar] and turn [enc dark]."],["which step component makes a drum roll, and on which key?","multiply, on the 3rd natural [key A] — it divides one step into several trigs."]], goal:"machines are perfectly on-grid and perfectly equal in volume. humans are neither. velocity, micro-timing, groove and fills put blood in the beat.",
+ sessions:[
+ {t:"Session 3 — Velocity, nudge, groove", warm:"build the house grid from memory, then say out loud how the hip-hop kick differs. only then read on.", story:{t:"The man who invented swing… as a number, 1979", x:"Roger Linn's drum machines introduced the swing knob — delaying every second subdivision by a percentage — and his MPC became hip-hop's workbench. producers pushed it further: J Dilla famously turned quantize off and placed hits by feel, kicks rushing, snares dragging, until the machine sounded drunk and human at once. entire genres now chase that feel. today you get the same three dials Dilla had: how loud, how early or late, how much swing."}, challenge:"constraint drill: humanize one copy of your beat using only velocity, another using only groove. play both for ten seconds each — which tool did more? that judgement is the actual skill.", remember:"humanity is a few deliberate imperfections — not many accidental ones.", sub:"loud/soft · early/late · swing",
+  goal:"make a robot beat breathe using three independent tools — and learn to hear which is which.",
+  steps:[
+   {do:"accent with the <b>velocity step component</b>: hold [shift], press a hat step (it blinks), then press the 4th natural [key B] — the screen says velocity. still holding [shift], press [acc 7] to force it loud (112). on two other hat steps force [acc 3] (soft, 16).",
+    why:"alternating strong and weak hats is what a real drummer's wrist does automatically.",
+    listen:"the hats stop being a flat 'tick tick tick' and start rolling.",
+    viz:seqGrid([{label:"hi-hat",key:"C#",steps:[1,3,5,7,9,11,13,15],txt:{1:"112",3:"16",5:"112",7:"16",9:"112",11:"16",13:"112",15:"16"}}],16,"orange numbers = forced velocity per step (hold [shift] + step → [key B] → accidental).")},
+   {do:"<b>nudge</b>: first hold [bar] and turn [enc dark] to set quantize below 100. now hold a snare step and tap [-] or [+] a click or two.",
+    why:"notes can only leave the grid when quantize is under 100. a snare a hair late feels fat and lazy; a hair early feels urgent.",
+    listen:"tiny moves only — if you can clearly hear it shift, it is too much."},
+   {do:"<b>groove</b>: hold [bar] and turn [enc light]. compare zero, moderate, and way too much.",
+    why:"groove (swing) delays certain subdivisions across the whole track. the style of groove is chosen in the [tempo] screen.",
+    listen:"moderate should feel better than zero. too much wobbles like a boat."},
+   {do:"clean-up trick, again: hold a drum key + tap [record] to see and edit only that sound.",
+    why:"editing hats while staring at kicks is how dense kits become soup."},
+   {do:"a/b test: keep one pattern as the untouched 'robot', one as the 'human'. flip between them in [arrange] with [enc white].",
+    why:"the human version should use <b>fewer, more intentional</b> changes — not more of everything."}
+  ],
+  assign:"two versions of one beat: robot and human.",
+  ready:"you can hear the difference between a velocity change, a timing nudge, and groove.",
+  fix:"got sloppy → [shift]+[record] undoes the last action, or rebuild from the clean grid. one clean beat beats one over-edited beat."},
+
+ {t:"Session 4 — Fills & turnarounds", warm:"play your human beat, then answer from memory: what must quantize be for nudging to work? (check with [bar] + [enc dark].)", story:{t:"Six seconds that built two genres, 1969", x:"in 1969 a Washington funk band called The Winstons recorded a b-side, Amen, Brother. drummer Gregory Coleman played a four-bar solo break — about six seconds of drums. sampled decades later, those six seconds became the most-sampled recording in history and the rhythmic dna of jungle and drum & bass. a fill is never filler: it is the moment drummers get remembered."}, challenge:"subtraction fill: make a fill by only removing things — no added hits allowed. drop the kick, drop half the hats, let one snare ring. notice it still reads as a fill.", remember:"a fill is a promise that step 1 is coming.", sub:"telling the listener the loop is about to restart",
+  goal:"a fill is a signpost in the last bar. learn the ratchet trick and the kick-drop trick.",
+  steps:[
+   {do:"copy your main beat to a new pattern ([arrange] → [M2], [M1], [M3]). edit the copy.",
+    why:"a fill is a <b>variation</b> of the groove, not a new groove."},
+   {do:"add one extra snare on step 14 or 16.",
+    why:"a single extra hit near the end already announces 'something is coming'.",
+    viz:seqGrid([{...KICK,ghost:[1,5,9,13]},{...SNARE,ghost:[5,13],steps:[14]}],16,"one extra snare late in the bar — that is already a fill.")},
+   {do:"<b>ratchet</b> with the multiply step component: hold [shift], press the snare's [step 16] (it blinks), press the 3rd natural [key A] — screen says multiply — then [acc 3]: divide into 3 trigs.",
+    why:"multiply chops one step into several fast hits: an instant drum roll with zero extra programming.",
+    listen:"brrap — a roll, not random noise.",
+    viz:seqGrid([{...SNARE,ghost:[5,13,14],steps:[16],txt:{16:"×3"}}],16,"step 16 plays three rapid snares. try ×2 and ×4 too — the screen names every value.")},
+   {do:"<b>kick drop</b>: remove the kick from step 13 in the fill pattern only.",
+    why:"silence right before the downbeat makes step 1 of the next loop land twice as hard.",
+    listen:"the restart should feel satisfying, like an exhale.",
+    viz:seqGrid([{...KICK,steps:[1,5,9],txt:{13:"✕"}}],16,"kick plays 1, 5, 9 — beat 13 is deliberately empty.")},
+   {do:"<b>parameter lock</b> one fill hit: hold the extra snare's step and turn an encoder ([M3] [enc dark] opens the filter, for instance).",
+    why:"one special-sounding hit marks the transition. resist changing every step.",
+    listen:"only that hit is brighter — the rest of the kit is untouched."}
+  ],
+  assign:"main beat + fill beat as two patterns. perform 8 bars: main ×3, fill ×1, repeat.",
+  ready:"your fill leads naturally back into the main groove.",
+  fix:"fill sounds amateurish → simplify. one extra snare + one missing kick usually beats a huge roll."},
+
+ {t:"Session 5 — Rhythm checkpoint", warm:"two-minute drill: build a brand-new fill on a copy of your beat without re-reading session 4. multiply component, one extra snare, kick drop — go.", story:{t:"One man and a drum machine on stage", x:"Detroit techno pioneer Jeff Mills performs live on a Roland TR-909 — building, muting and rebuilding patterns in front of thousands, no laptop, no safety net. what looks like knob-fiddling is actually arrangement at performance speed: intro, tension, release, ending. your 45-second checkpoint is the same discipline at bedroom scale."}, challenge:"plan-then-play: write your four moves on paper (which scene, when, which mute, how it ends). perform it twice — once reading the plan, once from memory.", remember:"contrast is the arrangement — what leaves matters as much as what enters.", sub:"a 45-second drums-only performance",
+  goal:"prove rhythm alone can be music: sections, contrast, a deliberate ending.",
+  steps:[
+   {do:"on track 1, prepare four patterns in [arrange]: <b>intro</b> (hats + snare only), <b>main</b>, <b>variation</b> (your human version), <b>fill</b>.",
+    why:"loops become sections the moment they have a reason to exist."},
+   {do:"make your first <b>scenes</b>: in [arrange], hold [shift] and press [acc 1] — scene 1. then [shift]+[acc 2] for scene 2: switching to an empty scene copies the current one, so just change which pattern plays. scenes remember pattern choice, mutes and levels.",
+    why:"scenes are how OP–XY thinks about song sections. you will live here from week 9 on — early contact pays off."},
+   {do:"perform: start on the intro scene → switch to main ([shift]+accidental) → 4 bars of variation → fill → back to main.",
+    why:"an arrangement is just decisions made in time.",
+    viz:energyViz([0.25,0.7,0.5,0.9,0.0],["intro","main","variation","fill+main","stop"],"a 45-second energy curve. low → high → dip → highest → silence.")},
+   {do:"end on purpose: fill, then [stop] exactly on the downbeat.",
+    why:"a clear ending is part of musicianship. do not just run out of ideas."}
+  ],
+  assign:"perform a 45-second drums-only piece twice. the second take counts.",
+  ready:"drums alone feel like a miniature arrangement.",
+  fix:"boring → do not add synths. sharpen the contrast: fewer hats in the intro, everything in the main, silence before the end."}
+]},
+
+/* ---------------- week 3 ---------------- */
+{n:"Week 3", title:"Harmony I — chords on the grid", quiz:[["what does track scale 4 do?","one step = one beat, so 16 steps = 4 bars — set per track with [bar] + [acc 4]."],["what is the difference between C major and C minor?","one note: E drops a semitone to E♭. major bright, minor dark."],["how do you make a chord ring longer?","hold its step and press a later step — the chord extends to it."]], goal:"chords carry the emotion. this week: enter them, stretch them, and hear major versus minor — using the track-scale trick that makes one step equal one beat.",
+ sessions:[
+ {t:"Session 6 — First chords", warm:"drum warm-up for the hands, then a question for the head: what does track scale 4 change, and for which tracks? say it before checking the vocabulary card.", story:{t:"Why does minor sound sad?", x:"here is an open scientific question you can hear tonight: nobody fully knows why minor chords feel dark. part is physics — the minor third creates slightly rougher overtone relationships — but a larger part is learned: thousands of hours of film scores and lullabies have trained your ear to read one semitone as an emotional switch. some cultures hear these colors differently. when you flip E to E♭ today, notice that three notes carry a century of cinema with them."}, challenge:"one-finger explorer: hold C and G, and walk the middle finger to every key between them. two of the results are the famous major and minor — but at least one more will be beautiful. keep it.", remember:"at scale 4, one step = one beat — and one semitone flips the mood.", sub:"major vs minor on the strings track",
+  goal:"place two chords on the grid, hear bright vs dark, and shape them with the envelope.",
+  steps:[
+   {do:"press [instrument] → [track 7] (strings — sustained and chord-friendly). play a few keys.",
+    why:"soft sustained sounds expose harmony clearly. save aggressive leads for later."},
+   {do:"slow the grid down: hold [bar] and press [acc 4] — track scale 4. now one step = one beat, so 16 steps = 4 bars.",
+    why:"chords change by the bar, not by the 16th note. track scale is <b>per track</b> — your drums stay fast while chords move slow. this is the single most useful sequencing trick in the course.",
+    listen:"press [play]: the playhead crawls 4× slower on this track."},
+   {do:"<b>C major</b>: hold [key C] + [key E] + [key G] together, then press [step 1]. <b>C minor</b>: hold [key C] + [acc 5] (that is E♭) + [key G], press [step 9].",
+    why:"same root, one note moved a half-step — and the entire mood flips. that one interval is most of western music's emotional vocabulary.",
+    listen:"major = bright, open. minor = dark, serious.",
+    viz: kbSVG({hl:{"C1":"C","E1":"E","G2":"G"},caption:"C major — hold all three, then press the step."}) + kbSVG({hl:{"C1":"C","D#1":"E♭","G2":"G"},caption:"C minor — E drops to the black key E♭ ([acc 5])."})},
+   {do:"<b>stretch a chord</b>: hold [step 1] and press [step 8]. the chord now sustains for 8 steps. press the end step again to toggle full/overlap.",
+    why:"harmony has to ring long enough to be heard as harmony.",
+    viz:seqGrid([{label:"chords",key:"hold notes",steps:[1,9],txt:{1:"C",9:"Cm"},ghost:[2,3,4,5,6,7,8,10,11,12,13,14,15,16]}],16,"at scale 4 this grid is 4 bars: C major rings bars 1–2, C minor bars 3–4.")},
+   {do:"shape it: press [M2] (envelopes). raise attack ([enc dark]) and release ([enc white]) for a swelling pad; pull both down for a short stab.",
+    why:"the envelope decides how a chord enters and leaves the room.",
+    listen:"pad = breathes in. stab = hits and vanishes."}
+  ],
+  assign:"two 4-bar loops: one that feels major/bright, one minor/dark.",
+  ready:"you can enter a chord on a step and extend it, without guessing.",
+  fix:"muddy → use fewer notes per chord, or play the chord an octave higher ([+])."},
+
+ {t:"Session 7 — Four progressions that always work", warm:"play C major and C minor from memory — keys first, then on steps 1 and 9. no diagrams until after.", story:{t:"The four chords that ate pop music", x:"in 2009 the comedy act Axis of Awesome played dozens of hit songs back to back over one repeating loop — C, G, Am, F — and the joke landed because it is true: hundreds of hits share this exact progression. that is not laziness, it is physics plus familiarity: the loop resolves so smoothly that listeners trust it instantly. tonight you learn the loop itself; the personality will come from your rhythm, sounds and melody on top."}, challenge:"the push: copy your favorite progression and move every chord one step earlier, so each lands on the last step of the previous bar. that anticipation is half of funk and most of UK garage.", remember:"same four chords, different order — order is the story.", sub:"reusable harmony templates",
+  goal:"program song-like chord loops you will reuse for the rest of the course.",
+  steps:[
+   {do:"new pattern on track 7 ([arrange] → [M1]). the track keeps its scale-4 setting.",
+    why:"never overwrite a sketch that worked."},
+   {do:"<b>C – G – Am – F</b>: one chord on each of steps 1, 5, 9, 13, each extended 4 steps.",
+    why:"the brightest, most familiar loop in pop. it feels resolved and safe.",
+    listen:"like a song you already know.",
+    viz:seqGrid([{label:"progression",key:"1 chord / bar",steps:[1,5,9,13],txt:{1:"C",5:"G",9:"Am",13:"F"}}],16,"scale 4: steps 1 / 5 / 9 / 13 are bars 1 / 2 / 3 / 4.")
+      + kbSVG({hl:{"G1":"G","B1":"B","D1":"D"},caption:"G major — G · B · D"})
+      + kbSVG({hl:{"A1":"A","C1":"C","E1":"E"},caption:"A minor — A · C · E"})
+      + kbSVG({hl:{"F1":"F","A1":"A","C1":"C"},caption:"F major — F · A · C"})},
+   {do:"<b>Am – F – C – G</b> as another pattern: same four chords, minor first.",
+    why:"identical ingredients, reordered — suddenly cinematic and wistful. order is meaning.",
+    listen:"darker opening, hopeful middle."},
+   {do:"<b>Dm – Am – C – G</b> as a third pattern (D minor = D · F · A).",
+    why:"the moody electronic staple — less obvious than the first two.",
+    viz:kbSVG({hl:{"D1":"D","F2":"F","A2":"A"},caption:"D minor — D · F · A (use the second octave's F and A)."})},
+   {do:"add your week-1 drums underneath each progression (track 1 still plays at scale 1 — fast drums under slow chords, simultaneously).",
+    why:"this is the payoff of per-track scale.",
+    listen:"pick the progression that makes the drums sound best. that one is yours."}
+  ],
+  assign:"three saved chord patterns. note your favorite and what it feels like.",
+  ready:"you can hear a progression's emotional character and name which chord is 'home'.",
+  fix:"chords feel disconnected → extend each one longer, and stick to these simple three-note voicings."}
+]},
+
+/* ---------------- week 4 ---------------- */
+{n:"Week 4", title:"Harmony II — bass & chord rhythm", quiz:[["which note does the bass play under each chord?","the root — the note the chord is named after."],["where do offbeat chord stabs go?","steps 3, 7, 11, 15 — exactly between the kicks."],["how do you mute a track while mixing?","in [mix], hold [shift] + the track button."]], goal:"the bass carries the harmony's weight; the kick and bass must share the floor. then chords learn to dance.",
+ sessions:[
+ {t:"Session 8 — Bass roots under the chords", warm:"enter C – G – Am – F from memory in under four minutes: scale set, four chords placed, extended. time yourself — speed is memory made physical.", story:{t:"The bassline recorded lying down, 1971", x:"Motown bassist James Jamerson played on more hits than the Beatles and the Stones combined, mostly uncredited. the night What's Going On was cut, Marvin Gaye pulled him from a club; too far gone to sit on a stool, Jamerson played the take lying flat on the studio floor — and still anchored every chord change perfectly. the lesson under the legend: the band can float anywhere as long as the bass states the root at the right moment."}, challenge:"root-and-fifth: after the root of each chord, add its fifth (count four naturals up: A→E, F→C, C→G, G→D) on an offbeat. instant bassline, zero wrong notes.", remember:"the bass plays the name of the chord.", sub:"track 3 · the foundation test",
+  goal:"make the bass follow the chord roots, then give it rhythm without fighting the kick.",
+  steps:[
+   {do:"press [instrument] → [track 3] (bass). press [-] once or twice so the keys sit low. set its scale to 4 as well: hold [bar] + [acc 4].",
+    why:"for version 1 the bass moves exactly with the chords — easiest possible alignment."},
+   {do:"for Am – F – C – G: place single notes A, F, C, G on steps 1, 5, 9, 13.",
+    why:"the bass plays each chord's <b>root</b> — the note the chord is named after. harmony instantly feels grounded.",
+    listen:"the chords suddenly sound twice as big.",
+    viz:seqGrid([{label:"bass roots",key:"one low note",steps:[1,5,9,13],txt:{1:"A",5:"F",9:"C",13:"G"}}],16,"roots line up with the chord changes — same steps, same bars.")},
+   {do:"shorten the notes: hold [bar] and turn [enc mid] (note length) down.",
+    why:"short bass notes leave a hole for the kick to punch through. long bass + kick = mud.",
+    listen:"kick stays audible on every hit."},
+   {do:"<b>pulse it</b>: hold [shift], press a bass step, press [key A] (multiply), then [acc 2] or [acc 4].",
+    why:"the ratchet trick from drums works on bass too — instant eighth-note pulse without re-sequencing.",
+    listen:"the bass starts driving instead of sitting."},
+   {do:"<b>foundation test</b>: in [mix], hold [shift] + [track 7] to mute the chords. listen to drums + bass alone, then unmute.",
+    why:"if drums + bass do not groove by themselves, no amount of decoration will save the track."}
+  ],
+  assign:"three bass versions: one-note-per-bar · pulsing · one with a multiply ratchet on the last bar.",
+  ready:"bass follows the harmony without clashing with the drums.",
+  fix:"low end is messy → shorter notes and lower bass level before you blame the sound."},
+
+ {t:"Session 9 — Chord stabs", warm:"place the four roots from memory, then answer: why do bass notes need to be short? say it, then test it by lengthening one.", story:{t:"The preset that owned the 90s", x:"when the Korg M1 workstation appeared in 1988, two of its presets — a bright piano and a breathy organ bass — got sequenced into offbeat stabs by house producers and never left: Robin S's Show Me Love runs almost entirely on that organ. a preset is not cheating; a preset played with better rhythm than everyone else is a career. your pluck on track 4 is today's M1."}, challenge:"ghost stabs: between two loud stabs, add one extra stab forced very quiet with the velocity component ([acc 2] or [acc 3]). barely-there notes are what make grooves feel expensive.", remember:"chords have rhythm — offbeats make the floor bounce.", sub:"harmony as rhythm on the pluck track",
+  goal:"turn the same progression into rhythmic offbeat stabs — the bounce of dance music.",
+  steps:[
+   {do:"press [instrument] → [track 4] (pluck). leave it at normal scale (1).",
+    why:"stabs are fast events; they live on the fast grid."},
+   {do:"hold the A-minor chord (A + C + E) and press steps 3, 7, 11, 15.",
+    why:"offbeat chords — exactly between the kicks — create bounce. ska, house and garage all live here.",
+    listen:"the track starts skipping.",
+    viz:seqGrid([{...KICK,ghost:[1,5,9,13]},{label:"stabs",key:"hold A·C·E",steps:[3,7,11,15]}],16,"stabs land exactly between the kicks. change the held chord each bar to follow the progression.")},
+   {do:"make it stab: [M2], fast attack, low sustain, short release.",
+    why:"the envelope is what makes it a stab rather than a wash.",
+    viz:adsr(0.04,0.3,0.15,0.18,"stab","fast in · fast out")},
+   {do:"<b>parameter lock</b> one stab: press [M3], hold one stab step and turn [enc dark] (cutoff) brighter.",
+    why:"one accented stab per bar prevents machine-repetition.",
+    listen:"only that hit pops."},
+   {do:"compare three textures: pad chords only (track 7) · stabs only (track 4) · both.",
+    why:"same harmony, different energy — that is an arrangement decision, and you just learned to make it."}
+  ],
+  assign:"pad version and stab version of the same progression, on separate tracks.",
+  ready:"you can explain how a chord can have rhythm, not just pitch.",
+  fix:"stabs feel harsh → close the cutoff a little ([M3] [enc dark]) or lower the track level."},
+
+ {t:"Session 10 — Harmony checkpoint", warm:"quick-fire, out loud: which encoder is level in mix M1? which is pan, and what does clicking it do? then verify on the device.", story:{t:"A bedroom in Paris, 1993–1996", x:"Daft Punk's Homework — including Around the World — was recorded in Thomas Bangalter's bedroom on a small pile of gear. they later said the limitation was the aesthetic: few machines, fully learned. you currently have more instruments under your fingers than that bedroom held. three tracks, well balanced, is not a compromise; it is the classic recipe."}, challenge:"reference listen: play your sketch, then thirty seconds of a favorite track at matched, low volume. write one difference in your notes — just one. that habit is called referencing and professionals never stop doing it.", remember:"balance in order: drums, then bass, then everything else.", sub:"a one-minute sketch with no melody",
+  goal:"drums + bass + chords, arranged into intro / groove / full, balanced by ear.",
+  steps:[
+   {do:"build three scenes in [arrange]: scene 1 drums + bass · scene 2 + stabs · scene 3 + pad chords. ([shift]+accidental to create; remember empty scenes copy the current one.)",
+    viz:scenesViz(
+      [{name:"1 intro",on:[0,1]},{name:"2 groove",on:[0,1,2]},{name:"3 full",on:[0,1,2,3]}],
+      ["1 drums","3 bass","4 stabs","7 chords"],"each scene adds one layer. subtraction will come later — addition first."),
+    why:"three scenes are enough for a real piece of music."},
+   {do:"balance in [mix] [M1]: select each track, set level with [enc white] — drums first, then bass, then chords last.",
+    why:"balance in order of importance. chords must never bury the kick or bass."},
+   {do:"keep kick and bass centered; pan the stabs slightly with [enc light] (click it to re-center).",
+    why:"the middle of the stereo field is where the power lives."},
+   {do:"perform one minute through the three scenes, then end deliberately.",
+    why:"a sketch with a beginning, middle and end — you are now arranging."}
+  ],
+  assign:"the one-minute harmony sketch, performed twice.",
+  ready:"a coherent groove exists with no melody at all.",
+  fix:"boring → vary mutes and chord rhythm before reaching for new instruments."}
+]},
+
+/* ---------------- week 5 ---------------- */
+{n:"Week 5", title:"Melody — five notes are plenty", quiz:[["name the five notes of A minor pentatonic.","A · C · D · E · G."],["how do you duplicate the current bar?","hold [bar] + [shift] and press [+]."],["in a 4-bar phrase, which bar changes and why?","bar 4 — repetition builds recognition, the late variation rewards attention."]], goal:"melody is the part people hum. the pentatonic scale makes wrong notes nearly impossible, and call-and-response makes phrases feel like sentences.",
+ sessions:[
+ {t:"Session 11 — Pentatonic melody", warm:"before touching the device, name the five allowed notes. then find them on the keys with the diagram covered.", story:{t:"The scale wired into everyone, 2009", x:"at the 2009 World Science Festival, Bobby McFerrin hopped along an invisible pentatonic scale on stage — and the audience sang each next note correctly before he landed on it, unprompted. the five-note scale appears on every inhabited continent, and flutes older than 35,000 years already play something close to it. when the pentatonic feels safe tonight, that is not a trick — you are borrowing the most field-tested melody technology humans own."}, challenge:"same rhythm, new notes: write a second motif that keeps your first motif's exact step positions but changes every pitch. hearing rhythm and pitch as separate layers is a composer's superpower.", remember:"five notes, mostly silence.", sub:"track 5 · five safe notes over Am–F–C–G",
+  goal:"write a 4-bar motif from a restricted palette, with deliberate space.",
+  steps:[
+   {do:"press [instrument] → [track 5] (lead). your palette is <b>only A · C · D · E · G</b> — the A-minor pentatonic.",
+    why:"these five notes contain no half-step collisions with your progression. every combination sounds at least okay — which frees you to think about <b>shape</b> instead of fear.",
+    viz:kbSVG({hl:{"A1":"A","C1":"C","D1":"D","E1":"E","G2":"G"},caption:"the whole allowed palette. anything you play from these five works over Am–F–C–G."})},
+   {do:"step-sequence a 4-note motif into one bar, leaving most steps empty — for example A on 1, C on 4, E on 7, D on 11.",
+    why:"melody needs air. the silence is part of the phrase.",
+    listen:"hum it back. if you can't, simplify.",
+    viz:seqGrid([{label:"motif",key:"lead",steps:[1,4,7,11],txt:{1:"A",4:"C",7:"E",11:"D"}}],16,"four notes, twelve empty steps. the gaps are intentional.")},
+   {do:"extend to 4 bars: hold [bar] + [shift] + press [+] — this duplicates the current bar. do it until you have 4 bars, then change <b>only the last note of bar 4</b>.",
+    why:"repetition builds memory; one small variation rewards attention. that ratio — mostly same, slightly different — is the core of catchy.",
+    listen:"the loop now has a hook and a wink."},
+   {do:"mute test: in [mix], [shift] + [track 5]. does the track still work without melody? good — unmute.",
+    why:"melody should decorate a groove that already stands, never rescue one that doesn't."}
+  ],
+  assign:"one 4-bar melody using five notes or fewer.",
+  ready:"your melody is hummable and clearly non-random.",
+  fix:"sounds noodly → cut the number of notes in half. yes, really."},
+
+ {t:"Session 12 — Call & response", warm:"play last session's motif from memory. then: which bar of a 4-bar phrase should vary, and why?", story:{t:"The oldest song structure on earth", x:"call and response predates written music: West African work songs used it, field hollers carried it across the Atlantic, gospel choirs formalized it, blues turned it inward, and every rap ad-lib and EDM crowd-echo still runs on it. it works because conversation is the shape human attention likes best. your two bars tonight — question up, answer down — are the same shape at its smallest possible size."}, challenge:"answer first: write the response phrase before the call, then compose a question that makes the existing answer feel inevitable. composing backwards breaks melodic habits fast.", remember:"question up, answer down, land on home.", sub:"making phrases talk to each other",
+  goal:"structure a melody as a conversation: question, answer, question, varied answer.",
+  steps:[
+   {do:"bar 1 — the <b>call</b>: a short rising phrase, e.g. A → C → E.",
+    why:"ending away from home (on E) leaves the phrase open, like a question.",
+    listen:"it should feel unfinished.",
+    viz:seqGrid([{label:"bar 1 · call",key:"lead",steps:[1,5,9],txt:{1:"A",5:"C",9:"E"}}],16)},
+   {do:"bar 2 — the <b>response</b>: answer it downward, e.g. E → D → C → A.",
+    why:"landing back on A (home) closes the question.",
+    listen:"question… answer. the two bars talk.",
+    viz:seqGrid([{label:"bar 2 · response",key:"lead",steps:[1,4,7,11],txt:{1:"E",4:"D",7:"C",11:"A"}}],16)},
+   {do:"bar 3: repeat the call <b>exactly</b> (duplicate-bar trick: hold [bar]+[shift]+[+]).",
+    why:"exact repetition is what makes the listener recognize it as a theme."},
+   {do:"bar 4: vary the response — change its rhythm or its final note.",
+    why:"variation at the end turns the loop back into itself gracefully."},
+   {do:"shape the voice: [M2] — short release for a pluck-y narrator, long release for a singing one.",
+    why:"the same notes phrase completely differently with a different envelope."}
+  ],
+  assign:"a 4-bar call-and-response melody over your favorite progression.",
+  ready:"you can point at the grid and say which bar is the call and which is the response.",
+  fix:"the response doesn't answer → end it on A or C. those notes close the door."}
+]},
+
+/* ---------------- week 6 ---------------- */
+{n:"Week 6", title:"First sketch — 90 seconds of music", quiz:[["what is the first move when a track feels flat?","subtract — make sections more different. do not add notes."],["why set rough levels before judging the composition?","bad balance makes good ideas sound bad — mix a little before you criticize yourself."]], goal:"everything so far becomes one piece. the skill being trained this week is not creativity — it is finishing.",
+ sessions:[
+ {t:"Session 13 — The 90-second sketch", warm:"name, out loud, your best pattern on each of tracks 1, 3, 4, 5 and 7 — before opening the device. commit to the list.", story:{t:"The demo that shipped, 1982", x:"Bruce Springsteen recorded the Nebraska songs alone on a 4-track cassette machine as demos for the band. the full-band versions never beat the kitchen-table tape, so the demo itself was released — and became a classic. finished and honest beats polished and postponed. your 90 seconds does not need to be good; it needs to be done."}, challenge:"radical subtraction: clone your scene set and delete half of everything — half the tracks in the intro, half the hats, half the melody notes. play both versions. the thin one usually wins somewhere; steal that somewhere.", remember:"arrangement is subtraction.", sub:"select, arrange, perform, done",
+  goal:"combine your best drums, bass, chords and melody into a sketch with sections and an ending.",
+  steps:[
+   {do:"choose your best pattern on each of tracks 1, 3, 4/7, 5. resist using everything you own.",
+    why:"<b>select, don't accumulate.</b> four good tracks beat eight weak ones."},
+   {do:"build four scenes: <b>intro</b> (no melody) → <b>main</b> (everything) → <b>breakdown</b> (no drums) → <b>return</b> (everything).",
+    why:"arrangement begins with subtraction. the melody matters more when it left and came back.",
+    viz:scenesViz(
+     [{name:"intro",on:[0,1,3]},{name:"main",on:[0,1,2,3,4]},{name:"breakdown",on:[2,3,4]},{name:"return",on:[0,1,2,3,4]}],
+     ["1 drums","3 bass","4 stabs","7 chords","5 melody"])},
+   {do:"add <b>one</b> transition: the week-2 fill, a bar of silence, or a filter sweep (hold [record] while playing and turn [M3] [enc dark]; smooth it after with [bar] + [enc white]).",
+    why:"one good transition connects sections. three mediocre ones distract.",
+    listen:"the listener should sense the next section coming."},
+   {do:"rough levels in [mix] [M1] before judging your composition.",
+    why:"bad balance makes good ideas sound bad. always mix a little before you criticize yourself."},
+   {do:"perform the full 90 seconds, top to bottom, twice. no stopping to fix things mid-take.",
+    why:"finishing is a muscle. this is its first real rep.",
+    viz:energyViz([0.3,0.8,0.35,0.9,0.0],["intro","main","breakdown","return","end"])}
+  ],
+  assign:"the first musical sketch — 90 seconds, with a name.",
+  ready:"a recognizable musical idea exists, with sections and an ending.",
+  fix:"doesn't feel like a song → make the sections more different from each other. do not add notes."}
+]},
+/* ---------------- week 7 ---------------- */
+{n:"Week 7", title:"Synthesis I — engines & envelopes", quiz:[["what do M1–M4 hold in instrument mode?","M1 engine · M2 envelopes · M3 filter · M4 LFO."],["map the four encoders in M2.","dark = attack, mid = decay, light = sustain, white = release."],["what does mono mode + portamento give you?","notes that glide into each other — the classic acid/funk bass feel ([shift] in [M2])."]], goal:"so far you used presets. now you learn the four instrument modules — M1 engine, M2 envelopes, M3 filter, M4 LFO — and start sculpting your own sounds.",
+ sessions:[
+ {t:"Session 14 — Engines", warm:"hum your call-and-response melody. then from memory: what do M1, M2, M3, M4 hold in instrument mode? all four, out loud.", story:{t:"The synthesizer goes mainstream, 1964–1968", x:"Bob Moog showed his modular synthesizer in 1964 — a wall of cables that had to be repatched for every sound. what convinced the world was Wendy Carlos's Switched-On Bach (1968), a synthesized Bach album that became one of the best-selling classical records ever and proved the machine was an instrument, not a gimmick. every engine in your [M1] page is a descendant of that wall of cables, shrunk to one button press."}, challenge:"productive accidents: press and hold [track 5] + [M1] to scramble five times. keep the single best accident as a saved preset — sound designers call this trawling, and it is a legitimate technique.", remember:"change one knob, listen, then decide.", sub:"M1 · where sound is born",
+  goal:"treat engine choice like choosing an instrument in an orchestra — deliberately.",
+  steps:[
+   {do:"on [track 5], press [M1]. turn one encoder, listen, turn it back. then the next.",
+    why:"M1 is the <b>sound source</b>. on a synth the encoders reshape the raw tone; the screen names each one.",
+    listen:"you should be able to say what each encoder did."},
+   {do:"hold [shift] + press [M1] to change the <b>engine</b>. OP–XY ships with: axis, dissolve, epiano, hardsync, organ, prism, simple, wavetable — plus the samplers.",
+    why:"different engines solve different jobs: simple for clean bass, wavetable for movement, epiano for softness, hardsync for bite.",
+    listen:"play the same melody on three engines. same notes, three instruments."},
+   {do:"browse <b>presets</b>: hold [shift] + press the track button (e.g. [track 5]). [enc dark] picks category, [enc mid] picks preset, click any encoder to load.",
+    why:"presets are professional starting points — study them by changing one thing at a time."},
+   {do:"make a <b>bright</b> and a <b>dark</b> version of the same bass line on track 3.",
+    why:"separating the notes from the timbre is the core synthesis skill.",
+    listen:"same rhythm, different color."},
+   {do:"two power moves: hold [track 5] + press [M1] = <b>scramble</b> (random sound — great for inspiration). hold the track + [M4] = <b>save</b> your own preset.",
+    why:"a personal preset library is a producer's fingerprint. start yours today."}
+  ],
+  assign:"four sounds from one musical line: bass, pluck, pad, noisy texture. save the keepers.",
+  ready:"engine choice feels like orchestration, not random browsing.",
+  fix:"lost in a weird sound → reload the preset and change exactly one parameter at a time."},
+
+ {t:"Session 15 — Envelopes", warm:"guess what the four encoders do in M2 before pressing it. then press it and check the screen. (score yourself out of four.)", story:{t:"Four letters from a composer's request, 1965", x:"composer Vladimir Ussachevsky wrote to Bob Moog asking for a circuit that could shape a note in four stages — how fast it starts, falls, holds and disappears. Moog built it, and ADSR became the most copied idea in synthesis: virtually every synthesizer since 1965 carries those four stages. the four encoders under your fingers in [M2] are that letter, made physical."}, challenge:"envelope ear-training: pick any factory preset, listen to three notes, and try to guess its four ADSR positions before opening [M2]. check. within a few weeks your guesses will land — that is real ear training.", remember:"envelopes are the shape of time.", sub:"M2 · attack, decay, sustain, release",
+  goal:"learn the four envelope shapes that cover 90% of all electronic music.",
+  steps:[
+   {do:"press [M2] on a synth track. the encoders are always: [enc dark] attack · [enc mid] decay · [enc light] sustain · [enc white] release. click an encoder to flip between the <b>volume</b> envelope and the <b>filter</b> envelope.",
+    why:"the envelope is the shape of a sound over time: how it starts, holds, and lets go."},
+   {do:"dial these four classics and play the same line through each:",
+    why:"these are the standard recipes — learn them as vocabulary, deviate later.",
+    viz:adsr(0.03,0.25,0.1,0.15,"pluck","fast attack · short decay · low sustain")
+       +adsr(0.65,0.5,0.85,0.8,"pad","slow swell · high sustain · long tail")
+       +adsr(0.02,0.35,0.55,0.12,"bass","instant attack · controlled tail")
+       +adsr(0.12,0.4,0.7,0.45,"lead","medium everything · notes connect")},
+   {do:"pluck: arps and stabs. pad: background glue. bass: must not smear over the kick. lead: playable melody voice.",
+    listen:"a pad should swell, not click. a bass should stop before the next kick."},
+   {do:"bonus page: hold [shift] while in [M2] — play mode (poly / mono / legato), portamento (glide between notes), bend range, preset volume.",
+    why:"mono + a little portamento is the classic acid/funk bass feel.",
+    listen:"notes now slide into each other."}
+  ],
+  assign:"four envelope variants of one sound; write down which knob changed the most.",
+  ready:"you can make a pluck or a pad on purpose, without browsing presets.",
+  fix:"clicks at note start → a touch more attack. mud between notes → shorter release."}
+]},
+
+/* ---------------- week 8 ---------------- */
+{n:"Week 8", title:"Synthesis II — motion & sampling", quiz:[["parameter lock vs recorded automation — the difference?","p-lock: one step's fixed value (hold step + turn). automation: movement over time (hold [record] + turn while playing)."],["how do you make a pad pump with the kick?","[M4], LFO type duck, source = track 1, set amount and release."],["what is the maximum sample length?","20 seconds — recording starts when the input crosses the threshold."]], goal:"static sounds bore ears. filters, parameter locks, LFO and your own samples put things in motion and make the machine yours.",
+ sessions:[
+ {t:"Session 16 — Filter & parameter locks", warm:"set a pluck envelope from memory — no diagram. then check it against the recipe. how close were you?", story:{t:"The failed bass box that squelched, 1987", x:"Roland built the TB-303 in 1981 to replace bass guitarists; it sounded nothing like one and flopped. in Chicago, DJ pierre and friends bought one secondhand, twisted cutoff and resonance while a pattern looped, and released the result as Phuture — Acid Tracks. the squelch invented acid house. the moral is precise: cutoff and resonance are not tone controls, they are an instrument you play. today you play them."}, challenge:"double automation: record cutoff automation for a full pattern, then hold the last fill step and p-lock resonance up on just that step. movement plus one exclamation mark.", remember:"cutoff is brightness; a p-lock is one step's opinion.", sub:"M3 · brightness as a musical instrument",
+  goal:"control brightness three ways: by hand, per step, and recorded over time.",
+  steps:[
+   {do:"press [M3]: [enc dark] cutoff · [enc mid] resonance · [enc light] envelope amount · [enc white] key tracking. sweep the cutoff slowly while the loop plays.",
+    why:"cutoff is the brightness knob. closed = muffled behind a door; open = present in the room.",
+    listen:"the single most expressive knob on the device."},
+   {do:"raise resonance a little.",
+    why:"resonance boosts right at the cutoff point — character and squelch. too much literally whistles.",
+    listen:"a vowel-like edge appears."},
+   {do:"<b>parameter lock</b>: hold one step and turn cutoff.",
+    why:"only that step changes — one bright note pops out of a dark line, permanently, with zero automation.",
+    listen:"fifteen dark notes, one spotlight."},
+   {do:"<b>record automation</b>: while the loop plays, hold [record] and turn cutoff for a full pattern. then smooth the recorded curve: hold [bar] and turn [enc white].",
+    why:"p-lock = one step's value. automation = movement over time. the smoothing knob turns stair-steps into a sweep.",
+    listen:"no zipper steps unless you want them."},
+   {do:"make a 16-bar build by opening the filter a little more each 4 bars.",
+    why:"the cheapest, most reliable tension-builder in electronic music."}
+  ],
+  assign:"one 16-bar filter build inside your sketch.",
+  ready:"you can explain the difference between a parameter lock and recorded automation.",
+  fix:"sounds cheesy → slower and smaller movements. subtlety reads as expensive."},
+
+ {t:"Session 17 — LFO & duck", warm:"say the difference between a parameter lock and recorded automation in one sentence. then demonstrate both on the pad in under a minute.", story:{t:"The radio trick that became a genre, 2004", x:"sidechain ducking was invented for radio — music automatically dips when the DJ speaks. French house producers realized you could feed the kick into that circuit instead of a voice, making the whole track inhale and exhale with the beat; Eric Prydz's Call on Me turned the pump itself into the hook. your duck LFO is that broadcast circuit, rebuilt as an instrument."}, challenge:"find your taste point: set duck amount to maximum for four bars, then zero, then move it slowly up until it breathes without gasping. write the screen value in your notes — that number is your signature setting.", remember:"modulation you can clearly hear is probably too loud — except the pump, which is the point.", sub:"M4 · hands-free motion + the sidechain pump",
+  goal:"delegate movement to the machine — including the classic pumping-pad effect.",
+  steps:[
+   {do:"press [M4]: [enc dark] source/rate · [enc mid] amount · [enc light] destination · [enc white] parameter. hold [shift] + press [M4] to change LFO type: element, random, tremolo, value… and duck.",
+    why:"an LFO wiggles one chosen parameter forever, for free. one destination at a time."},
+   {do:"slow <b>value</b> LFO → destination filter, parameter cutoff, low amount, on your pad (track 7/8).",
+    why:"background evolution. the pad slowly breathes over 16 bars without you touching anything.",
+    listen:"felt more than heard. if you clearly hear it, halve the amount."},
+   {do:"<b>tremolo</b> LFO on the lead, tiny amount.",
+    why:"adds life to sustained notes, like a string player's vibrato.",
+    listen:"too much sounds seasick."},
+   {do:"<b>duck</b> on the pad: LFO type duck, source = track 1 (your kick), set amount and release by ear.",
+    why:"this is sidechain pumping — the pad dips every time the kick hits, then swells back. the breathing engine of house and EDM.",
+    listen:"the whole track suddenly pumps and feels glued to the kick."},
+   {do:"a/b honestly: set amount to zero and compare.",
+    why:"if the track is better without the motion, delete the motion. taste is subtraction."}
+  ],
+  assign:"one pad that evolves for 16 bars with zero manual knob movement.",
+  ready:"modulation solves boredom without adding a new track.",
+  fix:"movement upstages the melody → lower amount and rate until it slips under the surface."},
+
+ {t:"Session 18 — Sampling", warm:"set up an LFO from memory: value type, destination filter, low amount. no re-reading — the screen will correct you.", story:{t:"Trains, a $100,000 computer, and crates, 1948–1988", x:"in 1948 Pierre Schaeffer looped recordings of trains and called it music — musique concrète, the idea that any sound can be an instrument. thirty years later the Fairlight CMI made sampling digital at the price of a house; by the late 80s, Akai samplers were cheap enough that hip-hop producers built masterpieces from records found in dollar crates. your [sample] button collapses that whole history into one key: 20 seconds, any sound, playable."}, challenge:"field-recording safari: capture three sounds from the room you are in right now. rule — one must become a snare, one a hi-hat, one a texture. household percussion hides everywhere.", remember:"sampling is composing, not collecting.", sub:"record the world, make it percussion",
+  goal:"put one sound from your own life into a beat — the moment the OP–XY becomes personally yours.",
+  steps:[
+   {do:"press [sample] from anywhere. [enc dark] picks the input (built-in mic, line-in, USB) · [enc light] gain · [enc white] threshold.",
+    why:"the threshold means recording starts only when sound actually arrives — no dead air to trim."},
+   {do:"hold [record] and make a short percussive sound: a knock, a clap, keys, a cough. max 20 seconds, you need one.",
+    listen:"watch the meter — strong but not clipping."},
+   {do:"better for drums: select [track 2] (the second drum kit), press [sample], press the key you want to replace, then hold [M1] to record straight onto that key. [M4] clears a key.",
+    why:"the drum sampler maps 24 one-shots across the keyboard. your knock now lives next to the factory kicks.",
+    listen:"play the key — that is you."},
+   {do:"sequence it sparsely — one or two hits per bar — then seat it with [M2] envelope and [M3] filter.",
+    why:"personal texture, not clutter. sound design happens after capture.",
+    viz:seqGrid([{...KICK,ghost:[1,5,9,13]},{label:"your sample",key:"track 2",steps:[4,12]}],16,"two hits per bar is plenty for identity.")},
+   {do:"everything you record lands in the <b>sample folder</b> — and you can also load .wav / .aiff files from a computer (connect via [com], the device shows up as storage).",
+    why:"your sample library compounds. every session can add one sound."}
+  ],
+  assign:"one beat that contains one sound recorded from your environment.",
+  ready:"you hear sampling as composition, not just recording.",
+  fix:"sample feels gimmicky → lower its level and use it once every 4–8 bars as a signature."}
+]},
+
+/* ---------------- week 9 ---------------- */
+{n:"Week 9", title:"Arrangement I — scenes & transitions", quiz:[["what happens when you switch to an empty scene?","it clones the current one — so you build sections by removing things."],["how do you make a scene change land on the downbeat?","queue it: hold [shift], tap [play], then choose the scene with an accidental."]], goal:"loops become music when they move through time. scenes are OP–XY's sections; transitions are the joints between them.",
+ sessions:[
+ {t:"Session 19 — Scenes & the energy curve", warm:"play your sketch and name each scene's one-word job out loud as it plays. any scene without a job gets deleted today.", story:{t:"Two turntables in the Bronx, 1973", x:"DJ Kool Herc noticed dancers waited for the drum break — so he bought two copies of the same record and switched between them, looping the break forever. that merry-go-round invented the extended breakdown and, arguably, hip-hop. your breakdown scene is Herc's trick formalized: take the part people crave, isolate it, make them wait for the return."}, challenge:"backwards build: construct the breakdown scene first — the sparsest thing that still grooves — then build outward to the main. designing from the quietest moment produces better contrast than trimming from the loudest.", remember:"clone the scene, then remove things.", sub:"sections by subtraction",
+  goal:"turn your best loop into four scenes that trace a deliberate energy curve.",
+  steps:[
+   {do:"press [arrange]. per track: [enc white] switches patterns, clicking it mutes the track. [M1] new pattern · [M2] copy · [M3] paste · [M4] clear.",
+    why:"arrange mode is mission control for patterns. instrument tracks light white, auxiliary red."},
+   {do:"scenes recap: hold [shift] + an accidental (1–9). an empty scene clones the current one — so the workflow is: clone, then <b>remove</b> things.",
+    why:"sections are made by subtraction far more often than by addition."},
+   {do:"build: scene 1 <b>intro</b> (few tracks) → scene 2 <b>groove</b> (drums + bass enter) → scene 3 <b>main</b> (everything) → scene 4 <b>breakdown</b> (kick or melody removed).",
+    viz:scenesViz(
+     [{name:"1 intro",on:[3,4]},{name:"2 groove",on:[0,1,3,4]},{name:"3 main",on:[0,1,2,3,4]},{name:"4 breakdown",on:[1,2,3]}],
+     ["1 drums","3 bass","4 stabs","7 pad","5 melody"],"each column is a scene = one combination of patterns and mutes."),
+    why:"scenes also remember levels and mutes — they are full snapshots of a moment."},
+   {do:"sanity-check the curve: intro low, main high, breakdown is the deep breath before the return.",
+    viz:energyViz([0.25,0.55,0.95,0.35,0.95],["intro","groove","main","break","return"])}
+  ],
+  assign:"four named scenes from one loop, each with a one-word purpose.",
+  ready:"you make scenes by changing patterns and mutes — not by writing new songs.",
+  fix:"scenes feel unrelated → keep drums and bass identical across scenes; change only one or two layers."},
+
+ {t:"Session 20 — Transitions", warm:"switch between two scenes un-queued, then queued ([shift], tap [play], pick scene). feel the difference; describe it in one word.", story:{t:"Why buildups feel good — the science", x:"music psychologist David Huron showed that much of musical pleasure is prediction: the brain rewards itself for correctly guessing what comes next. a riser or filter sweep is you loudly promising the listener a downbeat; the drop pays the promise and the brain hands out the chemistry. this is why a transition must telegraph, not surprise — you are not hiding the change, you are advertising it."}, challenge:"transition audit: play one favorite track and log every transition with its timestamp in your notes — fill? silence? riser? noise? most tracks use three tools, constantly. steal the ratio.", remember:"transitions are servants, not stars.", sub:"the joints between sections",
+  goal:"collect four transition tools and learn the queued scene change.",
+  steps:[
+   {do:"tool 1 — the <b>fill</b>: switch to your fill pattern for the last bar before a scene change.",
+    why:"rhythmic signpost. you built this in week 2."},
+   {do:"tool 2 — the <b>drop-out</b>: one bar of silence, or kick removed, right before the return.",
+    why:"negative space makes the arrival hit harder. silence is a transition."},
+   {do:"tool 3 — the <b>filter rise</b>: automate or p-lock the cutoff opening into the next scene.",
+    why:"energy rises without a single new note."},
+   {do:"tool 4 — the <b>queued switch</b>: hold [shift], tap [play], then choose the scene with an accidental. the change waits and lands cleanly in time.",
+    why:"un-queued scene changes happen instantly — fine for jamming, messy for songs.",
+    listen:"the switch lands exactly on the downbeat."},
+   {do:"perform all transitions live first; sequence only the ones that worked.",
+    why:"performance is the laboratory, the sequencer is the publication."}
+  ],
+  assign:"a 64-bar run through your scenes with at least three different transitions.",
+  ready:"sections no longer feel copy-pasted next to each other.",
+  fix:"a transition steals the show → make it shorter and quieter. transitions are servants."}
+]},
+
+/* ---------------- week 10 ---------------- */
+{n:"Week 10", title:"Arrangement II — song mode & performing", quiz:[["how do you enter song mode?","in [arrange], hold [shift] and press [arrange] again."],["where do punch-in FX live?","[auxiliary] → [track 2] — hold keyboard keys while the music plays."],["why does dance music phrase in 8s, 16s and 32s?","DJs need predictable joints to mix across — structure is a courtesy to the mixer."]], goal:"chain the scenes into an actual song that plays start to finish, then learn to perform on top of it without losing the plot.",
+ sessions:[
+ {t:"Session 21 — Song mode", warm:"perform your four transition tools once each, from memory: fill, drop-out, filter rise, queued switch. under five minutes.", story:{t:"The best-selling 12-inch of all time, 1983", x:"New Order's Blue Monday was arranged almost entirely on sequencers and a drum machine — famously even its mistakes were kept, like the kick pattern entering off. it became the best-selling 12-inch single in history, and its sleeve was so expensive to print the band initially lost money per copy. structure note for tonight: dance music phrases in 8s, 16s and 32s because DJs need predictable joints to mix across. count your scenes in those blocks."}, challenge:"structure theft: map a favorite song's sections with timestamps (intro 0:00, groove 0:15, …) and rebuild that exact map from your own scenes in song mode. composers have stolen forms forever; only the notes are yours to invent.", remember:"repeat a section only when something new pays for it.", sub:"scenes in order, like dialing a phone number",
+  goal:"build a 2-minute rough song that plays itself.",
+  steps:[
+   {do:"in [arrange], hold [shift] and press [arrange] — song mode.",
+    why:"song mode is where scenes get sequenced into a timeline."},
+   {do:"hold [shift] and press accidentals to enter your scene order — the official guide says it best: 'like entering a phone number'. e.g. 1 · 2 · 3 · 3 · 4 · 3 · 1.",
+    why:"a whole song structure in seven key presses.",
+    viz:energyViz([0.25,0.55,0.95,0.9,0.35,0.95,0.2],["intro","groove","main","main 2","break","return","outro"])},
+   {do:"housekeeping: [enc dark] toggles song looping · [shift]+[M2]/[M3] step through the song to insert scenes · [shift]+[M4] deletes a scene from the song (the scene itself survives).",
+    why:"editing the order is cheap — try three different structures in ten minutes."},
+   {do:"repeat the main scene only if something changes the second time — an added layer, an opened filter.",
+    why:"the listener forgives repetition only when it pays new information."},
+   {do:"write the final order on paper, then play the whole song once without touching anything.",
+    why:"paper stops endless fiddling. the full pass exposes which section is weakest — fix that one."}
+  ],
+  assign:"a 2-minute rough song in song mode. structure on paper.",
+  ready:"there is a beginning, development, contrast, return and ending.",
+  fix:"feels long → shorten sections. feels abrupt → add one transition, not three."},
+
+ {t:"Session 22 — Performing on top", warm:"play your song top to bottom hands-off. while it runs, name each scene aloud before it arrives. wrong guesses = re-listen.", story:{t:"The mixing desk becomes an instrument, 1970s Kingston", x:"King Tubby, a Jamaican electronics engineer, started performing the mixing console itself: yanking the vocals out, drenching a snare in spring reverb, dropping everything but bass — live, as dub versions. every mute-button performance and punch-in effect since is Tubby's move. tonight the desk is yours: mutes, one filter, and punch-in FX, played like an instrument."}, challenge:"one-take video: film one full performance on your phone and watch it once. cringe is information — you will instantly see which moves read and which fidget. keep three, cut the rest.", remember:"one mute and one sweep, done cleanly, beat ten frantic moves.", sub:"mutes, sweeps and punch-in FX™",
+  goal:"interact with the running song like an instrument — structure underneath, hands on top.",
+  steps:[
+   {do:"start the song. in [mix], mute and unmute single tracks with [shift] + track button. solo by holding one or more track buttons.",
+    why:"muting is the performance move: cheap, reversible, dramatic. (shortcut from anywhere: hold [instrument] + a track button.)"},
+   {do:"ride one filter during a build: [M3] [enc dark] on the pad or stabs.",
+    why:"one hand, one knob, smooth — not frantic."},
+   {do:"<b>punch-in FX™</b>: press [auxiliary] → [track 2]. while the song plays, hold keyboard keys — each is a momentary effect, and they combine.",
+    why:"these are performance effects: they only happen while held, so you cannot wreck the project.",
+    listen:"stutters, sweeps, chaos — released the instant you let go."},
+   {do:"record a full performance pass (even just on your phone) and note your three best moves.",
+    why:"performance ideas are discovered live and kept deliberately. repeat what worked."}
+  ],
+  assign:"perform the 2-minute arrangement twice; mark the better take and why.",
+  ready:"you can touch the music while it plays without losing the form.",
+  fix:"got lost → reduce the act to one mute and one filter sweep. mastery is doing less, cleanly."}
+]},
+
+/* ---------------- week 11 ---------------- */
+{n:"Week 11", title:"Mixing — clarity before character", quiz:[["map the four encoders in mix M1.","dark = FX I send, mid = FX II send, light = pan (click to center), white = level."],["which tracks stay nearly dry and centered?","kick and bass — reverb on low end is instant mud."],["a part is inaudible. first move?","lower its competitors. raising everything is how mixes die."]], goal:"mixing makes every important element audible. the order of operations is the whole secret: levels, then pan, then sends, then master.",
+ sessions:[
+ {t:"Session 23 — Levels first", warm:"quick recall: the punch-in FX live on which mode and track? go there and hold two keys to confirm.", story:{t:"Why studios keep terrible speakers", x:"professional control rooms famously mix on small, unflattering speakers — Auratones, Yamaha NS-10s — and then run the car test: if the mix survives a car stereo, it survives anywhere. the principle is that a mix must be balanced, not flattered. your OP–XY speaker and a cheap earbud are honest judges; if the kick and melody read there, you mixed it right."}, challenge:"the next-room test: play your track and walk into the next room. can you still hear the kick, the bass movement, the melody? whatever vanished first is your quietest priority — fix it with levels only.", remember:"if muting a track improves the song, the mix just told you something.", sub:"mix mode M1 · the volume-only mix",
+  goal:"balance the whole song using nothing but the white encoder.",
+  steps:[
+   {do:"press [mix] → [M1]. choose tracks with the track buttons; [enc white] is that track's level.",
+    why:"in mix mode you stop being a composer. you are now the engineer."},
+   {do:"set levels in this order: drums → bass → chords → melody → textures.",
+    why:"foundation first. everything else is balanced <b>against</b> the drums and bass.",
+    viz:mixerViz([{l:"drums",v:.9,c:ORANGE},{l:"bass",v:.8,c:ORANGE},{l:"chords",v:.55},{l:"Melody",v:.65},{l:"texture",v:.35}],"a healthy starting shape: rhythm section tallest, decoration shortest.")},
+   {do:"the earn-your-place test: mute each track ([shift]+track). if the song improves, that part gets quieter — or deleted.",
+    why:"arrangement and mixing overlap. the mute button is the most honest critic you own."},
+   {do:"check on headphones at moderate volume.",
+    why:"loud always sounds 'better' — it is a lie your ears tell you. judge quietly."}
+  ],
+  assign:"mix v1 — volume only. no effects were touched.",
+  ready:"every important element is audible with levels alone.",
+  fix:"can't hear something → lower its competitors. raising everything is how mixes die."},
+
+ {t:"Session 24 — Pan & sends", warm:"from memory: mix M1's four encoders, in color order. say all four, then check. (you will use them for the rest of your life.)", story:{t:"Singing into the stairwell, 1931 onward", x:"before digital reverb, studios built echo chambers — Abbey Road piped vocals into tiled rooms and recorded the reflections; Capitol buried concrete chambers under its Hollywood parking lot. early stereo was equally physical: sixties Beatles mixes shoved all drums into one ear because the console had few options. sends are the modern chamber: everyone shares one room, and that shared room is what glues a mix. pan is you deciding where each musician stands."}, challenge:"one-instrument reverb: send only the snare generously to FX I and keep everything else nearly dry — the classic trick for depth without wash. how far can you push the snare before the mix blurs?", remember:"dry center, wet edges.", sub:"width and depth, in moderation",
+  goal:"add stereo width and shared reverb/delay without washing the track out.",
+  steps:[
+   {do:"pan with [enc light] (click to re-center): kick and bass stay dead center, hats and stabs nudge slightly off, pads can spread wider.",
+    why:"the center carries the power; the sides carry the decoration.",
+    viz:mixerViz([{l:"kick/bass",v:.85,c:ORANGE,pan:0},{l:"hats",v:.5,pan:.5},{l:"stabs",v:.55,pan:-.5},{l:"pad",v:.45,pan:.8},{l:"lead",v:.65,pan:-.2}],"dots above each fader = pan position. heavy stuff stays in the middle.")},
+   {do:"choose your two shared effects: press [auxiliary] → [track 7] is FX I, [track 8] is FX II. [shift]+[M1] picks the effect: reverb, delay, chorus, phaser, lofi, distortion. classic setup: FX I reverb · FX II delay.",
+    why:"sends are <b>shared</b> effects — every track can feed a little signal into the same reverb. that shared space glues a mix."},
+   {do:"back in [mix] [M1]: [enc dark] sends to FX I, [enc mid] to FX II. start subtle. keep both near zero on kick and bass.",
+    why:"reverb on low end is instant mud. dry low end keeps punch.",
+    listen:"the song should sound like it happens in one room — not in a cave."},
+   {do:"gentle mastering, optional: [M2] master EQ (low / mid / high, white = blend) · [M3] saturator · [M4] master — group levels and a touch of compressor.",
+    why:"tiny moves. the master bus multiplies everything, including mistakes."},
+   {do:"a/b a dry version against your wet version. choose the clearer one.",
+    why:"effect addiction is real and this is the vaccine."}
+  ],
+  assign:"mix v2 — pan plus tasteful sends.",
+  ready:"the mix is wider and deeper but every element is still clear.",
+  fix:"sounds distant or washy → halve both send levels. yes, halve."}
+]},
+
+/* ---------------- week 12 ---------------- */
+{n:"Week 12", title:"Final project — finish one track", quiz:[["the three passes, in order?","arrangement → sound → mix. form first, polish last."],["how many fixes does perfectionism get?","three: one arrangement, one sound, one mix. then it ships."]], goal:"one track, 2–3 minutes, finished and shown to a human. finished and imperfect beats promising and abandoned, every single time.",
+ sessions:[
+ {t:"Session 25 — The production pass", warm:"listen to your week-6 sketch, then your current best. write one sentence in your notes about what changed. that sentence is the course, measured.", story:{t:"Abandoned, in the best way", x:"Paul Valéry wrote that a poem is never finished, only abandoned — and every producer learns the corollary: demoitis, falling for the rough version, and its cousin, endless polishing, both end in nothing shipped. the professionals you admire simply abandon better: three passes, a deadline, done. today you abandon your first track, on purpose, with a title and a date."}, challenge:"the 45-minute rule: set a literal timer for the final mix pass. when it rings, you record the track as-is. constraints are not the enemy of quality; they are the only reliable producer of finished.", remember:"finished beats perfect — ship it and start the next one.", sub:"arrangement → sound → mix → done",
+  goal:"take one existing sketch to a real ending. three passes, in order, no new ideas.",
+  steps:[
+   {do:"pick ONE sketch. close the door on the others.",
+    why:"finishing is a different skill from starting, and it only trains on commitment."},
+   {do:"<b>pass 1 — arrangement</b>: section lengths, transitions, and a real ending in song mode.",
+    why:"form first. a great-sounding track with no shape is a screensaver."},
+   {do:"<b>pass 2 — sound</b>: settle on one bass, one chord sound, one lead, one sample. no preset safari.",
+    why:"a small intentional palette reads as a style. infinite options read as noise."},
+   {do:"<b>pass 3 — mix</b>: levels, pan, sends — the week-11 routine, once through.",
+    why:"optimization comes last because everything before it changes the inputs."},
+   {do:"capture it: record the output (line-out into a computer or phone, or simply film a live pass), give it a title and today's date.",
+    why:"an artifact exists outside the device. that is what 'finished' means."},
+   {do:"write one paragraph: what works, what you would improve, what to learn next.",
+    why:"reflection converts a project into a curriculum. your week 13 writes itself."}
+  ],
+  assign:"one finished, titled, dated 2–3 minute OP–XY track — played for at least one other person.",
+  ready:"it starts, develops, contrasts, returns and ends. you made music.",
+  fix:"perfectionism spiral → you get a maximum of three fixes: one arrangement, one sound, one mix. then it ships."}
+]}
+];
+
+/* =================================================================
+   render course
+================================================================= */
+let SIDX=0;
+function renderCourse(){
+  const host=$("#course");
+  let html="";
+  COURSE.forEach((wk,wi)=>{
+    html+=`<section class="block"><div class="wrap">
+      <div class="weekhead"><span class="wno">${wk.n}</span><h2>${wk.title}</h2></div>
+      <p class="weekgoal">${chips(wk.goal)}</p>`;
+    wk.sessions.forEach(se=>{
+      const idx=SIDX++;
+      html+=`<details class="session" data-idx="${idx}" ${idx<=1?"open":""}>
+        <summary>
+          <span class="done-toggle" data-done="${idx}" title="mark done"></span>
+          <span class="sno">${idx}</span>
+          <span><span class="stitle">${se.t}</span><span class="ssub">${se.sub}</span></span>
+          <span class="chev">›</span>
+        </summary>
+        <div class="sbody">
+          ${se.warm?`<div class="warm"><b>Warm-up · 2 min</b><span>${chips(se.warm)}</span></div>`:""}
+          <div class="goal"><b>Goal</b><span>${chips(se.goal)}</span></div>
+          ${se.story?`<aside class="story"><b>Liner notes — ${se.story.t}</b><p>${chips(se.story.x)}</p></aside>`:""}
+          <ol class="steps">${se.steps.map(st=>`
+            <li>
+              <div class="do">${chips(st.do)}</div>
+              ${st.why?`<div class="why">${chips(st.why)}</div>`:""}
+              ${st.viz||""}
+              ${st.listen?`<div class="listen">${chips(st.listen)}</div>`:""}
+            </li>`).join("")}
+          </ol>
+          <div class="sfoot">
+            <div class="fcell assign"><b>Assignment</b><span>${chips(se.assign)}</span></div>
+            <div class="fcell ready"><b>Ready to move on when</b><span>${chips(se.ready)}</span></div>
+            <div class="fcell fix"><b>If it sounds wrong</b><span>${chips(se.fix)}</span></div>
+            ${se.challenge?`<div class="fcell challenge"><b>Go further</b><span>${chips(se.challenge)}</span></div>`:""}
+          </div>
+          ${se.remember?`<div class="remember">${chips(se.remember)}</div>`:""}
+        </div>
+      </details>`;
+    });
+    if(wk.quiz){
+      html+=`<div class="noteslabel">${wk.n} — Quick recall · answer out loud, then click to check</div>`
+        + wk.quiz.map(qa=>`<details class="quiz"><summary>${chips(qa[0])}</summary><div class="qa">${chips(qa[1])}</div></details>`).join("");
+    }
+    html+=`<div class="noteslabel">${wk.n} — Practice notes (saved in this page)</div>
+      <textarea class="notesbox" data-notes="w${wi}" placeholder="What worked · what sounded wrong · next action"></textarea>
+    </div></section>`;
+  });
+  host.innerHTML=html;
+}
+renderCourse();
+const TOTAL=SIDX;
+
+/* =================================================================
+   cheat sheets
+================================================================= */
+const PATHS=[
+ ["[projects] then hold [M1]","create a new project"],
+ ["[instrument] → [track 1]…[track 8]","select a track (lit red = selected)"],
+ ["[shift] + [M1]","change the engine on this track"],
+ ["[shift] + track button","browse / change this track's preset"],
+ ["play a note, then press a step","place that note on the step"],
+ ["hold several notes + press a step","place a chord"],
+ ["hold a step + press a later step","extend the note / chord"],
+ ["hold a step + turn any encoder","parameter lock just that step"],
+ ["hold a sound key + tap [record]","view & edit only that sound's steps"],
+ ["hold [record] + press [play]","live record (press [play] again first for a count-in)"],
+ ["hold [record] while stopped","step record, note by note"],
+ ["hold [record] + [stop] until red fills","clear the whole track"],
+ ["[shift] + [record]","undo (one step)"],
+ ["hold [bar] + [+] / [-]","add / remove bars (max 4)"],
+ ["hold [bar] + [shift] + [+]","duplicate the current bar"],
+ ["hold [bar] + an accidental","track scale (how long one step lasts)"],
+ ["hold [bar] + encoders","quantize · note length · groove · automation smoothing"],
+ ["hold [bar] + [M1] / [M2] / [M4]","clear notes / clear p-locks / clear everything"],
+ ["hold a step + [-] / [+]","nudge off the grid (quantize must be under 100)"],
+ ["[shift] + [-] / [+]","transpose the whole sequence by an octave"],
+ ["[arrange]: [M1] / [M2] / [M3] / [M4]","new / copy / paste / clear pattern"],
+ ["[arrange]: turn [enc white] · click it","switch patterns · mute track"],
+ ["[arrange]: [shift] + accidental","select scene (empty scene = clone of current)"],
+ ["[arrange]: [shift], tap [play], then accidental","queue the scene change in time"],
+ ["[arrange]: hold [shift] + press [arrange]","song mode — enter scenes like a phone number"],
+ ["[mix] [M1]: encoders","FX I send · FX II send · pan (click = center) · level"],
+ ["[mix]: [shift] + track button","mute / unmute (hold track buttons = solo)"],
+ ["[auxiliary] → [track 2]","punch-in FX™ — hold keys while playing"],
+ ["[auxiliary] → [track 7] / [track 8]","choose what FX I / FX II are ([shift]+[M1])"],
+ ["[sample], then hold [record]","record a sample, max 20 s"]
+];
+$("#cheatpaths").innerHTML=PATHS.map(([c,w])=>`<div class="row"><span class="combo">${chips(c)}</span><span class="what">${w}</span></div>`).join("");
+
+$("#encleg").innerHTML=`<div style="display:flex;gap:26px;flex-wrap:wrap;font-size:13px">
+  <span><span class="enc dark"></span> dark gray — first parameter</span>
+  <span><span class="enc mid"></span> mid gray — second</span>
+  <span><span class="enc light"></span> light gray — third</span>
+  <span><span class="enc white"></span> white — fourth (often level / the big one)</span>
+</div>
+<p style="font-size:13px;color:var(--mid);margin-top:10px">examples — [M2] envelopes: attack · decay · sustain · release&nbsp;&nbsp;·&nbsp;&nbsp;[M3] filter: cutoff · resonance · env amount · key tracking&nbsp;&nbsp;·&nbsp;&nbsp;[mix] [M1]: FX I · FX II · pan · level</p>`;
+
+const SC=[
+ ["F","pulse","repeat the step several times in place","[acc 3] = 3 repeats"],
+ ["G","hold","hold the step for several steps","[acc 2] = hold 2"],
+ ["A","multiply","chop one step into fast trigs — the ratchet","[acc 3] = roll of 3"],
+ ["B","velocity","force this step's loudness","[acc 7] = loud · [acc 3] = ghost"],
+ ["C","ramp up","note climbs the scale each repeat","[acc 3] = 4-step climb"],
+ ["D","ramp down","note descends each repeat","—"],
+ ["E","random","randomize the note within the scale","[acc 1] = small range"],
+ ["F (2nd)","portamento","glide into and out of this step","[acc 5] = 50%"],
+ ["G (2nd)","bend","pitch-bend shapes on the step","try each accidental"],
+ ["A (2nd)","tonality","transpose this step by an interval","[acc 3] = octave up"],
+ ["B (2nd)","jump","sequencer jumps to a chosen step","[acc 0] = random step"],
+ ["C (2nd)","skip p-lock","p-lock plays only every nth pass","[acc 2] = every 2nd"],
+ ["D (2nd)","skip component","component plays only every nth pass","—"],
+ ["E (2nd)","skip trig","note plays only every nth pass","[acc 4] = every 4th"]
+];
+$("#sckb").innerHTML=kbSVG({plain:true,hl:{"F1":"pulse","G1":"hold","A1":"mult","B1":"vel","C1":"ramp↑","D1":"ramp↓","E1":"rnd","F2":"port","G2":"bend","A2":"tone","B2":"jump","C2":"skipP","D2":"skipC","E2":"skipT"},caption:"hold [shift] + a lit step, then one of these natural keys. the screen names everything — trust the screen over memory."});
+$("#sctable").innerHTML=`<tr><th>natural key</th><th>component</th><th>what it does</th><th>good first value</th></tr>`+
+ SC.map(([k,n,d,v])=>`<tr><td><span class="k kw">${k}</span></td><td><b>${n}</b></td><td>${d}</td><td>${chips(v)}</td></tr>`).join("");
+
+$("#rules").innerHTML=[
+ "do not add a new track to fix a boring loop. improve rhythm, mutes or section contrast first.",
+ "keep kick and bass centered and nearly dry.",
+ "one memorable melody idea, repeated and varied, beats five forgettable ones.",
+ "copy the pattern before any risky edit. [shift]+[record] only undoes one step.",
+ "effects are dessert, not dinner.",
+ "when a sound is bad, ask in order: wrong note? wrong rhythm? wrong envelope? filter too bright? level too loud?",
+ "finish sketches. a finished mediocre track teaches more than twenty promising loops."
+].map(r=>`<li>${chips(r)}</li>`).join("");
+
+const CH=[["layout","layout"],["get started","get-started"],["sequencer","sequencer"],["step components","step-components"],["instrument","instrument"],["arrange","arrange"],["mix","mix"],["sample","sample"],["workflow","workflow"],["synth engines","synth-engines"],["fx","fx"],["how to","how-to"]];
+$("#chapters").innerHTML=CH.map(([t,u])=>`<a href="https://teenage.engineering/guides/op-xy/${u}" target="_blank">${t}</a>`).join(" · ");
+
+/* =================================================================
+   progress + notes (localStorage, fails silently on restricted setups)
+================================================================= */
+const store={
+  get(k){ try{return localStorage.getItem("opxy."+k)}catch(e){return null} },
+  set(k,v){ try{localStorage.setItem("opxy."+k,v)}catch(e){} }
+};
+function refreshProgress(){
+  let done=0;
+  document.querySelectorAll(".done-toggle").forEach(t=>{
+    const on=store.get("done."+t.dataset.done)==="1";
+    t.classList.toggle("on",on);
+    t.closest("details").classList.toggle("isdone",on);
+    if(on)done++;
+  });
+  $("#progressTxt").textContent=`${done} / ${TOTAL}`;
+  $("#progressBar i").style.width=(100*done/TOTAL)+"%";
+}
+document.addEventListener("click",e=>{
+  const t=e.target.closest(".done-toggle");
+  if(!t)return;
+  e.preventDefault(); e.stopPropagation();
+  const k="done."+t.dataset.done;
+  store.set(k, store.get(k)==="1"?"0":"1");
+  refreshProgress();
+});
+document.querySelectorAll(".notesbox").forEach(n=>{
+  n.value=store.get("notes."+n.dataset.notes)||"";
+  n.addEventListener("input",()=>store.set("notes."+n.dataset.notes,n.value));
+});
+refreshProgress();
+
+/* =================================================================
+   sentence case — capitalize rendered prose naturally.
+   skips device chips (.k), encoder dots, svg diagrams and textareas,
+   so hardware labels stay lowercase like on the real panel.
+================================================================= */
+(function(){
+  const seen=new WeakSet();
+  const SKIP=".k,.enc,.encname";
+  const blocks=document.querySelectorAll(
+    "nav .links a, .kicker, header.hero h1, header.hero .sub, header.hero .meta,"+
+    "section.block h2, section.block h3, .lede, .card h4, .card p, .card li,"+
+    ".maplegend .li, .roadmap .wk, .weekgoal, .stitle, .ssub,"+
+    ".goal>span, aside.story b, aside.story p, .warm span,"+
+    "ol.steps .do, ol.steps .why, ol.steps .listen, .fcell>span, .remember,"+
+    "details.quiz summary, details.quiz .qa, .noteslabel,"+
+    ".cheat .row .what, .rules li, #encleg p, #encleg span,"+
+    "table.t th, table.t td, .vizcap, #chapters a");
+  const ABBR=/(?:^|\s)(?:e\.g\.|i\.e\.|vs\.|etc\.|cf\.)$/i;
+  blocks.forEach(block=>{
+    let cap=true, started=false, pending=false, recent="";
+    const walker=document.createTreeWalker(block, NodeFilter.SHOW_TEXT, {acceptNode(n){
+      const pe=n.parentElement;
+      if(pe && pe.closest("svg,textarea,.badge")) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }});
+    let node;
+    while(node=walker.nextNode()){
+      if(seen.has(node)) continue; seen.add(node);
+      const pe=node.parentElement;
+      if(pe && pe.closest(SKIP)){ started=true; cap=false; pending=false; continue; } // chip = a word, never modified
+      const chars=[...node.nodeValue]; let changed=false;
+      for(let i=0;i<chars.length;i++){
+        const ch=chars[i];
+        if(!started && !/\s/.test(ch)){
+          started=true;
+          if(!/[a-zà-öø-ÿ]/.test(ch)) cap=false;  // block starts with digit/symbol/chip → no cap
+        }
+        if(/[a-zà-öø-ÿ]/.test(ch)&&cap){ chars[i]=ch.toUpperCase(); changed=true; cap=false; pending=false; }
+        else if(/[A-Za-zÀ-ÖØ-öø-ÿ0-9]/.test(ch)){ cap=false; pending=false; }
+        recent=(recent+ch).slice(-14);
+        if(/[.!?]/.test(ch)) pending=true;
+        else if(/\s/.test(ch)){ if(pending && !ABBR.test(recent.slice(0,-1).trimEnd())){ cap=true; } pending=false; }
+      }
+      if(changed) node.nodeValue=chars.join("");
+    }
+  });
+})();
+
+/* hero illustration is inline SVG — no external or embedded imagery */
+</script>
+</body>
+</html>
